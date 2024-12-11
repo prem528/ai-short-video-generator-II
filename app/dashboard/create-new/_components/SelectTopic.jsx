@@ -14,17 +14,17 @@ function SelectTopic({ onUserSelect }) {
   const options = [
     "Custom Prompt",
     "Product Description",
-    "Advertisement",
+    "Product Advertisement",
     "Product Review",
-    "Random",
+    "Story Telling",
   ];
 
   const [selectedOption, setSelectedOption] = useState();
 
   const handleValueChange = (value) => {
     setSelectedOption(value);
-    if (value !== 'Custom Prompt') {
-      onUserSelect('topic', value);
+    if (value !== "Custom Prompt") {
+      onUserSelect("topic", value);
     }
   };
 
@@ -47,10 +47,10 @@ function SelectTopic({ onUserSelect }) {
         </SelectContent>
       </Select>
 
-      {selectedOption === 'Custom Prompt' && (
+      {selectedOption === "Custom Prompt" && (
         <Textarea
           className="mt-3"
-          onChange={(e) => onUserSelect('topic', e.target.value)}
+          onChange={(e) => onUserSelect("topic", e.target.value)}
           placeholder="Enter your prompt"
         />
       )}
