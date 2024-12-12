@@ -31,7 +31,7 @@ function SelectTopic({ onUserSelect }) {
   return (
     <div className="mt-5">
       <h2 className="font-bold text-2xl text-primary">Content</h2>
-      <p className="text-gray-500">What is the title of the video?</p>
+      <p className="text-gray-500">Select the type of content the video will have</p>
       <Select onValueChange={handleValueChange} value={selectedOption}>
         <SelectTrigger className="w-full mt-2 text-lg">
           <SelectValue placeholder="Content Type" />

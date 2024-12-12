@@ -17,9 +17,16 @@ function ProductName({ value, onValueChange }) {
   };
 
   return (
-    <div>
-      <h2>Product Name</h2>
-      <Input id="name" type="text" value={productName} onChange={handleChange} placeholder="Product Name"/>
+    <div className="mt-5">
+      <h2 className="font-bold text-2xl text-primary">Product Name</h2>
+      <Input
+        id="name"
+        type="text"
+        value={productName}
+        onChange={handleChange}
+        placeholder="Product Name"
+        className="mt-3"
+      />
     </div>
   );
 }

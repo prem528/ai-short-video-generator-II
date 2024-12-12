@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SelectTopic from "./_components/SelectTopic";
 import SelectStyle from "./_components/SelectStyle";
 import SelectDuration from "./_components/SelectDuration";
@@ -11,6 +11,7 @@ import UrlBox from "./_components/UrlBox";
 import ProductName from "./_components/ProductName";
 import ProductDescription from "./_components/ProductDescription";
 import MediaBox from "./_components/MediaBox";
+import { VideoDataContext } from "@/app/_context/VideoDataContext";
 
 function CreateNew() {
   const [formData, setFormData] = useState({
@@ -21,10 +22,15 @@ function CreateNew() {
     imageStyle: "",
     duration: "",
   });
+
+  const [imageList, setImageList] = useState([]);
   const [loadingState, setLoadingState] = useState(false);
   const [videoScript, setVideoScript] = useState();
+  const [audioFileUrl, setAudioFileUrl] = useState();
+  const [captions, setCaptions] = useState();
+  const { videoData, setVideoData } = useContext(VideoDataContext);
 
-  const FILE_URL = "https://assembly.ai/sports_injuries.mp3"; // For testing
+  const fileUrl = "https://assembly.ai/wildfires.mp3";
 
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
@@ -32,29 +38,40 @@ function CreateNew() {
       ...prev,
       [fieldName]: fieldValue,
     }));
-    console.log(fieldName, fieldValue);
   };
 
   // Handle the create create video button:
   const onCreateClickHandler = () => {
-    // getVideoScript();
-    generateAudioCaptions(FILE_URL); // TESTING
+    getVideoScript();
+    // generateAudioCaptions(FILE_URL); // For testing
+  };
+
+  // Handle image uploads
+  const handleImageUpload = (event) => {
+    const files = Array.from(event.target.files);
+    setImageList((prev) => [...prev, ...files]);
+  };
+
+  // Handle deleting an image
+  const handleImageDelete = (index) => {
+    // Remove from imageList (File objects)
+    setImageList((prev) => {
+      return prev.filter((file, i) => i !== index);
+    });
   };
 
   // Get the video script based on the form data:
   const getVideoScript = async () => {
     setLoadingState(true);
 
-    // Prompt for video script:
-
     const prompt = `
   Write a script to generate a video with a duration of "${
     formData.duration
-  }" on the topic: "${formData.topic}".
+  }" on the topic: "${formData.topic}". 
   The video should include a detailed breakdown of each scene, based on the title "${
     formData.title
-  }" and the description "${formData.description}".
-  For each scene, ensure the following:
+  }" and the description "${formData.description}". 
+  For each scene, ensure the following: 
   1. **AI-Generated Image**: Create a detailed image prompt for "${
     formData.title
   }" in the "${
@@ -62,18 +79,18 @@ function CreateNew() {
     }" style. The image should visually highlight key features relevant to the scene and incorporate elements from the provided references: ${formData.images.join(
       ", "
     )}. Ensure the image aligns thematically with the video's topic and scene description.
-  2. **Content Text**: Provide a clear and engaging narrative text that describes the scene. It should:
-     - Align closely with the topic, title, and description.
-     - Highlight key points and maintain thematic consistency.
+  2. **Content Text**: Provide a clear and engaging narrative text that describes the scene. It should: 
+     - Align closely with the topic, title, and description. 
+     - Highlight key points and maintain thematic consistency. 
      - Be concise, informative, and suitable for the intended video duration.
 
-  Ensure the output adheres to the following JSON structure:
+  Ensure the output adheres to the following JSON structure: 
   [
-    {
-      "imagePrompt": "Detailed prompt for generating the image",
-      "contentText": "Description text for the scene"
-    },
-    ...
+    { 
+      "imagePrompt": "Detailed prompt for generating the image", 
+      "contentText": "Description text for the scene" 
+    }, 
+    ... 
   ]
     `;
 
@@ -91,41 +108,37 @@ function CreateNew() {
   };
 
   // Generating speech from the textData:
+  const generateAudioFile = () => {};
 
   // Generating the captions for the video:
   const generateAudioCaptions = async (fileUrl) => {
     try {
-      // Set loading state to true
       setLoadingState(true);
-
-      // Make API call
       const response = await axios.post("/api/generate-caption", {
         audioFileUrl: fileUrl,
       });
-
-      // Log the result
       console.log(response.data.result);
     } catch (error) {
-      // Handle error
       console.error("Error generating captions:", error);
-
-      // Optionally, display an error message to the user
       alert("Failed to generate captions. Please try again later.");
     } finally {
-      // Ensure loading state is reset
       setLoadingState(false);
     }
   };
 
+  // Generating the images for the video:
+  const generateImage = () => {};
+
   return (
-    <div className="mt-5 md:px-20">
+    <div className="mt-10 md:px-20">
       <h2 className="font-bold text-4xl text-primary text-center">
         Create New
       </h2>
-      <div className="mt-10 shadow-md p-10">
+      <div className="mt-5 shadow-md p-10">
         {/* Enter URL */}
         <UrlBox
-          onUserSelect={(data) => setFormData((prev) => ({ ...prev, ...data }))}
+          onUser
+          Select={(data) => setFormData((prev) => ({ ...prev, ...data }))}
         />
 
         {/* Product Name */}
@@ -144,23 +157,30 @@ function CreateNew() {
 
         {/* Upload Media */}
         <MediaBox
-          images={formData.images}
+          images={formData.images} // Pass image URLs for display
           setImages={(newImages) => onHandleInputChange("images", newImages)}
+          imageList={imageList} // Pass file objects
+          setImageList={setImageList} // Pass the setter function for imageList
+          handleImageUpload={handleImageUpload} // Pass the image upload handler
+          handleImageDelete={handleImageDelete} // Pass the delete handler
         />
 
         {/* Select Topic */}
         <SelectTopic
-          onUserSelect={(topic) => onHandleInputChange("topic", topic)}
+          onUser
+          Select={(topic) => onHandleInputChange("topic", topic)}
         />
 
         {/* Select Style */}
         <SelectStyle
-          onUserSelect={(style) => onHandleInputChange("imageStyle", style)}
+          onUser
+          Select={(style) => onHandleInputChange("imageStyle", style)}
         />
 
         {/* Duration */}
         <SelectDuration
-          onUserSelect={(duration) => onHandleInputChange("duration", duration)}
+          onUser
+          Select={(duration) => onHandleInputChange("duration", duration)}
         />
 
         {/* Create Button */}

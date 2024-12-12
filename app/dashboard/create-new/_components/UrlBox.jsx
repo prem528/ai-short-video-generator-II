@@ -63,8 +63,8 @@ function UrlBox({ onUserSelect }) {
 
   return (
     <div>
-      <h2>Enter the product link</h2>
-      <div className="flex w-full gap-1">
+      <h2 className="font-bold text-2xl text-primary">Enter the product link</h2>
+      <div className="flex w-full gap-1 mt-3">
         <Input
           type="url"
           placeholder="URL"

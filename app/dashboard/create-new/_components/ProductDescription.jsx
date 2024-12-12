@@ -1,29 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
 
 function ProductDescription({ value, onValueChange }) {
   const [description, setDescription] = useState(value);
+  const textareaRef = useRef(null);
 
-  // Update the state if the `value` prop changes (e.g., for autofill)
+  // Adjust textarea height based on content
+  const adjustTextareaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"; // Reset height to calculate new height
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set to scrollHeight
+    }
+  };
+
+  // Update state and adjust height when the value prop changes
   useEffect(() => {
-    setDescription(value);
+    setDescription(value || ""); // Ensure no null/undefined values
+    adjustTextareaHeight();
   }, [value]);
 
-  // Handle changes made by the user
+  // Handle manual input changes
   const handleChange = (e) => {
     const newValue = e.target.value;
     setDescription(newValue);
     onValueChange(newValue);
+    adjustTextareaHeight(); // Adjust height dynamically on user input
   };
 
   return (
-    <div>
-      <h2>Product Description</h2>
+    <div className="mt-5">
+      <h2 className="font-bold text-2xl text-primary">Product Description</h2>
       <Textarea
-        className="mt-3"
+        ref={textareaRef}
+        className="mt-3 resize-none"
         value={description}
         onChange={handleChange}
         placeholder="Description"
+        rows={5}
       />
     </div>
   );
