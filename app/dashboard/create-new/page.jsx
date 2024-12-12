@@ -16,13 +16,15 @@ function CreateNew() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    images: [], // Hold images here
+    images: [],
     topic: "",
     imageStyle: "",
     duration: "",
   });
   const [loadingState, setLoadingState] = useState(false);
   const [videoScript, setVideoScript] = useState();
+
+  const FILE_URL = "https://assembly.ai/sports_injuries.mp3"; // For testing
 
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
@@ -33,36 +35,47 @@ function CreateNew() {
     console.log(fieldName, fieldValue);
   };
 
+  // Handle the create create video button:
   const onCreateClickHandler = () => {
-    getVideoScript();
+    // getVideoScript();
+    generateAudioCaptions(FILE_URL); // TESTING
   };
 
-  // Get the video script based on the form data
+  // Get the video script based on the form data:
   const getVideoScript = async () => {
     setLoadingState(true);
 
+    // Prompt for video script:
+
     const prompt = `
-  Write a script to generate a ${formData.duration} video on the topic: "${
-      formData.topic
-    }". 
-  The video should include a detailed description for each scene based on the title "${
+  Write a script to generate a video with a duration of "${
+    formData.duration
+  }" on the topic: "${formData.topic}".
+  The video should include a detailed breakdown of each scene, based on the title "${
     formData.title
   }" and the description "${formData.description}".
-  For each scene, include the following:
-  1. A detailed AI avatar that will narrate the topic "${
-    formData.topic
-  }". Provide its image prompt in the "${
+  For each scene, ensure the following:
+  1. **AI-Generated Image**: Create a detailed image prompt for "${
+    formData.title
+  }" in the "${
       formData.imageStyle
-    }" style, incorporating details from the provided images: ${formData.images.join(
+    }" style. The image should visually highlight key features relevant to the scene and incorporate elements from the provided references: ${formData.images.join(
       ", "
-    )}.
-  2. Contextual contentText that aligns with the scene description, highlighting key points from the topic, title, and description.
-  Provide results in JSON format with the following structure:
-  {
-    "imagePrompt": "AI avatar image narrating the description for the scene",
-    "contentText": "Contextual description for the scene"
-  }
-`;
+    )}. Ensure the image aligns thematically with the video's topic and scene description.
+  2. **Content Text**: Provide a clear and engaging narrative text that describes the scene. It should:
+     - Align closely with the topic, title, and description.
+     - Highlight key points and maintain thematic consistency.
+     - Be concise, informative, and suitable for the intended video duration.
+
+  Ensure the output adheres to the following JSON structure:
+  [
+    {
+      "imagePrompt": "Detailed prompt for generating the image",
+      "contentText": "Description text for the scene"
+    },
+    ...
+  ]
+    `;
 
     try {
       const response = await axios.post("/api/get-video-script", {
@@ -73,6 +86,33 @@ function CreateNew() {
     } catch (error) {
       console.error("Error fetching video script:", error);
     } finally {
+      setLoadingState(false);
+    }
+  };
+
+  // Generating speech from the textData:
+
+  // Generating the captions for the video:
+  const generateAudioCaptions = async (fileUrl) => {
+    try {
+      // Set loading state to true
+      setLoadingState(true);
+
+      // Make API call
+      const response = await axios.post("/api/generate-caption", {
+        audioFileUrl: fileUrl,
+      });
+
+      // Log the result
+      console.log(response.data.result);
+    } catch (error) {
+      // Handle error
+      console.error("Error generating captions:", error);
+
+      // Optionally, display an error message to the user
+      alert("Failed to generate captions. Please try again later.");
+    } finally {
+      // Ensure loading state is reset
       setLoadingState(false);
     }
   };
