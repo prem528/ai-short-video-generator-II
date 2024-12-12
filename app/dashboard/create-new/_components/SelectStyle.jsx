@@ -20,7 +20,7 @@ function SelectStyle({ onUserSelect }) {
   return (
     <div className="mt-5">
       <h2 className="font-bold text-2xl text-primary">Style</h2>
-      <p className="text-gray-500">Select your avatar style:</p>
+      <p className="text-gray-500">Select your video style:</p>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-3">
         {styleOptions.map((item) => (

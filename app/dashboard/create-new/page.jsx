@@ -12,6 +12,7 @@ import ProductName from "./_components/ProductName";
 import ProductDescription from "./_components/ProductDescription";
 import MediaBox from "./_components/MediaBox";
 import { VideoDataContext } from "@/app/_context/VideoDataContext";
+import PlayerDialog from "../_components/PlayerDialog";
 
 function CreateNew() {
   const [formData, setFormData] = useState({
@@ -29,6 +30,8 @@ function CreateNew() {
   const [audioFileUrl, setAudioFileUrl] = useState();
   const [captions, setCaptions] = useState();
   const { videoData, setVideoData } = useContext(VideoDataContext);
+  const [playVideo, setPlayVideo] = useState(false);
+  const [videoId, setVideoId] = useState();
 
   const fileUrl = "https://assembly.ai/wildfires.mp3";
 
@@ -129,6 +132,29 @@ function CreateNew() {
   // Generating the images for the video:
   const generateImage = () => {};
 
+  // Saving the video data into the database:
+  const saveVideoData = async (videoData) => {
+    setLoadingState(true);
+
+    const result = await db
+      .insert(videoData)
+      .values({
+        script: videoData?.videoScript,
+        audioFileUrl: videoData?.audioFileUrl,
+        captions: videoData?.captions,
+        imageList: videoData?.imageList,
+        createdBy: user?.primaryEmailAddress?.emailAddress,
+      })
+      .returning({ id: videoData?.id });
+
+    setVideoId(result[0].id);
+    setPlayVideo(true);
+
+    console.log(result);
+
+    setLoadingState(false);
+  };
+
   return (
     <div className="mt-10 md:px-20">
       <h2 className="font-bold text-4xl text-primary text-center">
@@ -191,6 +217,8 @@ function CreateNew() {
 
       {/* Loading Screen */}
       <CustomLoading loading={loadingState} />
+
+      <PlayerDialog playVideo={playVideo} videoId={videoId} />
     </div>
   );
 }
