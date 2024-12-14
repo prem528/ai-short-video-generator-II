@@ -51,21 +51,21 @@ export async function POST(request) {
         getInnerText(".product-description") ||
         getInnerText(".description");
 
-      const images = Array.from(document.querySelectorAll("img"))
-        .filter((img) => {
-          return (
-            img.classList.contains("imageBlock") ||
-            img.closest(".altImages") ||
-            img.getAttribute("src")?.includes("product") ||
-            img.id === "landingImage"
-          );
-        })
-        .map((img) => img.getAttribute("src"))
-        .filter((src) => !!src);
+      // const images = Array.from(document.querySelectorAll("img"))
+      //   .filter((img) => {
+      //     return (
+      //       img.classList.contains("imageBlock") ||
+      //       img.closest(".altImages") ||
+      //       img.getAttribute("src")?.includes("product") ||
+      //       img.id === "landingImage"
+      //     );
+      //   })
+      //   .map((img) => img.getAttribute("src"))
+      //   .filter((src) => !!src);
 
-      console.log(images);
+      // console.log(images);
 
-      return { title, description, images };
+      return { title, description };
     });
 
     await browser.close();

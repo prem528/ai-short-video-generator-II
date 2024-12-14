@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -63,7 +63,9 @@ function UrlBox({ onUserSelect }) {
 
   return (
     <div>
-      <h2 className="font-bold text-2xl text-primary">Enter the product link</h2>
+      <h2 className="font-bold text-2xl text-primary">
+        Enter the product link
+      </h2>
       <div className="flex w-full gap-1 mt-3">
         <Input
           type="url"

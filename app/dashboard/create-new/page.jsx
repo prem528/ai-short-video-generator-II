@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SelectTopic from "./_components/SelectTopic";
 import SelectStyle from "./_components/SelectStyle";
 import SelectDuration from "./_components/SelectDuration";
@@ -13,27 +13,39 @@ import ProductDescription from "./_components/ProductDescription";
 import MediaBox from "./_components/MediaBox";
 import { VideoDataContext } from "@/app/_context/VideoDataContext";
 import PlayerDialog from "../_components/PlayerDialog";
+import { v4 as uuidv4 } from "uuid";
+import AddMedia from "./_components/AddMedia";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadString,
+} from "firebase/storage";
+import { storage } from "../../../configs/FirebaseConfig.js";
 
 function CreateNew() {
+  // storing form data:
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    images: [],
-    topic: "",
-    imageStyle: "",
-    duration: "",
   });
 
+  // storing images from user:
   const [imageList, setImageList] = useState([]);
-  const [loadingState, setLoadingState] = useState(false);
-  const [videoScript, setVideoScript] = useState();
-  const [audioFileUrl, setAudioFileUrl] = useState();
-  const [captions, setCaptions] = useState();
-  const { videoData, setVideoData } = useContext(VideoDataContext);
-  const [playVideo, setPlayVideo] = useState(false);
-  const [videoId, setVideoId] = useState();
 
-  const fileUrl = "https://assembly.ai/wildfires.mp3";
+  const [loadingState, setLoadingState] = useState(false);
+
+  const [videoScript, setVideoScript] = useState();
+
+  const [audioFileUrl, setAudioFileUrl] = useState();
+
+  const [captions, setCaptions] = useState();
+
+  const { videoData, setVideoData } = useContext(VideoDataContext);
+
+  const [playVideo, setPlayVideo] = useState(false);
+
+  const [videoId, setVideoId] = useState();
 
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
@@ -43,24 +55,16 @@ function CreateNew() {
     }));
   };
 
+  // Handle changes in media field
+  const handleMediaChange = (newImageList) => {
+    setImageList(newImageList);
+  };
+
   // Handle the create create video button:
   const onCreateClickHandler = () => {
     getVideoScript();
-    // generateAudioCaptions(FILE_URL); // For testing
-  };
-
-  // Handle image uploads
-  const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    setImageList((prev) => [...prev, ...files]);
-  };
-
-  // Handle deleting an image
-  const handleImageDelete = (index) => {
-    // Remove from imageList (File objects)
-    setImageList((prev) => {
-      return prev.filter((file, i) => i !== index);
-    });
+    generateAudioFile(videoScript);
+    uploadToFirebase(imageList);
   };
 
   // Get the video script based on the form data:
@@ -68,41 +72,34 @@ function CreateNew() {
     setLoadingState(true);
 
     const prompt = `
-  Write a script to generate a video with a duration of "${
-    formData.duration
-  }" on the topic: "${formData.topic}". 
-  The video should include a detailed breakdown of each scene, based on the title "${
-    formData.title
-  }" and the description "${formData.description}". 
-  For each scene, ensure the following: 
-  1. **AI-Generated Image**: Create a detailed image prompt for "${
-    formData.title
-  }" in the "${
-      formData.imageStyle
-    }" style. The image should visually highlight key features relevant to the scene and incorporate elements from the provided references: ${formData.images.join(
-      ", "
-    )}. Ensure the image aligns thematically with the video's topic and scene description.
-  2. **Content Text**: Provide a clear and engaging narrative text that describes the scene. It should: 
-     - Align closely with the topic, title, and description. 
-     - Highlight key points and maintain thematic consistency. 
-     - Be concise, informative, and suitable for the intended video duration.
+  Write a script for a video with a duration of "${formData.duration}" on the topic "${formData.topic}". 
+  The script should include a breakdown of "${imageList.length}" scenes, based on the title "${formData.title}" and description "${formData.description}". 
+  For each scene, generate the following:
 
-  Ensure the output adheres to the following JSON structure: 
+  **Content Text**: A concise, engaging narrative that:
+    - Aligns with the topic, title, and description.
+    - Highlights key points and maintains thematic consistency.
+    - Is informative, clear, and appropriate for the video's duration.
+
+  The output should follow this JSON format:
   [
-    { 
-      "imagePrompt": "Detailed prompt for generating the image", 
-      "contentText": "Description text for the scene" 
-    }, 
-    ... 
+    {  
+      "contentText": "Description for the scene" 
+    },
+    ...
   ]
-    `;
+`;
 
     try {
       const response = await axios.post("/api/get-video-script", {
         prompt: prompt.trim(),
       });
+
+      setVideoData((prev) => ({
+        ...prev,
+        videoScript: response.data.result,
+      }));
       setVideoScript(response.data.result);
-      console.log(response.data.result);
     } catch (error) {
       console.error("Error fetching video script:", error);
     } finally {
@@ -110,17 +107,83 @@ function CreateNew() {
     }
   };
 
-  // Generating speech from the textData:
-  const generateAudioFile = () => {};
+  /**
+   * Generates speech from the provided video script.
+   *
+   * This function takes in a `videoScript` (a string containing the text) and uses a text-to-speech API or a custom function to generate speech audio.
+   *
+   * @param {string} videoScript - The script of the video, containing the text to be converted into speech.
+   *
+   * @returns {Promise} - A promise that resolves when the speech is successfully generated. The promise can contain a URL or data representing the audio file.
+   */
 
-  // Generating the captions for the video:
-  const generateAudioCaptions = async (fileUrl) => {
+  const generateAudioFile = async (videoScript) => {
+    setLoadingState(true);
+
+    // Validate videoScript
+    if (!Array.isArray(videoScript) || videoScript.length === 0) {
+      console.error("Invalid videoScript:", videoScript);
+      setLoadingState(false);
+      return;
+    }
+
+    let script = "";
+    const id = uuidv4();
+
+    // Concatenate contentText for all items
+    videoScript.forEach((item, index) => {
+      if (item.contentText) {
+        script += item.contentText + " ";
+      } else {
+        console.warn(`Missing contentText in item at index ${index}:`, item);
+      }
+    });
+
+    try {
+      console.log("Generated script for audio:", script); // Debugging step
+
+      const resp = await axios.post("/api/generate-audio", {
+        text: script.trim(),
+        id: id,
+      });
+
+      if (resp?.data?.result) {
+        const audioUrl = resp.data.result;
+
+        // Update video data
+        setVideoData((prev) => ({
+          ...prev,
+          audioFileUrl: audioUrl,
+        }));
+        setAudioFileUrl(audioUrl);
+
+        // Generate captions if audio URL is present
+        await generateAudioCaptions(audioUrl, videoScript);
+      } else {
+        console.error("No audio URL returned:", resp?.data);
+      }
+    } catch (error) {
+      console.error("Error generating audio file:", error);
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  /**
+   * Generating audio captions for the video:
+   * @param {*} fileUrl
+   */
+  const generateAudioCaptions = async (fileUrl, videoScript) => {
     try {
       setLoadingState(true);
       const response = await axios.post("/api/generate-caption", {
         audioFileUrl: fileUrl,
       });
-      console.log(response.data.result);
+      setVideoData((prev) => ({
+        ...prev,
+        captions: response.data.result,
+      }));
+      setCaptions(response?.data?.result);
     } catch (error) {
       console.error("Error generating captions:", error);
       alert("Failed to generate captions. Please try again later.");
@@ -129,8 +192,52 @@ function CreateNew() {
     }
   };
 
-  // Generating the images for the video:
-  const generateImage = () => {};
+  // Uploading images to firebase:
+  const uploadToFirebase = async (imageList) => {
+    setLoadingState(true);
+    try {
+      const uploadPromises = imageList.map(async (image) => {
+        const base64Image =
+          "data:image/png;base64," + (await convertImage(image));
+        const fileName = "ai-video-file/" + Date.now() + ".png";
+        const storageRef = ref(storage, fileName);
+
+        await uploadString(storageRef, base64Image, "data_url");
+
+        const downloadURL = await getDownloadURL(storageRef);
+        console.log(`Download URL for ${image}: ${downloadURL}`);
+      });
+
+      await Promise.all(uploadPromises);
+      console.log("All images uploaded successfully");
+
+      setVideoData((prev) => ({
+        ...prev,
+        imageList: imageList,
+      }));
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
+
+    setLoadingState(false);
+  };
+
+  const convertImage = async (image) => {
+    try {
+      const resp = await axios.get(image, { responseType: "arraybuffer" });
+      const base64Image = Buffer.from(resp.data).toString("base64");
+      return base64Image;
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
+  useEffect(() => {
+    console.log(videoData);
+    if (Object.keys(videoData).length == 4) {
+      saveVideoData(videoData);
+    }
+  }, [videoData]);
 
   // Saving the video data into the database:
   const saveVideoData = async (videoData) => {
@@ -163,8 +270,7 @@ function CreateNew() {
       <div className="mt-5 shadow-md p-10">
         {/* Enter URL */}
         <UrlBox
-          onUser
-          Select={(data) => setFormData((prev) => ({ ...prev, ...data }))}
+          onUserSelect={(data) => setFormData((prev) => ({ ...prev, ...data }))}
         />
 
         {/* Product Name */}
@@ -182,31 +288,21 @@ function CreateNew() {
         />
 
         {/* Upload Media */}
-        <MediaBox
-          images={formData.images} // Pass image URLs for display
-          setImages={(newImages) => onHandleInputChange("images", newImages)}
-          imageList={imageList} // Pass file objects
-          setImageList={setImageList} // Pass the setter function for imageList
-          handleImageUpload={handleImageUpload} // Pass the image upload handler
-          handleImageDelete={handleImageDelete} // Pass the delete handler
-        />
+        <AddMedia onMediaChange={handleMediaChange} />
 
         {/* Select Topic */}
         <SelectTopic
-          onUser
-          Select={(topic) => onHandleInputChange("topic", topic)}
+          onUserSelect={(topic) => onHandleInputChange("topic", topic)}
         />
 
-        {/* Select Style */}
+        {/* Select Style
         <SelectStyle
-          onUser
-          Select={(style) => onHandleInputChange("imageStyle", style)}
-        />
+          onUserSelect={(style) => onHandleInputChange("imageStyle", style)}
+        /> */}
 
         {/* Duration */}
         <SelectDuration
-          onUser
-          Select={(duration) => onHandleInputChange("duration", duration)}
+          onUserSelect={(duration) => onHandleInputChange("duration", duration)}
         />
 
         {/* Create Button */}
