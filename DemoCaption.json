@@ -1,0 +1,793 @@
+[
+  {
+    "text": "Introducing",
+    "start": 360,
+    "end": 728,
+    "confidence": 0.7764,
+    "speaker": null
+  },
+  {
+    "text": "the",
+    "start": 728,
+    "end": 880,
+    "confidence": 0.99959,
+    "speaker": null
+  },
+  {
+    "text": "Realme",
+    "start": 880,
+    "end": 1352,
+    "confidence": 0.99592,
+    "speaker": null
+  },
+  {
+    "text": "GT",
+    "start": 1352,
+    "end": 1768,
+    "confidence": 0.67851,
+    "speaker": null
+  },
+  {
+    "text": "7",
+    "start": 1833,
+    "end": 2209,
+    "confidence": 0.99922,
+    "speaker": null
+  },
+  {
+    "text": "Pro",
+    "start": 2297,
+    "end": 2761,
+    "confidence": 0.98172,
+    "speaker": null
+  },
+  {
+    "text": "Power",
+    "start": 2873,
+    "end": 3217,
+    "confidence": 0.60683,
+    "speaker": null
+  },
+  {
+    "text": "Redefined",
+    "start": 3281,
+    "end": 4169,
+    "confidence": 0.83575,
+    "speaker": null
+  },
+  {
+    "text": "experience",
+    "start": 4337,
+    "end": 4881,
+    "confidence": 0.9985,
+    "speaker": null
+  },
+  {
+    "text": "blazing",
+    "start": 4993,
+    "end": 5513,
+    "confidence": 0.96247,
+    "speaker": null
+  },
+  {
+    "text": "fast",
+    "start": 5569,
+    "end": 5833,
+    "confidence": 0.99966,
+    "speaker": null
+  },
+  {
+    "text": "speed",
+    "start": 5889,
+    "end": 6169,
+    "confidence": 0.99763,
+    "speaker": null
+  },
+  {
+    "text": "with",
+    "start": 6217,
+    "end": 6401,
+    "confidence": 0.99988,
+    "speaker": null
+  },
+  {
+    "text": "India's",
+    "start": 6433,
+    "end": 6881,
+    "confidence": 0.99783,
+    "speaker": null
+  },
+  {
+    "text": "first",
+    "start": 6913,
+    "end": 7153,
+    "confidence": 0.99992,
+    "speaker": null
+  },
+  {
+    "text": "Snapdragon",
+    "start": 7209,
+    "end": 7761,
+    "confidence": 0.61117,
+    "speaker": null
+  },
+  {
+    "text": "8",
+    "start": 7793,
+    "end": 8009,
+    "confidence": 0.91218,
+    "speaker": null
+  },
+  {
+    "text": "Elite",
+    "start": 8057,
+    "end": 8441,
+    "confidence": 0.94376,
+    "speaker": null
+  },
+  {
+    "text": "processor.",
+    "start": 8513,
+    "end": 9129,
+    "confidence": 0.67707,
+    "speaker": null
+  },
+  {
+    "text": "A",
+    "start": 9217,
+    "end": 9441,
+    "confidence": 0.99309,
+    "speaker": null
+  },
+  {
+    "text": "3M",
+    "start": 9473,
+    "end": 9817,
+    "confidence": 0.98317,
+    "speaker": null
+  },
+  {
+    "text": "and",
+    "start": 9841,
+    "end": 10001,
+    "confidence": 0.45471,
+    "speaker": null
+  },
+  {
+    "text": "2",
+    "start": 10033,
+    "end": 10393,
+    "confidence": 0.41241,
+    "speaker": null
+  },
+  {
+    "text": "score",
+    "start": 10489,
+    "end": 10881,
+    "confidence": 0.87623,
+    "speaker": null
+  },
+  {
+    "text": "speaks",
+    "start": 10953,
+    "end": 11217,
+    "confidence": 0.53019,
+    "speaker": null
+  },
+  {
+    "text": "for",
+    "start": 11241,
+    "end": 11401,
+    "confidence": 0.99978,
+    "speaker": null
+  },
+  {
+    "text": "itself.",
+    "start": 11433,
+    "end": 12125,
+    "confidence": 0.99958,
+    "speaker": null
+  },
+  {
+    "text": "Immerse",
+    "start": 12505,
+    "end": 13025,
+    "confidence": 0.92376,
+    "speaker": null
+  },
+  {
+    "text": "yourself",
+    "start": 13065,
+    "end": 13457,
+    "confidence": 0.99982,
+    "speaker": null
+  },
+  {
+    "text": "in",
+    "start": 13521,
+    "end": 13721,
+    "confidence": 0.99974,
+    "speaker": null
+  },
+  {
+    "text": "vibrant",
+    "start": 13753,
+    "end": 14153,
+    "confidence": 0.99794,
+    "speaker": null
+  },
+  {
+    "text": "visuals",
+    "start": 14209,
+    "end": 14665,
+    "confidence": 0.99981,
+    "speaker": null
+  },
+  {
+    "text": "on",
+    "start": 14705,
+    "end": 14857,
+    "confidence": 0.99976,
+    "speaker": null
+  },
+  {
+    "text": "the",
+    "start": 14881,
+    "end": 15017,
+    "confidence": 0.99964,
+    "speaker": null
+  },
+  {
+    "text": "stunning",
+    "start": 15041,
+    "end": 15329,
+    "confidence": 0.56196,
+    "speaker": null
+  },
+  {
+    "text": "real",
+    "start": 15377,
+    "end": 15561,
+    "confidence": 0.59248,
+    "speaker": null
+  },
+  {
+    "text": "world",
+    "start": 15593,
+    "end": 15809,
+    "confidence": 0.99464,
+    "speaker": null
+  },
+  {
+    "text": "eco2",
+    "start": 15857,
+    "end": 16505,
+    "confidence": 0.76143,
+    "speaker": null
+  },
+  {
+    "text": "OLED",
+    "start": 16585,
+    "end": 17281,
+    "confidence": 0.4647,
+    "speaker": null
+  },
+  {
+    "text": "display.",
+    "start": 17433,
+    "end": 18321,
+    "confidence": 0.83526,
+    "speaker": null
+  },
+  {
+    "text": "Its",
+    "start": 18513,
+    "end": 18841,
+    "confidence": 0.9943,
+    "speaker": null
+  },
+  {
+    "text": "quad",
+    "start": 18873,
+    "end": 19137,
+    "confidence": 0.62224,
+    "speaker": null
+  },
+  {
+    "text": "curved",
+    "start": 19201,
+    "end": 19577,
+    "confidence": 0.99978,
+    "speaker": null
+  },
+  {
+    "text": "design",
+    "start": 19641,
+    "end": 20009,
+    "confidence": 0.99997,
+    "speaker": null
+  },
+  {
+    "text": "feels",
+    "start": 20097,
+    "end": 20465,
+    "confidence": 0.99992,
+    "speaker": null
+  },
+  {
+    "text": "amazing",
+    "start": 20505,
+    "end": 20865,
+    "confidence": 0.70581,
+    "speaker": null
+  },
+  {
+    "text": "in",
+    "start": 20905,
+    "end": 21033,
+    "confidence": 0.99985,
+    "speaker": null
+  },
+  {
+    "text": "your",
+    "start": 21049,
+    "end": 21249,
+    "confidence": 0.99957,
+    "speaker": null
+  },
+  {
+    "text": "hand,",
+    "start": 21297,
+    "end": 21649,
+    "confidence": 0.99993,
+    "speaker": null
+  },
+  {
+    "text": "while",
+    "start": 21737,
+    "end": 22033,
+    "confidence": 0.99976,
+    "speaker": null
+  },
+  {
+    "text": "natural",
+    "start": 22089,
+    "end": 22449,
+    "confidence": 0.56011,
+    "speaker": null
+  },
+  {
+    "text": "eye",
+    "start": 22497,
+    "end": 22753,
+    "confidence": 0.75346,
+    "speaker": null
+  },
+  {
+    "text": "protection",
+    "start": 22809,
+    "end": 23185,
+    "confidence": 0.59269,
+    "speaker": null
+  },
+  {
+    "text": "keeps",
+    "start": 23265,
+    "end": 23537,
+    "confidence": 0.9999,
+    "speaker": null
+  },
+  {
+    "text": "you",
+    "start": 23561,
+    "end": 23697,
+    "confidence": 0.99989,
+    "speaker": null
+  },
+  {
+    "text": "comfortable.",
+    "start": 23721,
+    "end": 24565,
+    "confidence": 0.84702,
+    "speaker": null
+  },
+  {
+    "text": "Capture",
+    "start": 24945,
+    "end": 25409,
+    "confidence": 0.96665,
+    "speaker": null
+  },
+  {
+    "text": "breathtaking",
+    "start": 25457,
+    "end": 26041,
+    "confidence": 0.31432,
+    "speaker": null
+  },
+  {
+    "text": "photos",
+    "start": 26113,
+    "end": 26505,
+    "confidence": 0.99984,
+    "speaker": null
+  },
+  {
+    "text": "and",
+    "start": 26545,
+    "end": 26745,
+    "confidence": 0.99937,
+    "speaker": null
+  },
+  {
+    "text": "videos",
+    "start": 26785,
+    "end": 27329,
+    "confidence": 0.9988,
+    "speaker": null
+  },
+  {
+    "text": "underwater",
+    "start": 27417,
+    "end": 27913,
+    "confidence": 0.83544,
+    "speaker": null
+  },
+  {
+    "text": "or",
+    "start": 27969,
+    "end": 28185,
+    "confidence": 0.99751,
+    "speaker": null
+  },
+  {
+    "text": "above",
+    "start": 28225,
+    "end": 28585,
+    "confidence": 0.70578,
+    "speaker": null
+  },
+  {
+    "text": "with",
+    "start": 28665,
+    "end": 28881,
+    "confidence": 0.99951,
+    "speaker": null
+  },
+  {
+    "text": "the",
+    "start": 28913,
+    "end": 29057,
+    "confidence": 0.99848,
+    "speaker": null
+  },
+  {
+    "text": "groundbreaking",
+    "start": 29081,
+    "end": 29657,
+    "confidence": 0.75719,
+    "speaker": null
+  },
+  {
+    "text": "3x",
+    "start": 29721,
+    "end": 30233,
+    "confidence": 0.76423,
+    "speaker": null
+  },
+  {
+    "text": "Periscope",
+    "start": 30289,
+    "end": 30849,
+    "confidence": 0.85084,
+    "speaker": null
+  },
+  {
+    "text": "flagship",
+    "start": 30897,
+    "end": 31393,
+    "confidence": 0.77498,
+    "speaker": null
+  },
+  {
+    "text": "camera.",
+    "start": 31449,
+    "end": 32085,
+    "confidence": 0.98883,
+    "speaker": null
+  },
+  {
+    "text": "Every",
+    "start": 32485,
+    "end": 32893,
+    "confidence": 0.95459,
+    "speaker": null
+  },
+  {
+    "text": "detail",
+    "start": 32949,
+    "end": 33405,
+    "confidence": 0.95768,
+    "speaker": null
+  },
+  {
+    "text": "vibrantly",
+    "start": 33525,
+    "end": 34149,
+    "confidence": 0.99034,
+    "speaker": null
+  },
+  {
+    "text": "alive.",
+    "start": 34197,
+    "end": 34797,
+    "confidence": 0.68219,
+    "speaker": null
+  },
+  {
+    "text": "Intense",
+    "start": 34941,
+    "end": 35437,
+    "confidence": 0.99806,
+    "speaker": null
+  },
+  {
+    "text": "gaming",
+    "start": 35501,
+    "end": 36037,
+    "confidence": 0.59271,
+    "speaker": null
+  },
+  {
+    "text": "demanding",
+    "start": 36141,
+    "end": 36653,
+    "confidence": 0.99943,
+    "speaker": null
+  },
+  {
+    "text": "apps",
+    "start": 36709,
+    "end": 37149,
+    "confidence": 0.99764,
+    "speaker": null
+  },
+  {
+    "text": "the",
+    "start": 37237,
+    "end": 37461,
+    "confidence": 0.99917,
+    "speaker": null
+  },
+  {
+    "text": "advanced",
+    "start": 37493,
+    "end": 37901,
+    "confidence": 0.99981,
+    "speaker": null
+  },
+  {
+    "text": "cooling",
+    "start": 37933,
+    "end": 38333,
+    "confidence": 0.56195,
+    "speaker": null
+  },
+  {
+    "text": "system",
+    "start": 38389,
+    "end": 38725,
+    "confidence": 0.99997,
+    "speaker": null
+  },
+  {
+    "text": "keeps",
+    "start": 38805,
+    "end": 39013,
+    "confidence": 0.99944,
+    "speaker": null
+  },
+  {
+    "text": "the",
+    "start": 39029,
+    "end": 39157,
+    "confidence": 0.99981,
+    "speaker": null
+  },
+  {
+    "text": "Realme",
+    "start": 39181,
+    "end": 39645,
+    "confidence": 0.99082,
+    "speaker": null
+  },
+  {
+    "text": "GT7",
+    "start": 39725,
+    "end": 40541,
+    "confidence": 0.99838,
+    "speaker": null
+  },
+  {
+    "text": "Pro",
+    "start": 40613,
+    "end": 40869,
+    "confidence": 0.99994,
+    "speaker": null
+  },
+  {
+    "text": "cool",
+    "start": 40917,
+    "end": 41205,
+    "confidence": 0.99967,
+    "speaker": null
+  },
+  {
+    "text": "and",
+    "start": 41245,
+    "end": 41445,
+    "confidence": 0.99939,
+    "speaker": null
+  },
+  {
+    "text": "performing",
+    "start": 41485,
+    "end": 41885,
+    "confidence": 0.99989,
+    "speaker": null
+  },
+  {
+    "text": "at",
+    "start": 41925,
+    "end": 42077,
+    "confidence": 0.99993,
+    "speaker": null
+  },
+  {
+    "text": "its",
+    "start": 42101,
+    "end": 42285,
+    "confidence": 0.99963,
+    "speaker": null
+  },
+  {
+    "text": "peak,",
+    "start": 42325,
+    "end": 42685,
+    "confidence": 0.98577,
+    "speaker": null
+  },
+  {
+    "text": "even",
+    "start": 42765,
+    "end": 43029,
+    "confidence": 0.9997,
+    "speaker": null
+  },
+  {
+    "text": "under",
+    "start": 43077,
+    "end": 43309,
+    "confidence": 1,
+    "speaker": null
+  },
+  {
+    "text": "pressure.",
+    "start": 43357,
+    "end": 44077,
+    "confidence": 0.59268,
+    "speaker": null
+  },
+  {
+    "text": "The",
+    "start": 44261,
+    "end": 44557,
+    "confidence": 0.97904,
+    "speaker": null
+  },
+  {
+    "text": "Realme",
+    "start": 44581,
+    "end": 45045,
+    "confidence": 0.93911,
+    "speaker": null
+  },
+  {
+    "text": "GT",
+    "start": 45125,
+    "end": 45581,
+    "confidence": 0.97595,
+    "speaker": null
+  },
+  {
+    "text": "7",
+    "start": 45653,
+    "end": 45981,
+    "confidence": 0.99966,
+    "speaker": null
+  },
+  {
+    "text": "Pro",
+    "start": 46053,
+    "end": 46573,
+    "confidence": 0.93941,
+    "speaker": null
+  },
+  {
+    "text": "Unleash",
+    "start": 46709,
+    "end": 47149,
+    "confidence": 0.95486,
+    "speaker": null
+  },
+  {
+    "text": "your",
+    "start": 47197,
+    "end": 47429,
+    "confidence": 0.80244,
+    "speaker": null
+  },
+  {
+    "text": "potential.",
+    "start": 47477,
+    "end": 48085,
+    "confidence": 0.99632,
+    "speaker": null
+  },
+  {
+    "text": "Available",
+    "start": 48245,
+    "end": 48709,
+    "confidence": 0.99705,
+    "speaker": null
+  },
+  {
+    "text": "now",
+    "start": 48797,
+    "end": 49069,
+    "confidence": 0.59277,
+    "speaker": null
+  },
+  {
+    "text": "on",
+    "start": 49117,
+    "end": 49301,
+    "confidence": 0.99974,
+    "speaker": null
+  },
+  {
+    "text": "Amazon.in",
+    "start": 49333,
+    "end": 50621,
+    "confidence": 0.81698,
+    "speaker": null
+  },
+  {
+    "text": "tap",
+    "start": 50813,
+    "end": 51141,
+    "confidence": 0.81434,
+    "speaker": null
+  },
+  {
+    "text": "the",
+    "start": 51173,
+    "end": 51341,
+    "confidence": 0.99936,
+    "speaker": null
+  },
+  {
+    "text": "link",
+    "start": 51373,
+    "end": 51637,
+    "confidence": 0.99942,
+    "speaker": null
+  },
+  {
+    "text": "below.",
+    "start": 51701,
+    "end": 51805,
+    "confidence": 0.99967,
+    "speaker": null
+  }
+]

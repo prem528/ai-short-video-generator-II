@@ -9,7 +9,6 @@ function UrlBox({ onUserSelect }) {
   const [data, setData] = useState({
     title: "",
     description: "",
-    images: [],
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -38,7 +37,6 @@ function UrlBox({ onUserSelect }) {
         const fetchedData = {
           title: result.title || "No title available",
           description: result.description || "No description available",
-          images: result.images || [],
         };
         setData(fetchedData);
         onUserSelect(fetchedData);

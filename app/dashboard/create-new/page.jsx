@@ -2,7 +2,6 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import SelectTopic from "./_components/SelectTopic";
-import SelectStyle from "./_components/SelectStyle";
 import SelectDuration from "./_components/SelectDuration";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -10,17 +9,11 @@ import CustomLoading from "./_components/CustomLoading";
 import UrlBox from "./_components/UrlBox";
 import ProductName from "./_components/ProductName";
 import ProductDescription from "./_components/ProductDescription";
-import MediaBox from "./_components/MediaBox";
 import { VideoDataContext } from "@/app/_context/VideoDataContext";
 import PlayerDialog from "../_components/PlayerDialog";
 import { v4 as uuidv4 } from "uuid";
 import AddMedia from "./_components/AddMedia";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  uploadString,
-} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../configs/FirebaseConfig.js";
 
 function CreateNew() {
@@ -60,11 +53,17 @@ function CreateNew() {
     setImageList(newImageList);
   };
 
+  // testing sound data:
+  const sound =
+    "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2F3a339263-760a-4130-8538-8b808f4a25df.mp3?alt=media&token=b036015e-c4e0-4216-914b-ae43144e643e";
+
   // Handle the create create video button:
   const onCreateClickHandler = () => {
-    getVideoScript();
-    generateAudioFile(videoScript);
-    uploadToFirebase(imageList);
+    console.log("This is the formData:", formData);
+    console.log("This is the imageList:", imageList);
+
+    // getVideoScript();
+    uploadImagesToFirebase(imageList);
   };
 
   // Get the video script based on the form data:
@@ -91,15 +90,20 @@ function CreateNew() {
 `;
 
     try {
-      const response = await axios.post("/api/get-video-script", {
-        prompt: prompt.trim(),
+      const resp = await axios.post("/api/get-video-script", {
+        prompt: prompt,
       });
 
       setVideoData((prev) => ({
         ...prev,
-        videoScript: response.data.result,
+        videoScript: resp.data.result,
       }));
-      setVideoScript(response.data.result);
+
+      setVideoScript(resp.data.result);
+
+      console.log("This is the videoScript:", resp.data.result);
+
+      await generateAudioFile(resp.data.result);
     } catch (error) {
       console.error("Error fetching video script:", error);
     } finally {
@@ -107,61 +111,33 @@ function CreateNew() {
     }
   };
 
-  /**
-   * Generates speech from the provided video script.
-   *
-   * This function takes in a `videoScript` (a string containing the text) and uses a text-to-speech API or a custom function to generate speech audio.
-   *
-   * @param {string} videoScript - The script of the video, containing the text to be converted into speech.
-   *
-   * @returns {Promise} - A promise that resolves when the speech is successfully generated. The promise can contain a URL or data representing the audio file.
-   */
-
-  const generateAudioFile = async (videoScript) => {
+  // Generating the audiofile:
+  const generateAudioFile = async (videoScriptData) => {
     setLoadingState(true);
-
-    // Validate videoScript
-    if (!Array.isArray(videoScript) || videoScript.length === 0) {
-      console.error("Invalid videoScript:", videoScript);
-      setLoadingState(false);
-      return;
-    }
-
-    let script = "";
+    let script = videoScriptData.map((item) => item.contentText).join(" ");
     const id = uuidv4();
 
-    // Concatenate contentText for all items
-    videoScript.forEach((item, index) => {
-      if (item.contentText) {
-        script += item.contentText + " ";
-      } else {
-        console.warn(`Missing contentText in item at index ${index}:`, item);
-      }
-    });
+    console.log(script);
 
     try {
-      console.log("Generated script for audio:", script); // Debugging step
-
       const resp = await axios.post("/api/generate-audio", {
-        text: script.trim(),
+        text: script,
         id: id,
       });
+      console.log(resp.data.result);
 
-      if (resp?.data?.result) {
-        const audioUrl = resp.data.result;
+      const audioUrl = resp.data.result;
 
-        // Update video data
-        setVideoData((prev) => ({
-          ...prev,
-          audioFileUrl: audioUrl,
-        }));
-        setAudioFileUrl(audioUrl);
+      setVideoData((prev) => ({
+        ...prev,
+        audioFileUrl: audioUrl,
+      }));
 
-        // Generate captions if audio URL is present
-        await generateAudioCaptions(audioUrl, videoScript);
-      } else {
-        console.error("No audio URL returned:", resp?.data);
-      }
+      setAudioFileUrl(audioUrl);
+
+      console.log("This is the audioFileUrl:", audioUrl);
+
+      await generateAudioCaptions(audioUrl);
     } catch (error) {
       console.error("Error generating audio file:", error);
     } finally {
@@ -169,71 +145,67 @@ function CreateNew() {
     }
   };
 
-  /**
-   * Generating audio captions for the video:
-   * @param {*} fileUrl
-   */
-  const generateAudioCaptions = async (fileUrl, videoScript) => {
+  //  Generating audio captions for the video:
+  const generateAudioCaptions = async (fileUrl) => {
+    setLoadingState(true);
+
     try {
-      setLoadingState(true);
-      const response = await axios.post("/api/generate-caption", {
+      const resp = await axios.post("/api/generate-caption", {
         audioFileUrl: fileUrl,
       });
+
+      const caption = resp.data.result;
+
       setVideoData((prev) => ({
         ...prev,
-        captions: response.data.result,
+        captions: resp.data.result,
       }));
-      setCaptions(response?.data?.result);
+
+      setCaptions(caption);
+
+      console.log("This is the captions:", caption);
     } catch (error) {
       console.error("Error generating captions:", error);
-      alert("Failed to generate captions. Please try again later.");
     } finally {
       setLoadingState(false);
     }
   };
 
-  // Uploading images to firebase:
-  const uploadToFirebase = async (imageList) => {
+  // Function to upload images to firebase:
+  const uploadImagesToFirebase = async (imageList) => {
     setLoadingState(true);
-    try {
-      const uploadPromises = imageList.map(async (image) => {
-        const base64Image =
-          "data:image/png;base64," + (await convertImage(image));
-        const fileName = "ai-video-file/" + Date.now() + ".png";
-        const storageRef = ref(storage, fileName);
 
-        await uploadString(storageRef, base64Image, "data_url");
-
-        const downloadURL = await getDownloadURL(storageRef);
-        console.log(`Download URL for ${image}: ${downloadURL}`);
-      });
-
-      await Promise.all(uploadPromises);
-      console.log("All images uploaded successfully");
-
-      setVideoData((prev) => ({
-        ...prev,
-        imageList: imageList,
-      }));
-    } catch (error) {
-      console.error("Error uploading images:", error);
+    if (!Array.isArray(imageList) || imageList.length === 0) {
+      alert(
+        "The image list is empty or invalid. Please provide a valid list of images."
+      );
+      setLoadingState(false);
     }
 
-    setLoadingState(false);
-  };
+    for (const image of imageList) {
+      // Create a unique path for each image
+      const imageRef = ref(
+        storage,
+        `ai-video-file/${Date.now()}_${image.name}`
+      );
 
-  const convertImage = async (image) => {
-    try {
-      const resp = await axios.get(image, { responseType: "arraybuffer" });
-      const base64Image = Buffer.from(resp.data).toString("base64");
-      return base64Image;
-    } catch (e) {
-      console.log("error", e);
+      try {
+        // Upload the image to Firebase Storage
+        const snapshot = await uploadBytes(imageRef, image);
+
+        // Get the downloadable URL
+        const downloadUrl = await getDownloadURL(snapshot.ref);
+
+        console.log(`Image uploaded successfully: ${downloadUrl}`);
+      } catch (error) {
+        console.error(`Error uploading image ${image.name}:`, error);
+      } finally {
+        setLoadingState(false);
+      }
     }
   };
 
   useEffect(() => {
-    console.log(videoData);
     if (Object.keys(videoData).length == 4) {
       saveVideoData(videoData);
     }
@@ -291,9 +263,7 @@ function CreateNew() {
         <AddMedia onMediaChange={handleMediaChange} />
 
         {/* Select Topic */}
-        <SelectTopic
-          onUserSelect={(topic) => onHandleInputChange("topic", topic)}
-        />
+        <SelectTopic onUserSelect={onHandleInputChange} />
 
         {/* Select Style
         <SelectStyle
@@ -301,9 +271,7 @@ function CreateNew() {
         /> */}
 
         {/* Duration */}
-        <SelectDuration
-          onUserSelect={(duration) => onHandleInputChange("duration", duration)}
-        />
+        <SelectDuration onUserSelect={onHandleInputChange} />
 
         {/* Create Button */}
         <Button className="mt-5 w-full" onClick={onCreateClickHandler}>
