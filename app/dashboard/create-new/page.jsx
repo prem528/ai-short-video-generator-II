@@ -15,6 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 import AddMedia from "./_components/AddMedia";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../configs/FirebaseConfig.js";
+import { useUser } from "@clerk/nextjs";
+import { db } from "@/configs/db";
 
 function CreateNew() {
   // storing form data:
@@ -25,6 +27,8 @@ function CreateNew() {
 
   // storing images from user:
   const [imageList, setImageList] = useState([]);
+
+  const [imageUrlList, setImageUrlList] = useState([]);
 
   const [loadingState, setLoadingState] = useState(false);
 
@@ -39,6 +43,8 @@ function CreateNew() {
   const [playVideo, setPlayVideo] = useState(false);
 
   const [videoId, setVideoId] = useState();
+
+  const { user } = useUser();
 
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
@@ -58,12 +64,14 @@ function CreateNew() {
     "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2F3a339263-760a-4130-8538-8b808f4a25df.mp3?alt=media&token=b036015e-c4e0-4216-914b-ae43144e643e";
 
   // Handle the create create video button:
-  const onCreateClickHandler = () => {
-    console.log("This is the formData:", formData);
-    console.log("This is the imageList:", imageList);
-
-    // getVideoScript();
-    uploadImagesToFirebase(imageList);
+  const onCreateClickHandler = async () => {
+    try {
+      uploadImagesToFirebase(imageList);
+      // Wait for getVideoScript to complete
+      await getVideoScript();
+    } catch (error) {
+      console.error("Error in onCreateClickHandler:", error);
+    }
   };
 
   // Get the video script based on the form data:
@@ -103,7 +111,7 @@ function CreateNew() {
 
       console.log("This is the videoScript:", resp.data.result);
 
-      await generateAudioFile(resp.data.result);
+      resp.data.result && (await generateAudioFile(resp.data.result));
     } catch (error) {
       console.error("Error fetching video script:", error);
     } finally {
@@ -117,27 +125,30 @@ function CreateNew() {
     let script = videoScriptData.map((item) => item.contentText).join(" ");
     const id = uuidv4();
 
-    console.log(script);
+    console.log("Generated script:", script);
 
     try {
       const resp = await axios.post("/api/generate-audio", {
         text: script,
         id: id,
       });
-      console.log(resp.data.result);
 
-      const audioUrl = resp.data.result;
+      const audioFileUrl = resp.data.Result;
 
-      setVideoData((prev) => ({
-        ...prev,
-        audioFileUrl: audioUrl,
-      }));
+      if (audioFileUrl) {
+        console.log("Audio download URL:", audioFileUrl);
 
-      setAudioFileUrl(audioUrl);
+        setVideoData((prev) => ({
+          ...prev,
+          audioFileUrl: audioFileUrl,
+        }));
 
-      console.log("This is the audioFileUrl:", audioUrl);
+        setAudioFileUrl(audioFileUrl);
 
-      await generateAudioCaptions(audioUrl);
+        await generateAudioCaptions(audioFileUrl);
+      } else {
+        console.warn("No audioFileUrl returned from the API.");
+      }
     } catch (error) {
       console.error("Error generating audio file:", error);
     } finally {
@@ -154,16 +165,14 @@ function CreateNew() {
         audioFileUrl: fileUrl,
       });
 
-      const caption = resp.data.result;
-
       setVideoData((prev) => ({
         ...prev,
         captions: resp.data.result,
       }));
 
-      setCaptions(caption);
+      setCaptions(resp.data.result);
 
-      console.log("This is the captions:", caption);
+      console.log("This is the captions:", resp.data.result);
     } catch (error) {
       console.error("Error generating captions:", error);
     } finally {
@@ -174,6 +183,8 @@ function CreateNew() {
   // Function to upload images to firebase:
   const uploadImagesToFirebase = async (imageList) => {
     setLoadingState(true);
+
+    let images = [];
 
     if (!Array.isArray(imageList) || imageList.length === 0) {
       alert(
@@ -196,42 +207,53 @@ function CreateNew() {
         // Get the downloadable URL
         const downloadUrl = await getDownloadURL(snapshot.ref);
 
-        console.log(`Image uploaded successfully: ${downloadUrl}`);
+        images.push(downloadUrl);
       } catch (error) {
         console.error(`Error uploading image ${image.name}:`, error);
       } finally {
+        setImageUrlList(images);
+        setVideoData((prev) => ({
+          ...prev,
+          imageList: images,
+        }));
+
         setLoadingState(false);
       }
     }
   };
 
+  // Displays whenever videoData gets updated:
   useEffect(() => {
+    console.log("Current video data:", videoData);
+
+    // Ensure all required fields are present before saving
     if (Object.keys(videoData).length == 4) {
       saveVideoData(videoData);
     }
   }, [videoData]);
 
-  // Saving the video data into the database:
+  // Save video data to the database
   const saveVideoData = async (videoData) => {
     setLoadingState(true);
 
-    const result = await db
-      .insert(videoData)
-      .values({
-        script: videoData?.videoScript,
-        audioFileUrl: videoData?.audioFileUrl,
-        captions: videoData?.captions,
-        imageList: videoData?.imageList,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
-      })
-      .returning({ id: videoData?.id });
+    try {
+      const result = await db
+        .insert(videoData)
+        .values({
+          script: videoData?.videoScript,
+          audioFileUrl: videoData?.audioFileUrl,
+          captions: videoData?.captions,
+          imageList: videoData?.imageList,
+          createdBy: user?.primaryEmailAddress?.emailAddress,
+        })
+        .returning({ id: true });
 
-    setVideoId(result[0].id);
-    setPlayVideo(true);
-
-    console.log(result);
-
-    setLoadingState(false);
+      console.log("Inserted video data:", result);
+    } catch (error) {
+      console.error("Error saving video data:", error);
+    } finally {
+      setLoadingState(false);
+    }
   };
 
   return (
