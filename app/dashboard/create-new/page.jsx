@@ -261,7 +261,7 @@ function CreateNew() {
       <h2 className="font-bold text-4xl text-primary text-center">
         Create New
       </h2>
-      <div className='mt-10 p-10 relative animate-shadow-pulse bg-white'>
+      <div className="mt-10 p-10 relative animate-shadow-pulse bg-white">
         {/* Enter URL */}
         <UrlBox
           onUserSelect={(data) => setFormData((prev) => ({ ...prev, ...data }))}
@@ -296,9 +296,11 @@ function CreateNew() {
         <SelectDuration onUserSelect={onHandleInputChange} />
 
         {/* Create Button */}
-        <Button className="mt-5 w-full" onClick={onCreateClickHandler}>
-          Create Video
-        </Button>
+        <div className="flex justify-center mt-5">
+          <Button className="flex items-center rounded-full" onClick={onCreateClickHandler}>
+            Create Video
+          </Button>
+        </div>
       </div>
 
       {/* Loading Screen */}

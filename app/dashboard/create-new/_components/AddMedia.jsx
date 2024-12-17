@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const AddMedia = ({ onMediaChange }) => {
@@ -20,7 +21,7 @@ const AddMedia = ({ onMediaChange }) => {
 
   return (
     <div className="mt-5">
-      <h2 className="font-bold text-2xl text-primary">Product Name</h2>
+      <h2 className="font-bold text-2xl text-primary">Product Images</h2>
 
       {/* Image List with Dotted Rectangle */}
       <div
@@ -40,12 +41,12 @@ const AddMedia = ({ onMediaChange }) => {
                   alt="Selected"
                   className="w-20 h-20 object-cover rounded-md"
                 />
-                <button
-                  className="absolute top-0 right-0 text-red-500 bg-white rounded-full p-1"
+                <Button
+                  className="absolute top-0 right-0 text-red-500 bg-white rounded-full p-1 hover:bg-red-500 hover:text-white"
                   onClick={() => removeImage(image)}
                 >
                   &times;
-                </button>
+                </Button>
               </div>
             ))}
           </div>
@@ -54,12 +55,14 @@ const AddMedia = ({ onMediaChange }) => {
 
       {/* Add Image Button */}
       <div className="flex justify-center mt-5">
-        <label
-          htmlFor="fileInput"
-          className="inline-flex justify-center items-center bg-primary text-white px-4 py-2 rounded-full cursor-pointer"
+        <Button
+          asChild
+          className="bg-primary text-white px-4 py-2 rounded-full"
         >
-          Click to add pictures
-        </label>
+          <label htmlFor="fileInput" className="cursor-pointer">
+            Click to add pictures
+          </label>
+        </Button>
         <input
           id="fileInput"
           type="file"
