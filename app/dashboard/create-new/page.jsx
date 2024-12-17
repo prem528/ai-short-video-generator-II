@@ -41,9 +41,9 @@ function CreateNew() {
 
   const { videoData, setVideoData } = useContext(VideoDataContext);
 
-  const [playVideo, setPlayVideo] = useState(false);
+  const [playVideo, setPlayVideo] = useState(true);
 
-  const [videoId, setVideoId] = useState();
+  const [videoId, setVideoId] = useState(1);
 
   const { user } = useUser();
 
@@ -266,6 +266,9 @@ function CreateNew() {
       const result = await query.returning({ id: VideoData?.id });
 
       console.log("Inserted video data:", result);
+
+      setVideoId(result[0].id);
+      setPlayVideo(true);
     } catch (error) {
       console.error("Error saving video data:", error);
     } finally {
