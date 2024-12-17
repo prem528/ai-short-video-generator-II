@@ -43,7 +43,7 @@ function CreateNew() {
 
   const [playVideo, setPlayVideo] = useState(false);
 
-  const [videoId, setVideoId] = useState();
+  const [videoId, setVideoId] = useState(1);
 
   const { user } = useUser();
 

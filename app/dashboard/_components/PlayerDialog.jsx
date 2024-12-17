@@ -1,65 +1,81 @@
 import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import RemotionVideo from "./RemotionVideo";
 import { Player } from "@remotion/player";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import RemotionVideo from "./RemotionVideo";
 import { Button } from "@/components/ui/button";
+import { db } from "@/configs/db";
 import { VideoData } from "@/configs/schema";
+import { eq } from "drizzle-orm";
+import { useRouter } from "next/navigation";
 
 function PlayerDialog({ playVideo, videoId }) {
   const [openDialog, setOpenDialog] = useState(false);
-  const [videoData, setVideoData] = useState();
-  const [durationInFrame, setDurationInFrame] = useState(100);
+  const [videoData, setVideoData] = useState(null);
+  const [durationInFrames, setDurationInFrames] = useState(100); // Default value
+  const router = useRouter();
 
   useEffect(() => {
-    setOpenDialog(playVideo)
-    videoId&&getVideoData();
-  }, [playVideo]);
+    if (playVideo && videoId) {
+      setOpenDialog(true); // Open dialog only when playVideo is true and videoId exists
+      getVideoData(); // Fetch video data
+    } else {
+      setOpenDialog(false); // Close dialog if playVideo is false
+    }
+  }, [playVideo, videoId]);
 
+  const getVideoData = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(VideoData)
+        .where(eq(VideoData.id, videoId));
 
-  const getVideoData = async() => {
-    const result = await db.select().from(VideoData).where(eq(VideoData.id, videoId));
-    console.log(result);
-    setVideoData(result[0])
-  }
+      if (result?.length) {
+        setVideoData(result[0]); // Set the fetched video data
+      } else {
+        console.error("No video data found for the given video ID.");
+      }
+    } catch (error) {
+      console.error("Error fetching video data:", error);
+    }
+  };
 
+  const handleDurationFrames = (frames) => {
+    setDurationInFrames(Math.round(frames)); // Round frames to ensure integer value
+  };
 
   return (
     <Dialog open={openDialog}>
       <DialogContent className="bg-white flex flex-col items-center">
-        <DialogHeader>
-          <DialogTitle className="text-3xl font-bold my-5">
-            Your video is ready!
-          </DialogTitle>
-          <DialogDescription>
-            <Player
-              component={RemotionVideo}
-              durationInFrames={Number(durationInFrame.toFixed(0))}
-              compositionWidth={300}
-              compositionHeight={450}
-              fps={30}
-              controls={true}
-              inputProps={{...VideoData,
-                setDurationInFrame: (frameValue) => setDurationInFrame(frameValue)
-              }}
-            />
-
-            <div className="flex gap-10 mt-10">
-                <Button variant='ghost'>
-                    Cancel
-                </Button>
-                <Button>
-                    Export
-                </Button>
-            </div>
-          </DialogDescription>
-        </DialogHeader>
+        <DialogTitle className="font-bold text-3xl my-5">
+          Your video is ready!
+        </DialogTitle>
+        {videoData && (
+          <Player
+            component={RemotionVideo}
+            durationInFrames={durationInFrames}
+            compositionWidth={300}
+            compositionHeight={450}
+            fps={30}
+            controls={true}
+            inputProps={{
+              ...videoData,
+              setDurationFrames: handleDurationFrames,
+            }}
+          />
+        )}
+        <div className="flex items-center justify-center gap-5 mt-5">
+          <Button>Export</Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              router.replace("/dashboard"); // Navigate to the dashboard
+              setOpenDialog(false); // Close the dialog
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

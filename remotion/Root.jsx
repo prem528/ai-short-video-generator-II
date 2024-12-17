@@ -10,8 +10,8 @@ function RemotionRoot() {
         component={RemotionVideo}
         durationInFrames={60}
         fps={30}
-        width={1280}
-        height={720}
+        width={720}
+        height={1280}
       />
     </>
   );
