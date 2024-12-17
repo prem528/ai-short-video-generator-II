@@ -6,26 +6,38 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/configs/db";
 import { VideoData } from "@/configs/schema";
 import { eq } from "drizzle-orm";
+import { useRouter } from "next/navigation";
 
 function PlayerDialog({ playVideo, videoId }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [videoData, setVideoData] = useState(null);
   const [durationInFrames, setDurationInFrames] = useState(100); // Default value
+  const router = useRouter();
 
   useEffect(() => {
-    setOpenDialog(playVideo);
-    if (videoId) {
-      getVideoData();
+    if (playVideo && videoId) {
+      setOpenDialog(true); // Open dialog only when playVideo is true and videoId exists
+      getVideoData(); // Fetch video data
+    } else {
+      setOpenDialog(false); // Close dialog if playVideo is false
     }
   }, [playVideo, videoId]);
 
   const getVideoData = async () => {
-    const result = await db
-      .select()
-      .from(VideoData)
-      .where(eq(VideoData.id, videoId));
-    console.log(result);
-    setVideoData(result[0]);
+    try {
+      const result = await db
+        .select()
+        .from(VideoData)
+        .where(eq(VideoData.id, videoId));
+
+      if (result?.length) {
+        setVideoData(result[0]); // Set the fetched video data
+      } else {
+        console.error("No video data found for the given video ID.");
+      }
+    } catch (error) {
+      console.error("Error fetching video data:", error);
+    }
   };
 
   const handleDurationFrames = (frames) => {
@@ -54,7 +66,15 @@ function PlayerDialog({ playVideo, videoId }) {
         )}
         <div className="flex items-center justify-center gap-5 mt-5">
           <Button>Export</Button>
-          <Button variant="ghost">Cancel</Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              router.replace("/dashboard"); // Navigate to the dashboard
+              setOpenDialog(false); // Close the dialog
+            }}
+          >
+            Cancel
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
