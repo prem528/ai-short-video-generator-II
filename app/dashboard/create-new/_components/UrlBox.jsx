@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 function UrlBox({ onUserSelect }) {
   const [url, setUrl] = useState("");
@@ -61,13 +62,11 @@ function UrlBox({ onUserSelect }) {
 
   return (
     <div>
-      <h2 className="font-bold text-2xl text-primary">
-        Enter the product link
-      </h2>
+      <Label className='text-gray-500 text-md'  htmlFor="url">Product URL</Label>
       <div className="flex w-full gap-1 mt-3">
         <Input
           type="url"
-          placeholder="URL"
+          placeholder="https://example.com/product"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />

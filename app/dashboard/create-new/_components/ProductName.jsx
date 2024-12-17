@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 
 function ProductName({ value, onValueChange }) {
@@ -18,7 +19,7 @@ function ProductName({ value, onValueChange }) {
 
   return (
     <div className="mt-5">
-      <h2 className="font-bold text-2xl text-primary">Product Name</h2>
+      <Label className='text-gray-500 text-md'  htmlFor="productName">Product Name</Label>
       <Input
         id="name"
         type="text"

@@ -1,13 +1,21 @@
-import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
+import { HeroSection } from "./pages/HeroSection";
+import { FeaturesSection } from "./pages/FeaturesSection";
+import { CTASection } from "./pages/CTASection";
+import Header from "./pages/Header";
+import Footer from "./pages/Footer";
+import HowItWork from "./pages/HowItWork";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to the home page</h1>
-      <Button>Click me!</Button>
-
-      <UserButton />
+    <div className="min-h-screen">
+      <div className=" ">
+      <Header/>
+      </div>
+      <HeroSection/>
+      <FeaturesSection/>
+      <CTASection/>
+      <HowItWork/>
+      <Footer/>
     </div>
   );
 }
