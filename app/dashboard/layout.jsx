@@ -10,15 +10,19 @@ function DashboardLayout({ children }) {
 
   return (
     <VideoDataContext.Provider value={{videoData, setVideoData}}>
-      <div>
-        <div className="hidden md:block h-screen bg-white fixed mt-[65px]">
+    <div className="min-h-screen">
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Header />
+      </div>
+      <div className="pt-[60px] flex">
+        <div className="hidden md:block fixed left-0 h-[calc(100vh-60px)] bg-gray-200 w-64">
           <SideNav />
         </div>
-        <div>
-          <Header />
-          <div className="md:ml-64">{children}</div>
+        <div className="flex-1 md:ml-64 p-5">
+          {children}
         </div>
       </div>
+    </div>
     </VideoDataContext.Provider>
   );
 }
