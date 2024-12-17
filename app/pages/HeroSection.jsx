@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export function HeroSection() {
   return (
-    <section className="relative animated-gradient py-32 h-screen">
+    <section className="relative animated-gradient h-screen">
       <div className="absolute inset-0 bg-black/20" /> {/* Overlay for better text readability */}
       <div className="container relative flex justify-center items-center h-full p-3">
         <div className="flex flex-col items-center text-center space-y-8">
