@@ -17,6 +17,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../configs/FirebaseConfig.js";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/configs/db";
+import { VideoData } from "@/configs/schema";
 
 function CreateNew() {
   // storing form data:
@@ -66,7 +67,6 @@ function CreateNew() {
   // Handle the create create video button:
   const onCreateClickHandler = async () => {
     try {
-      uploadImagesToFirebase(imageList);
       // Wait for getVideoScript to complete
       await getVideoScript();
     } catch (error) {
@@ -77,6 +77,8 @@ function CreateNew() {
   // Get the video script based on the form data:
   const getVideoScript = async () => {
     setLoadingState(true);
+
+    await uploadImagesToFirebase(imageList);
 
     const prompt = `
   Write a script for a video with a duration of "${formData.duration}" on the topic "${formData.topic}". 
@@ -224,29 +226,44 @@ function CreateNew() {
 
   // Displays whenever videoData gets updated:
   useEffect(() => {
+    if (!videoData || typeof videoData !== "object") {
+      console.error("Invalid videoData:", videoData);
+      return;
+    }
+
     console.log("Current video data:", videoData);
 
     // Ensure all required fields are present before saving
-    if (Object.keys(videoData).length == 4) {
+    if (Object.keys(videoData).length === 4) {
       saveVideoData(videoData);
     }
   }, [videoData]);
 
-  // Save video data to the database
   const saveVideoData = async (videoData) => {
+    if (!videoData || typeof videoData !== "object") {
+      console.error("Invalid videoData:", videoData);
+      return;
+    }
+
+    if (!user || !user.primaryEmailAddress?.emailAddress) {
+      console.error("Invalid user or user email:", user);
+      return;
+    }
+
     setLoadingState(true);
 
     try {
-      const result = await db
-        .insert(videoData)
-        .values({
-          script: videoData?.videoScript,
-          audioFileUrl: videoData?.audioFileUrl,
-          captions: videoData?.captions,
-          imageList: videoData?.imageList,
-          createdBy: user?.primaryEmailAddress?.emailAddress,
-        })
-        .returning({ id: true });
+      const query = db.insert(VideoData).values({
+        script: videoData?.videoScript,
+        audioFileUrl: videoData?.audioFileUrl,
+        captions: videoData?.captions,
+        imageList: videoData?.imageList,
+        createdBy: user?.primaryEmailAddress?.emailAddress,
+      });
+
+      console.log("Generated SQL Query:", query.toSQL());
+
+      const result = await query.returning({ id: VideoData?.id });
 
       console.log("Inserted video data:", result);
     } catch (error) {
@@ -297,7 +314,10 @@ function CreateNew() {
 
         {/* Create Button */}
         <div className="flex justify-center mt-5">
-          <Button className="flex items-center rounded-full" onClick={onCreateClickHandler}>
+          <Button
+            className="flex items-center rounded-full"
+            onClick={onCreateClickHandler}
+          >
             Create Video
           </Button>
         </div>
