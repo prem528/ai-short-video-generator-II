@@ -8,12 +8,12 @@ function VideoList({ videoList }) {
   const [videoId, setVideoId] = useState();
 
   return (
-    <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 p-3">
+    <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 p-3">
       {videoList?.map((video, index) => {
         return (
           <div
             key={video?.id || index}
-            className="cursor-pointer hover:scale-105 transition-all"
+            className="flex items-center justify-center cursor-pointer hover:scale-105 transition-all"
             onClick={() => {
               setOpenPlayer(Date.now());
               setVideoId(video?.id);
@@ -32,6 +32,8 @@ function VideoList({ videoList }) {
               }}
               style={{
                 borderRadius: 15,
+                borderStyle: "solid",
+                borderWidth: 2,
               }}
             />
           </div>

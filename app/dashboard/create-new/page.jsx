@@ -17,7 +17,9 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../configs/FirebaseConfig.js";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/configs/db";
-import { VideoData } from "@/configs/schema";
+import { Users, VideoData } from "@/configs/schema";
+import { UserDetailContext } from "@/app/_context/userDataContext";
+import { eq } from "drizzle-orm";
 
 function CreateNew() {
   // storing form data:
@@ -47,6 +49,8 @@ function CreateNew() {
 
   const { user } = useUser();
 
+  const { userData, setUserData } = useContext(UserDetailContext);
+
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
     setFormData((prev) => ({
@@ -68,6 +72,9 @@ function CreateNew() {
   const onCreateClickHandler = async () => {
     try {
       // Wait for getVideoScript to complete
+      if (!userData?.credits >= 0) {
+        alert("You don't have enough credits to create a video"); // Alert user if he dosen't have sufficient credits.
+      }
       await getVideoScript();
     } catch (error) {
       console.error("Error in onCreateClickHandler:", error);
@@ -266,11 +273,29 @@ function CreateNew() {
       const result = await query.returning({ id: VideoData?.id });
 
       console.log("Inserted video data:", result);
+
+      await updateUserCredits();
     } catch (error) {
       console.error("Error saving video data:", error);
     } finally {
       setLoadingState(false);
     }
+  };
+
+  // Used to update user's credits:
+  const updateUserCredits = async () => {
+    const result = await db
+      .update(Users)
+      .set({ credits: userData?.credits - 1 })
+      .where(eq(Users?.email, user?.primaryEmailAddress?.emailAddress));
+
+    console.log("Credit deduction:", result);
+    setUserData((prev) => ({
+      ...prev,
+      credits: userData?.credits - 1,
+    }));
+
+    setVideoData(null);
   };
 
   return (
