@@ -67,7 +67,7 @@ const AddMedia = ({ onMediaChange }) => {
           id="fileInput"
           type="file"
           multiple
-          accept="image/png"
+          accept="image/png, image/jpeg"
           className="hidden"
           onChange={handleFileChange}
         />

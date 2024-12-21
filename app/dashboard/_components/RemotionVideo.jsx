@@ -59,7 +59,7 @@ function RemotionVideo({
           interpolate(
             frame,
             [startTime, startTime + duration / 2, startTime + duration],
-            index % 2 == 0 ? [1, 1.2, 1] : [1.2, 1, 1.2],
+            index % 2 == 0 ? [1, 1.5, 1] : [1.5, 1, 1.5],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
           );
         return (
@@ -96,7 +96,9 @@ function RemotionVideo({
                   width: "100%",
                 }}
               >
-                <h2 className="text-1xl">{getCurrentCaptions()}</h2>
+                <h2 className="text-1xl bg-black p-1 rounded-sm">
+                  {getCurrentCaptions()}
+                </h2>
               </AbsoluteFill>
             </AbsoluteFill>
           </Sequence>

@@ -8,7 +8,7 @@ export function HeroSection() {
   return (
     <section className="relative animated-gradient py-32 h-screen">
       <div className="absolute inset-0 bg-black/20" /> {/* Overlay for better text readability */}
-      <div className="container relative flex justify-center items-center h-full p-3">
+      <div className="relative flex justify-center items-center h-full p-3">
         <div className="flex flex-col items-center text-center space-y-8">
           <Video className="w-16 h-16 text-white animate-pulse" />
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
