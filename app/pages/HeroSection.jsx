@@ -7,7 +7,8 @@ import Link from "next/link";
 export function HeroSection() {
   return (
     <section className="relative animated-gradient py-32 h-screen">
-      <div className="absolute inset-0 bg-black/20" /> {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/20" />{" "}
+      {/* Overlay for better text readability */}
       <div className="relative flex justify-center items-center h-full p-3">
         <div className="flex flex-col items-center text-center space-y-8">
           <Video className="w-16 h-16 text-white animate-pulse" />
@@ -18,20 +19,21 @@ export function HeroSection() {
             </span>
           </h1>
           <p className="text-xl text-white/90 max-w-2xl">
-            Transform your ideas into captivating short videos in minutes. Powered by cutting-edge AI technology.
+            Transform your ideas into captivating short videos in minutes.
+            Powered by cutting-edge AI technology.
           </p>
           <div className="flex gap-4">
-            <Link href='/dashboard'> 
-            <Button 
-              size="lg" 
-              className="bg-blue-300 border-white text-black hover:bg-blue-400 hover:text-white transition-colors"
-            >
-              Get Started Free
-            </Button>
+            <Link href="/dashboard">
+              <Button
+                size="lg"
+                className="bg-blue-300 border-white text-black hover:bg-blue-400 hover:text-white transition-colors"
+              >
+                Get Started Free
+              </Button>
             </Link>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              size="lg"
+              variant="outline"
               className="text-white border-white bg-transparent hover:bg-white/10"
             >
               Watch Demo

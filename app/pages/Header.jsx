@@ -7,7 +7,10 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 animated-gradient ">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-          <Link href="/" className="flex items-center text-2xl font-bold text-white gap-2">
+          <Link
+            href="/"
+            className="flex items-center text-2xl font-bold text-white gap-2"
+          >
             <Image src={"/logo.png"} width={100} height={50} alt="logo" />
             <h2 className="font-bold text-xl">Video Generator</h2>
           </Link>

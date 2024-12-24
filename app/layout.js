@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Provider from "./provider";
 import { Outfit } from "next/font/google";
 import Head from "next/head";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Delberto Video Generator",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         </Head>
         <body className={outfit.className}>
           <Provider>{children}</Provider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
