@@ -69,7 +69,6 @@ function PlayerDialog({ playVideo, videoId }) {
           <Button
             variant="ghost"
             onClick={() => {
-              router.replace("/dashboard"); // Navigate to the dashboard
               setOpenDialog(false); // Close the dialog
             }}
           >
