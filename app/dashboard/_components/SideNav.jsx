@@ -32,7 +32,7 @@ function SideNav() {
     {
       id: 4,
       name: "Account",
-      path: "/account",
+      path: "/dashboard/account",
       icons: CircleUserIcon,
     },
   ];
