@@ -8,7 +8,7 @@ import HowItWork from "./pages/HowItWork";
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <div className=" ">
+      <div>
       <Header/>
       </div>
       <HeroSection/>
