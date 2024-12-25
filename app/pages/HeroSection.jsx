@@ -18,20 +18,21 @@ export function HeroSection() {
             </span>
           </h1>
           <p className="text-xl text-white/90 max-w-2xl">
-            Transform your ideas into captivating short videos in minutes. Powered by cutting-edge AI technology.
+            Transform your ideas into captivating short videos in minutes.
+            Powered by cutting-edge AI technology.
           </p>
           <div className="flex gap-4">
-            <Link href='/dashboard'> 
-            <Button 
-              size="lg" 
-              className="bg-blue-300 border-white text-black hover:bg-blue-400 hover:text-white transition-colors"
-            >
-              Get Started Free
-            </Button>
+            <Link href="/dashboard">
+              <Button
+                size="lg"
+                className="bg-blue-300 border-white text-black hover:bg-blue-400 hover:text-white transition-colors"
+              >
+                Get Started Free
+              </Button>
             </Link>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              size="lg"
+              variant="outline"
               className="text-white border-white bg-transparent hover:bg-white/10"
             >
               Watch Demo
