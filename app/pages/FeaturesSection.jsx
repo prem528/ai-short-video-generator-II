@@ -1,10 +1,20 @@
+'use client'
+
 import { Wand2, Zap, Clock, Share2 } from "lucide-react";
 import { FeatureCard } from "./FeatureCard";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import React  from "react";
+
 
 export function FeaturesSection() {
+  React.useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
-    <section id="features" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="features" className="py-20" data-aos="fade-up">
+      <div className="container mx-auto px-20">
         <h2 className="text-3xl font-bold text-center mb-12">
           Why Choose Our Platform?
         </h2>
