@@ -120,7 +120,7 @@ export default function AccountPage() {
                   <CardTitle>Your Generated Videos</CardTitle>
                   <CardDescription>View and manage your AI-generated short videos.</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide">
                   {isLoading ? (
                     <div className="flex justify-center items-center min-h-[200px]">
                       <Loader2 className="h-8 w-8 animate-spin" />

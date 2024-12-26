@@ -3,21 +3,66 @@
 import { Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion } from 'framer-motion';
 
 export function HeroSection() {
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  
+  const videos = [
+    "/video22.mp4",
+      // Add all your video paths here
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prevIndex) => 
+        prevIndex === videos.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 8000); // Change video every 8 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative animated-gradient h-screen">
-      <div className="absolute inset-0 bg-black/20" /> {/* Overlay for better text readability */}
+    <section className="relative h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+        key={videos[currentVideoIndex]} // Key helps React remount video element
+        autoPlay
+        loop={true} // Set to false since we're handling the cycling
+        muted
+        playsInline
+        onEnded={() => {
+          setCurrentVideoIndex((prevIndex) => 
+            prevIndex === videos.length - 1 ? 0 : prevIndex + 1
+          );
+        }}
+        className="absolute w-full h-full object-cover "
+      >
+        <source src={videos[currentVideoIndex]} type="video/mp4" />
+      </video>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/50 animated-gradient mix-blend-overlay" />
+      
+      {/* Content */}
       <div className="relative flex justify-center items-center h-full p-3">
-        <div className="flex flex-col items-center text-center space-y-8">
+        <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        
+        className="flex flex-col items-center text-center space-y-8" >
           <Video className="w-16 h-16 text-white animate-pulse" />
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
+          <h1 
+          className="text-4xl md:text-6xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/30 p-6 rounded-lg" >
             Create Stunning Videos with{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-500">
+            <span className="text-transparent animated-gradient bg-clip-text ">
               AI Magic
             </span>
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl">
+          <p className="text-xl text-white/90 max-w-2xl backdrop-blur-sm bg-black/3">
             Transform your ideas into captivating short videos in minutes.
             Powered by cutting-edge AI technology.
           </p>
@@ -25,7 +70,7 @@ export function HeroSection() {
             <Link href="/dashboard">
               <Button
                 size="lg"
-                className="bg-blue-300 border-white text-black hover:bg-blue-400 hover:text-white transition-colors"
+                className="animated-gradient"
               >
                 Get Started Free
               </Button>
@@ -38,7 +83,7 @@ export function HeroSection() {
               Watch Demo
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

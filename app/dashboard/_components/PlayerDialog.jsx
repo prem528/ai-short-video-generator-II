@@ -69,6 +69,7 @@ function PlayerDialog({ playVideo, videoId }) {
           <Button
             variant="ghost"
             onClick={() => {
+
               setOpenDialog(false); // Close the dialog
             }}
           >
