@@ -1,4 +1,9 @@
+'use client'
+
 import { Edit3Icon, Wand2Icon, Share2Icon } from 'lucide-react'
+import AOS from "aos";
+import "aos/dist/aos.css";
+import React  from "react";
 
 const steps = [
   {
@@ -19,9 +24,13 @@ const steps = [
 ]
 
 export default function HowItWork() {
+  React.useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
-    <section id="how-it-works" className="py-20 px-6 bg-gray-100">
-      <div className="flex flex-col items-center container mx-auto">
+    <section id="how-it-works" className="py-20 px-6 bg-gray-200" >
+      <div className="flex flex-col items-center container mx-auto" data-aos="fade-up">
         <h2 className="text-4xl font-bold text-center mb-12">How It Works</h2>
         <div className="flex flex-col md:flex-row justify-center items-start space-y-8 md:space-y-0 md:space-x-8">
           {steps.map((step, index) => (
@@ -32,7 +41,7 @@ export default function HowItWork() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <div className="mb-4 bg-gray-200 rounded-full p-4">{step.icon}</div>
+              <div className="mb-4 bg-gray-300 rounded-full p-4">{step.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
               <p className="text-gray-400">{step.description}</p>
             </div>
