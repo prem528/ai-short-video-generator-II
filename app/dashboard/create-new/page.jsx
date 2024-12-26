@@ -67,10 +67,6 @@ function CreateNew() {
     setImageList(newImageList);
   };
 
-  // testing sound data:
-  const sound =
-    "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2F3a339263-760a-4130-8538-8b808f4a25df.mp3?alt=media&token=b036015e-c4e0-4216-914b-ae43144e643e";
-
   // Handle the create create video button:
   const onCreateClickHandler = async () => {
     try {
