@@ -24,6 +24,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.4",
     "@remotion/cli": "4.0.239",
+    "@remotion/cloudrun": "4.0.239",
     "assemblyai": "^4.8.0",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",

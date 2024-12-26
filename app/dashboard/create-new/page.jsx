@@ -20,6 +20,7 @@ import { db } from "@/configs/db";
 import { Users, VideoData } from "@/configs/schema";
 import { UserDetailContext } from "@/app/_context/userDataContext";
 import { eq } from "drizzle-orm";
+import { useToast } from "@/hooks/use-toast";
 
 function CreateNew() {
   // storing form data:
@@ -51,6 +52,8 @@ function CreateNew() {
 
   const { userData, setUserData } = useContext(UserDetailContext);
 
+  const { toast } = useToast();
+
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
     setFormData((prev) => ({
@@ -72,8 +75,12 @@ function CreateNew() {
   const onCreateClickHandler = async () => {
     try {
       // Wait for getVideoScript to complete
-      if (!userData?.credits >= 0) {
-        alert("You don't have enough credits to create a video"); // Alert user if he dosen't have sufficient credits.
+      if (!userData?.credits > 0) {
+        // Alert user if he dosen't have sufficient credits.
+        toast({
+          title: "Error",
+          description: "Insufficient credits. Please add more credits.",
+        });
       }
       await getVideoScript();
     } catch (error) {
