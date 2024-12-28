@@ -27,7 +27,7 @@ export default function AnimatedDemoSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl md:text-6xl font-bold mb-4 text-center text-transparent animated-gradient bg-clip-text backdrop-blur-sm bg-black/30" 
+          className="text-4xl md:text-6xl font-bold mb-4 text-center text-transparent animated-gradient bg-clip-text backdrop-blur-sm bg-black/30 rounded-lg" 
         >
           Experience the Future
         </motion.h2>

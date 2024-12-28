@@ -19,11 +19,9 @@ export default function Header() {
             className="flex items-center text-2xl font-bold text-white gap-2"
           >
             <Image src={"/logo.png"} width={100} height={50} alt="logo" />
-            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">
-              Video Generator
-            </h2>
+            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500">Video Generator</h2>
           </Link>
-          <div className="font-bold hidden md:flex space-x-6">
+          <div className="font-semibold hidden md:flex space-x-8">
             <Link
               href="#features"
               className=" text-blue-600 hover:text-black transition-colors"
