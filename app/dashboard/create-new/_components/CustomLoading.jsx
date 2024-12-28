@@ -14,7 +14,7 @@ function CustomLoading({ loading }) {
       <AlertDialog open={loading}>
         <AlertDialogContent className="bg-white">
           <AlertDialogTitle className="flex flex-col items-center justify-center">
-            Generating video
+            Loading...
           </AlertDialogTitle>
           <div className="bg-white flex flex-col items-center my-10 justify-center">
             <Image src="/progress.gif" alt="loading" height={100} width={100} />

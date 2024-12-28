@@ -20,6 +20,7 @@ import { db } from "@/configs/db";
 import { Users, VideoData } from "@/configs/schema";
 import { UserDetailContext } from "@/app/_context/userDataContext";
 import { eq } from "drizzle-orm";
+import { useToast } from "@/hooks/use-toast";
 
 function CreateNew() {
   // storing form data:
@@ -51,6 +52,8 @@ function CreateNew() {
 
   const { userData, setUserData } = useContext(UserDetailContext);
 
+  const { toast } = useToast();
+
   // Handle changes to form fields
   const onHandleInputChange = (fieldName, fieldValue) => {
     setFormData((prev) => ({
@@ -64,16 +67,16 @@ function CreateNew() {
     setImageList(newImageList);
   };
 
-  // testing sound data:
-  const sound =
-    "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2F3a339263-760a-4130-8538-8b808f4a25df.mp3?alt=media&token=b036015e-c4e0-4216-914b-ae43144e643e";
-
   // Handle the create create video button:
   const onCreateClickHandler = async () => {
     try {
       // Wait for getVideoScript to complete
-      if (!userData?.credits >= 0) {
-        alert("You don't have enough credits to create a video"); // Alert user if he dosen't have sufficient credits.
+      if (!userData?.credits > 0) {
+        // Alert user if he dosen't have sufficient credits.
+        toast({
+          title: "Error",
+          description: "Insufficient credits. Please add more credits.",
+        });
       }
       await getVideoScript();
     } catch (error) {

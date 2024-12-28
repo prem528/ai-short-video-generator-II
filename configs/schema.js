@@ -14,7 +14,8 @@ export const Users = pgTable("users", {
   email: varchar("email").notNull(),
   imageUrl: varchar("imageUrl"),
   subscription: boolean("subscription").default(false),
-  credits: integer("credits").default(10),
+  credits: integer("credits").notNull().default(10),
+  role: varchar("role").notNull().default("user"),
 });
 
 // VideoData table

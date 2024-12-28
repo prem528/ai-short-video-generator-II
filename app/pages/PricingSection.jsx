@@ -1,11 +1,18 @@
-'use client'
+"use client";
 
-import { Check } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import React  from "react";
+import React from "react";
 
 const tiers = [
   {
@@ -18,7 +25,7 @@ const tiers = [
       "Up to 1-minute video length",
       "Basic text-to-speech voices",
       "10 stock music tracks",
-      "Email support"
+      "Email support",
     ],
   },
   {
@@ -32,7 +39,7 @@ const tiers = [
       "Advanced text-to-speech voices",
       "50 stock music tracks",
       "Custom branding",
-      "Priority email support"
+      "Priority email support",
     ],
   },
   {
@@ -48,10 +55,10 @@ const tiers = [
       "Advanced editing tools",
       "API access",
       "Dedicated account manager",
-      "24/7 phone and email support"
+      "24/7 phone and email support",
     ],
   },
-]
+];
 
 export default function PricingSection() {
   React.useEffect(() => {
@@ -59,19 +66,38 @@ export default function PricingSection() {
   }, []);
 
   return (
-    <section className="py-16 px-20 bg-gray-200">
+    <section id="pricing" className="py-16 px-20 bg-gray-200">
       <div className="container mx-auto px-20">
-        <h2 className="text-4xl font-bold text-center mb-4">Choose Your AI Video Plan</h2>
-        <p className="text-xl text-center text-gray-600 mb-12">Unleash your creativity with our AI-powered video generation</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8"  data-aos="zoom-out-up">
+        <h2 className="text-4xl font-bold text-center mb-4">
+          Choose Your AI Video Plan
+        </h2>
+        <p className="text-xl text-center text-gray-600 mb-12">
+          Unleash your creativity with our AI-powered video generation
+        </p>
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          data-aos="zoom-out-up"
+        >
           {tiers.map((tier) => (
-            <Card key={tier.name} className="flex flex-col bg-gray-800 text-white hover:shadow-xl transition-shadow duration-300">
+            <Card
+              key={tier.name}
+              className="flex flex-col bg-gray-800 text-white hover:shadow-xl transition-shadow duration-300"
+            >
               <CardHeader className="text-center ">
-                <CardTitle className="text-2xl font-bold">{tier.name}</CardTitle>
-                <CardDescription className='text-lg text-white'>{tier.description}</CardDescription>
+                <CardTitle className="text-2xl font-bold">
+                  {tier.name}
+                </CardTitle>
+                <CardDescription className="text-lg text-white">
+                  {tier.description}
+                </CardDescription>
               </CardHeader>
               <CardContent className="flex-grow text-white">
-                <p className="text-4xl font-bold text-center mb-6">{tier.price}<span className="text-lg font-normal text-gray-600">{tier.name !== "Enterprise" ? "/month" : ""}</span></p>
+                <p className="text-4xl font-bold text-center mb-6">
+                  {tier.price}
+                  <span className="text-lg font-normal text-gray-600">
+                    {tier.name !== "Enterprise" ? "/month" : ""}
+                  </span>
+                </p>
                 <ul className="space-y-3 text-white">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-start">
@@ -91,6 +117,5 @@ export default function PricingSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
