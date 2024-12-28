@@ -56,13 +56,13 @@ export function HeroSection() {
         className="flex flex-col items-center text-center space-y-8" >
           <Video className="w-16 h-16 text-white animate-pulse" />
           <h1 
-          className="text-4xl md:text-6xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/30 p-6 rounded-lg" >
+          className="text-4xl md:text-6xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/10 p-6 rounded-lg" >
             Create Stunning Videos with{" "}
             <span className="text-transparent animated-gradient bg-clip-text ">
               AI Magic
             </span>
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl backdrop-blur-sm bg-black/3">
+          <p className="text-xl text-white/90 max-w-2xl backdrop-blur-sm bg-black/3 rounded-lg">
             Transform your ideas into captivating short videos in minutes.
             Powered by cutting-edge AI technology.
           </p>
@@ -70,7 +70,7 @@ export function HeroSection() {
             <Link href="/dashboard">
               <Button
                 size="lg"
-                className="animated-gradient"
+                className="animated-gradient hover:text-black hover:font-semibold "
               >
                 Get Started Free
               </Button>
