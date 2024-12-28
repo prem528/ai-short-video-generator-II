@@ -31,7 +31,7 @@ function SideNav() {
     },
     {
       id: 4,
-      name: "account",
+      name: "Account",
       path: "/admin/account",
       icons: CircleUserIcon,
     },

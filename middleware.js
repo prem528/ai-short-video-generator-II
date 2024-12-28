@@ -14,17 +14,8 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.redirect(url);
   }
 
-  // Redirect admin to the admin dashboard after sign-in
-  if (
-    req.nextUrl.pathname === "/" &&
-    sessionClaims?.metadata?.role === "admin"
-  ) {
-    const url = new URL("/admin", req.url);
-    return NextResponse.redirect(url);
-  }
-
   // Protect routes defined as protected
-  if (isProtectedRoute(req)) {
+  if (isProtectedRoute(req) || isAdminRoute(req)) {
     await auth.protect();
   }
 });

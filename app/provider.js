@@ -1,33 +1,31 @@
 "use client";
 
-import { db } from "@/configs/db";
-import { Users } from "@/configs/schema";
 import { useUser } from "@clerk/nextjs";
-import { eq } from "drizzle-orm";
 import React, { useEffect } from "react";
 
 function Provider({ children }) {
   const { user } = useUser();
 
   useEffect(() => {
-    user && isNewUser();
+    if (user) {
+      isNewUser();
+    }
   }, [user]);
 
   const isNewUser = async () => {
-    const result = await db
-      .select()
-      .from(Users)
-      .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
-
-    console.log(result);
-
-    if (!result[0]) {
-      await db.insert(Users).values({
-        name: user.fullName,
-        email: user?.primaryEmailAddress?.emailAddress,
-        imageUrl: user?.imageUrl,
-      });
-    }
+    // Call the API route to handle user creation and role assignment
+    const response = await fetch("/api/setUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user.id,
+        email: user.primaryEmailAddress.emailAddress,
+        fullName: user.fullName,
+        imageUrl: user.imageUrl,
+      }),
+    });
   };
 
   return <div>{children}</div>;
