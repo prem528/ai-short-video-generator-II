@@ -306,7 +306,7 @@ function CreateNew() {
       <h2 className="font-bold text-4xl text-primary text-center">
         Create New
       </h2>
-      <div className="mt-10 p-10 relative animate-shadow-pulse bg-white">
+      <div className="mt-10 p-10 relative animate-shadow-pulse  ">
         {/* Enter URL */}
         <UrlBox
           onUserSelect={(data) => setFormData((prev) => ({ ...prev, ...data }))}

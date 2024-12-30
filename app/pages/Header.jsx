@@ -3,6 +3,7 @@
 import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { ThemeToggle } from "../about/_components/toggle-theme";
 
 export default function Header() {
   const { user } = useUser();
@@ -40,8 +41,16 @@ export default function Header() {
             >
               Pricing
             </Link>
+            <Link
+              href="/about"
+              className="text-blue-600 hover:text-black transition-colors"
+            >
+              About
+            </Link>
           </div>
+          
           <div className="flex gap-3 items-center">
+          <ThemeToggle/>
             <Link
               href={redirectPath}
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors"

@@ -126,7 +126,7 @@ function Page() {
 
   return (
     <div className="md:px-20">
-      <div className="mt-10 p-10 relative animate-shadow-pulse bg-white">
+      <div className="mt-10 p-10 relative animate-shadow-pulse  ">
         <h1 className="font-bold text-4xl text-primary text-center">
           Add Credits
         </h1>
