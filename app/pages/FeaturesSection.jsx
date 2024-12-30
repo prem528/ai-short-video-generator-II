@@ -42,11 +42,11 @@ export function FeaturesSection() {
               description="Automate your video creation workflow and focus on what matters because your time is important"
             />
           </div>
-          <div className="h-full   shadow-xl overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
+          <div className="h-full shadow-xl overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
             <FeatureCard
               icon={<Share2 className="w-10 h-10" />}
               title="Easy Sharing"
-              description="Share your videos instantly across all social media platforms in just few seconds "
+              description="Share your short videos instantly across all social platforms in just few minutes"
             />
           </div>
           

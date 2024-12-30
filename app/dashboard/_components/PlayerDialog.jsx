@@ -66,8 +66,8 @@ function PlayerDialog({ playVideo, videoId }) {
         )}
         <div className="flex items-center justify-center gap-5 mt-5">
           <Button>Export</Button>
-          <Button
-            variant="ghost"
+          <Button 
+          className='bg-transparent text-black hover:bg-black hover:text-white'
             onClick={() => {
 
               setOpenDialog(false); // Close the dialog

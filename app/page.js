@@ -6,21 +6,20 @@ import Footer from "./pages/Footer";
 import HowItWork from "./pages/HowItWork";
 import AnimatedDemoSection from "./pages/AnimatedDemoSection";
 import PricingSection from "./pages/PricingSection";
+import BackgroundLayout from "./pages/BackgroundLayout";
  
 
 export default function Home() {
   return (
-    <div className="min-h-screen ">
-      <div>
-      <Header/>
-      </div>
-      <HeroSection/>
-      <FeaturesSection/>
-      <CTASection/>
-      <AnimatedDemoSection/>
-      <HowItWork/>
-      <PricingSection/>
-      <Footer/>
-    </div>
+    <BackgroundLayout>
+      <Header />
+      <HeroSection />
+      <FeaturesSection />
+      <CTASection />
+      <AnimatedDemoSection />
+      <HowItWork />
+      <PricingSection />
+      <Footer />
+    </BackgroundLayout>
   );
 }

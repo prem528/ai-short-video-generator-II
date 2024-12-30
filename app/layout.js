@@ -4,6 +4,7 @@ import Provider from "./provider";
 import { Outfit } from "next/font/google";
 import Head from "next/head";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "next-themes";
 
 export const metadata = {
   title: "Delberto Video Generator",
@@ -24,7 +25,14 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="/logo.png" />
         </Head>
         <body className={outfit.className}>
+          <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          >
           <Provider>{children}</Provider>
+          </ThemeProvider>
           <Toaster />
         </body>
       </html>
