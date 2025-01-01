@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Composition } from "remotion";
-import { Player } from "@remotion/player";
-import RemotionVideo from "../app/dashboard/_components/RemotionVideo";
 import { db } from "../configs/db";
 import { VideoData } from "../configs/schema";
 import { eq } from "drizzle-orm";
+import RemotionComposition from "./RemotionComposition";
 
 function RemotionRoot() {
   const videoId = 14; // Replace with the desired video ID
@@ -49,7 +48,7 @@ function RemotionRoot() {
     <>
       <Composition
         id="video-result"
-        component={RemotionVideo}
+        component={RemotionComposition}
         durationInFrames={durationInFrames}
         width={720}
         height={1080}
