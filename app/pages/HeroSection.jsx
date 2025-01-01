@@ -35,9 +35,11 @@ export function HeroSection() {
       <video
         key={videos[currentVideoIndex]} // Key helps React remount video element
         autoPlay
-        loop={true} // Set to false since we're handling the cycling
+        loop={true}  
         muted
         playsInline
+        preload="metadata" // Load only metadata initially
+        poster="/video-placeholder.jpg" // Placeholder image
         onEnded={() => {
           setCurrentVideoIndex((prevIndex) =>
             prevIndex === videos.length - 1 ? 0 : prevIndex + 1

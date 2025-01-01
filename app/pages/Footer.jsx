@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className=" mt-8 border-t  py-8">
+    <footer className="bg-opacity-10 mt-8 border-t  py-8">
       <div className="container mx-auto px-6">
         <div className="flex justify-between gap-2">
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-2xl font-bold mb-2">
               Delberto Video Generator
             </h3>
-            <p className="text-gray-400">
+            <p className="text-gray-500">
               Creating stunning videos with the power of AI.
             </p>
           </div>
@@ -44,8 +44,8 @@ export default function Footer() {
           </div>
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
-            <p className="text-gray-400">Email: info@aividgen.com</p>
-            <p className="text-gray-400">Phone: (555) 123-4567</p>
+            <p className="text-gray-500">Email: info@aividgen.com</p>
+            <p className="text-gray-500">Phone: (555) 123-4567</p>
           </div>
           <div className="w-full md:w-1/4">
             <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
@@ -104,7 +104,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-          <p className="text-gray-400">
+          <p className="text-gray-600">
             &copy; {new Date().getFullYear()} Delberto Video Generator. All
             rights reserved.
           </p>
