@@ -1,24 +1,23 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 function Provider({ children }) {
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       isNewUser();
     }
+    setLoading(false);
   }, [user]);
 
   const isNewUser = async () => {
-    // Call the API route to handle user creation and role assignment
-    const response = await fetch("/api/setUser", {
+    await fetch("/api/setUser", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: user.id,
         email: user.primaryEmailAddress.emailAddress,
@@ -28,7 +27,11 @@ function Provider({ children }) {
     });
   };
 
-  return <div>{children}</div>;
+  if (loading) {
+    return null; // Prevent rendering until loading is complete
+  }
+
+  return <>{children}</>;
 }
 
 export default Provider;

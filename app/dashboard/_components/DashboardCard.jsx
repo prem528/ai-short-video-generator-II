@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const DashboardCard = ({ title, value, icon: Icon, description }) => {
+export const DashboardCard = ({header, amount, title, value, icon: Icon, description }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex items-center justify-between mb-4">
