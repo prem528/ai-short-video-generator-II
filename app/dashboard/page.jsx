@@ -9,6 +9,10 @@ import { VideoData } from "@/configs/schema";
 import { eq } from "drizzle-orm";
 import { useUser } from "@clerk/nextjs";
 import VideoList from "./_components/VideoList";
+import { MainDashboard } from "./_components/MainDashboard";
+import { Plus } from "lucide-react";
+import VideoContainer from "./_components/VideoContainer";
+import QuickActions from "./_components/QuickActions";
 
 function Dashboard() {
   const [videoList, setVideoList] = useState([]);
@@ -34,22 +38,20 @@ function Dashboard() {
   return (
     <div className="p-5">
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-2xl text-primary">Dashboard</h2>
+        <h2 className="text-3xl font-bold text-primary">Dashboard</h2>
         <Link href={"dashboard/create-new"}>
-          <Button>Create New Video</Button>
+          <Button>
+             <Plus className="w-5 h-5" /> 
+              New Video
+             </Button>
         </Link>
       </div>
-
-      {/* Empty state */}
-      {videoList?.length == 0 && (
-        <div>
-          {" "}
-          <EmptyState />
-        </div>
-      )}
-
-      {/* List of videos */}
-      <VideoList videoList={videoList} />
+      <div>
+        <MainDashboard/>
+        <QuickActions/>
+      </div>
+      <VideoContainer/>
+      
     </div>
   );
 }
