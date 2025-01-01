@@ -115,7 +115,7 @@ export default function AccountPage() {
               variants={tabContentVariants}
               transition={{ duration: 0.3 }}
             >
-              <Card className='bg-slate-100'>
+              <Card>
                 <CardHeader>
                   <CardTitle>Your Generated Videos</CardTitle>
                   <CardDescription>View and manage your AI-generated short videos.</CardDescription>

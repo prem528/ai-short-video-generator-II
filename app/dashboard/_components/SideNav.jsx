@@ -1,9 +1,9 @@
 "use client";
 import {
   CircleUserIcon,
-  FileVideo,
   PanelsTopLeft,
-  ShieldPlus,
+  Plus,
+  Wallet2,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,13 +21,13 @@ function SideNav() {
       id: 2,
       name: "Create New",
       path: "/dashboard/create-new",
-      icons: FileVideo,
+      icons: Plus,
     },
     {
       id: 3,
       name: "Add Credits",
       path: "/dashboard/add-credits",
-      icons: ShieldPlus,
+      icons: Wallet2,
     },
     {
       id: 4,
