@@ -9,32 +9,24 @@ import {
   useVideoConfig,
 } from "remotion";
 
-function RemotionVideo({
-  script,
-  imageList,
-  audioFileUrl,
-  captions,
-  setDurationFrames,
-}) {
+function RemotionVideo({ script, imageList, audioFileUrl, captions }) {
   const { fps } = useVideoConfig();
-  const [durationFrames, setDurationFramesState] = useState(100);
   const frame = useCurrentFrame();
+  const [durationFrames, setDurationFrames] = useState(10000); // Default value
 
-  // Calculate the total duration of the video in frames
-  useEffect(() => {
-    let calculatedDurationFrames = 0;
-
+  const calculateDurationFrames = (captions) => {
     if (captions?.length > 0) {
       const lastCaptionEnd = captions[captions.length - 1]?.end;
       if (lastCaptionEnd) {
         const durationInSeconds = lastCaptionEnd / 1000;
-        calculatedDurationFrames = durationInSeconds * fps;
+        setDurationFrames(Math.round(durationInSeconds * fps));
       }
     }
+  };
 
-    setDurationFramesState(calculatedDurationFrames); // Update local state
-    setDurationFrames(Math.round(calculatedDurationFrames)); // Send the value to the parent
-  }, [captions, fps, setDurationFrames]);
+  useEffect(() => {
+    calculateDurationFrames(captions);
+  }, [captions]);
 
   // Early return if durationFrames is 0 or imageList is empty
   if (durationFrames === 0 || !imageList?.length) {
@@ -96,7 +88,14 @@ function RemotionVideo({
                   width: "100%",
                 }}
               >
-                <h2 className="text-1xl bg-black p-1 rounded-sm">
+                <h2
+                  style={{
+                    fontSize: "1rem",
+                    backgroundColor: "black",
+                    padding: "0.25rem",
+                    borderRadius: "0.125rem",
+                  }}
+                >
                   {getCurrentCaptions()}
                 </h2>
               </AbsoluteFill>

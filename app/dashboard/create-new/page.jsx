@@ -5,7 +5,7 @@ import SelectTopic from "./_components/SelectTopic";
 import SelectDuration from "./_components/SelectDuration";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import CustomLoading from "./_components/CustomLoading";
+import CustomLoading from "../../../components/CustomLoading";
 import UrlBox from "./_components/UrlBox";
 import ProductName from "./_components/ProductName";
 import ProductDescription from "./_components/ProductDescription";
@@ -236,13 +236,6 @@ function CreateNew() {
 
   // Displays whenever videoData gets updated:
   useEffect(() => {
-    if (!videoData || typeof videoData !== "object") {
-      console.error("Invalid videoData:", videoData);
-      return;
-    }
-
-    console.log("Current video data:", videoData);
-
     // Ensure all required fields are present before saving
     if (Object.keys(videoData).length === 4) {
       saveVideoData(videoData);
