@@ -90,7 +90,7 @@ export function Nav() {
   return (
     <div className="absolute flex h-[100px] w-full items-center justify-center overflow-hidden rounded-lg min-w-[500px]">      
       <TooltipProvider>
-        <Dock direction="middle">
+        <Dock direction="middle" className="border border-gray-300">
           {DATA.navbar.map((item) => (
             <DockIcon key={item.label}>
               <Tooltip>
