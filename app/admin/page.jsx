@@ -3,11 +3,9 @@
 import React, { useEffect, useState } from "react";
 import InfoCard from "./_components/InfoCard";
 import axios from "axios";
-import { useToast } from "@/hooks/use-toast";
-import { useUser } from "@clerk/nextjs";
 import { db } from "@/configs/db";
 import { Users, VideoData } from "@/configs/schema";
-import { eq } from "drizzle-orm";
+import MonthlyEarningsChart from "./_components/MonthlyEarningsChart";
 
 export default function AdminDashboard() {
   const [data, setData] = useState({
@@ -15,10 +13,7 @@ export default function AdminDashboard() {
     totalUsers: 0,
     totalVideos: 0,
   });
-  const { user } = useUser();
-  const { toast } = useToast();
 
-  // Function to fetch monthly revenue data:
   const fetchMonthlyRevenue = async () => {
     try {
       const response = await axios.get("/api/get-monthly-revenue");
@@ -27,7 +22,6 @@ export default function AdminDashboard() {
           ...prevData,
           totalRevenue: response?.data?.revenue,
         }));
-        // console.log(`This month's revenue: ₹${response.data.revenue}`);
       } else {
         console.error("Failed to fetch revenue.");
       }
@@ -36,13 +30,9 @@ export default function AdminDashboard() {
     }
   };
 
-  // Function to get total users
   const getTotalUsers = async () => {
     try {
       const count = await db.$count(Users);
-
-      // console.log("Total Users:", count);
-
       setData((prevData) => ({
         ...prevData,
         totalUsers: count,
@@ -52,13 +42,9 @@ export default function AdminDashboard() {
     }
   };
 
-  // Function to get total videos
   const getTotalVideos = async () => {
     try {
       const count = await db.$count(VideoData);
-
-      // console.log("Total Videos:", count);
-
       setData((prevData) => ({
         ...prevData,
         totalVideos: count,
@@ -69,24 +55,39 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchMonthlyRevenue();
-    getTotalUsers();
-    getTotalVideos();
+    fetchMonthlyRevenue(), getTotalUsers(), getTotalVideos();
   }, []);
 
   return (
-    <div className="p-5">
-      <div className="flex justify-between items-center">
-        <h2 className="font-bold text-2xl text-primary">Admin Dashboard</h2>
+    <div className="p-6 bg-gray-100 min-h-screen rounded-md">
+      {/* Dashboard Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="font-bold text-3xl text-primary">Admin Dashboard</h2>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-1 mt-5">
+
+      {/* Info Cards */}
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
         <InfoCard
-          header={"This Month Revenue"}
-          amount={data.totalRevenue}
-          sign={"₹"}
+          title="This Month Revenue"
+          value={data.totalRevenue}
+          sign="₹"
+          className="bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition-shadow"
         />
-        <InfoCard header={"Total Users"} amount={data.totalUsers} />
-        <InfoCard header={"Total Videos Generated"} amount={data.totalVideos} />
+        <InfoCard
+          title="Total Users"
+          value={data.totalUsers}
+          className="bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition-shadow"
+        />
+        <InfoCard
+          title="Total Videos Generated"
+          value={data.totalVideos}
+          className="bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition-shadow"
+        />
+      </div>
+
+      {/* Monthly Earnings Chart */}
+      <div>
+        <MonthlyEarningsChart />
       </div>
     </div>
   );

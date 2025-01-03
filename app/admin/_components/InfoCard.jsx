@@ -6,18 +6,19 @@ import {
 } from "@/components/ui/card";
 import React from "react";
 
-function InfoCard({ header, amount, footer, sign }) {
+function InfoCard({ title, value, description, sign }) {
   return (
-    <div>
-      <Card className="flex flex-col m-1 shadow-sm hover:shadow-lg">
-        <CardHeader className="font-bold text-primary text-2xl">
-          {header}
-        </CardHeader>
-        <CardContent className="text-2xl">
+    <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
+      </div>
+      <div>
+        <p className="text-3xl font-bold text-gray-900 mb-2">
           {sign}
-          {amount}
-        </CardContent>
-      </Card>
+          {value}
+        </p>
+        <p className="text-sm text-gray-500">{description}</p>
+      </div>
     </div>
   );
 }
