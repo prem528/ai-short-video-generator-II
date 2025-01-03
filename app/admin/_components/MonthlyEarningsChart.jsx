@@ -18,7 +18,10 @@ const MonthlyEarningsChart = () => {
     try {
       const response = await axios.get("/api/get-monthly-earnings");
       if (response.status === 200) {
-        setMonthlyEarnings(response.data.data);
+        const sortedData = response.data.data.sort(
+          (a, b) => new Date(a.month) - new Date(b.month)
+        );
+        setMonthlyEarnings(sortedData);
       } else {
         console.error("Failed to fetch monthly earnings.");
       }
