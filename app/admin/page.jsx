@@ -41,7 +41,7 @@ export default function AdminDashboard() {
     try {
       const count = await db.$count(Users);
 
-      console.log("Total Users:", count);
+      // console.log("Total Users:", count);
 
       setData((prevData) => ({
         ...prevData,
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
     try {
       const count = await db.$count(VideoData);
 
-      console.log("Total Videos:", count);
+      // console.log("Total Videos:", count);
 
       setData((prevData) => ({
         ...prevData,

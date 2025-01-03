@@ -8,6 +8,7 @@ import { VideoData } from "@/configs/schema";
 import { eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import CustomLoading from "@/components/CustomLoading";
+import axios from "axios";
 
 function PlayerDialog({ playVideo, videoId }) {
   const [loadingState, setLoadingState] = useState(false);
@@ -56,6 +57,32 @@ function PlayerDialog({ playVideo, videoId }) {
     }
   };
 
+  // Function to handle export video using GCP Cloudrun:
+  const handleExport = async () => {
+    console.log("video data:", videoData);
+
+    setLoadingState(true);
+    try {
+      const response = await axios.post("/api/render-video", { videoData });
+
+      if (response.status === 200) {
+        const { bucketName, renderId } = response.data;
+        const videoUrl = `https://storage.googleapis.com/${bucketName}/${renderId}.mp4`;
+
+        console.log("Video successfully rendered:", videoUrl);
+
+        // Open the video URL in a new tab
+        window.open(videoUrl, "_blank");
+      } else {
+        console.error("Error rendering video:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error calling API:", error.message);
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
   return (
     <>
       <CustomLoading loading={loadingState} />
@@ -78,7 +105,7 @@ function PlayerDialog({ playVideo, videoId }) {
             />
           )}
           <div className="flex items-center justify-center gap-5 mt-5">
-            <Button>Export</Button>
+            <Button onClick={handleExport}>Export</Button>
             <Button
               className="bg-transparent text-black hover:bg-black hover:text-white"
               onClick={() => {

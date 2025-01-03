@@ -26,7 +26,7 @@ function DashboardLayout({ children }) {
       .from(Users)
       .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
 
-    console.log("Result :", result[0]);
+    // console.log("Result :", result[0]);
     setUserData(result[0]);
   };
 
@@ -34,21 +34,17 @@ function DashboardLayout({ children }) {
     <UserDetailContext.Provider value={{ userData, setUserData }}>
       <VideoDataContext.Provider value={{ videoData, setVideoData }}>
         <BackgroundLayout>
-
-        
-        <div className="min-h-screen">
-          <div className="fixed top-0 left-0 right-0 z-50">
-            
-            <Header />
-            
-          </div>
-          <div className="pt-[60px] flex">
-            <div className="hidden md:block fixed left-0 h-[calc(100vh-60px)]   w-64">
-              <SideNav />
+          <div className="min-h-screen">
+            <div className="fixed top-0 left-0 right-0 z-50">
+              <Header />
             </div>
-            <div className="flex-1 md:ml-64 p-5">{children}</div>
+            <div className="pt-[60px] flex">
+              <div className="hidden md:block fixed left-0 h-[calc(100vh-60px)]   w-64">
+                <SideNav />
+              </div>
+              <div className="flex-1 md:ml-64 p-5">{children}</div>
+            </div>
           </div>
-        </div>
         </BackgroundLayout>
       </VideoDataContext.Provider>
     </UserDetailContext.Provider>
