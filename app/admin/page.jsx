@@ -6,6 +6,7 @@ import axios from "axios";
 import { db } from "@/configs/db";
 import { Users, VideoData } from "@/configs/schema";
 import MonthlyEarningsChart from "./_components/MonthlyEarningsChart";
+import RecentVideos from "./_components/RecentVideos";
 
 export default function AdminDashboard() {
   const [data, setData] = useState({
@@ -59,7 +60,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen rounded-md">
+    <div className="p-6 px-24   min-h-screen rounded-md">
       {/* Dashboard Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="font-bold text-3xl text-primary">Admin Dashboard</h2>
@@ -86,9 +87,14 @@ export default function AdminDashboard() {
       </div>
 
       {/* Monthly Earnings Chart */}
-      <div>
+      <div className="py-24">
         <MonthlyEarningsChart />
       </div>
+      <div className=" py-24">
+        <RecentVideos/>
+      </div>
+       
+        
     </div>
   );
 }

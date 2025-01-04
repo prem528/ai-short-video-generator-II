@@ -40,7 +40,7 @@ function SideNav() {
   const path = usePathname();
 
   return (
-    <div className="w-64 h-screen shadow-lg border-r border-gray-200 bg-white p-5">
+    <div className="w-64 h-screen shadow-lg border-r border-gray-200  p-5">
       <div className="grid gap">
         {MenuOption.map((item, index) => (
           <div key={item.id} className="gap-4 p-2 rounded-lg">

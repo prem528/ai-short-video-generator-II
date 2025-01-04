@@ -7,6 +7,8 @@ import HowItWork from "./pages/HowItWork";
 import AnimatedDemoSection from "./pages/AnimatedDemoSection";
 import PricingSection from "./pages/PricingSection";
 import BackgroundLayout from "./pages/BackgroundLayout";
+import { IntroSection } from "./pages/IntroSection";
+ 
  
 
 export default function Home() {
@@ -15,9 +17,9 @@ export default function Home() {
       <Header />
       <HeroSection />
       <FeaturesSection />
+      <IntroSection/>
+      <AnimatedDemoSection />      
       <CTASection />
-      <AnimatedDemoSection />
-      <HowItWork />
       <PricingSection />
       <Footer />
     </BackgroundLayout>

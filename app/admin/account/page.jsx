@@ -11,7 +11,7 @@ const Account = () => {
     <div className="account p-5">
       <h1 className="text-2xl text-primary font-bold">Account</h1>
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center border border-gray-300 shadow-sm hover:shadow-xl rounded-lg p-10 m-10 bg-white max-w-md mx-auto ">
+        <div className="flex flex-col items-center border border-gray-300 shadow-sm hover:shadow-xl rounded-lg p-10 m-10   max-w-md mx-auto">
           <img
             src={user.imageUrl}
             alt="Profile"
