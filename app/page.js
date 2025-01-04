@@ -8,6 +8,7 @@ import AnimatedDemoSection from "./pages/AnimatedDemoSection";
 import PricingSection from "./pages/PricingSection";
 import BackgroundLayout from "./pages/BackgroundLayout";
 import { IntroSection } from "./pages/IntroSection";
+import VideoCarousel from "./pages/video-carousel";
  
  
 
@@ -16,6 +17,7 @@ export default function Home() {
     <BackgroundLayout>
       <Header />
       <HeroSection />
+      <VideoCarousel/>
       <FeaturesSection />
       <IntroSection/>
       <AnimatedDemoSection />      
