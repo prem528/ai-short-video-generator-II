@@ -4,6 +4,8 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "../about/_components/toggle-theme";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export default function Header() {
   const { user } = useUser();
@@ -20,42 +22,45 @@ export default function Header() {
             className="flex items-center text-2xl font-bold text-white gap-2"
           >
             <Image src={"/logo.png"} width={100} height={50} alt="logo" />
-            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500">Video Generator</h2>
+            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">Video Generator</h2>
           </Link>
-          <div className="font-semibold hidden md:flex space-x-8">
+          <div className="font-semibold text-lg hidden md:flex space-x-8">
             <Link
               href="#features"
-              className=" text-blue-600 hover:text-black transition-colors"
+              className="text-blue-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-blue-500 transition-colors "
             >
               Features
             </Link>
             <Link
               href="#how-it-works"
-              className="text-blue-600 hover:text-black transition-colors"
+              className="text-blue-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-blue-500 transition-colors "
             >
               How It Works
             </Link>
             <Link
               href="#pricing"
-              className="text-blue-600 hover:text-black transition-colors"
+              className="text-blue-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-blue-500 transition-colors "
             >
               Pricing
             </Link>
             <Link
               href="/about"
-              className="text-blue-600 hover:text-black transition-colors"
+             className="text-blue-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-blue-500 transition-colors "
             >
               About
             </Link>
           </div>
-          
+
           <div className="flex gap-3 items-center">
-          <ThemeToggle/>
+            <ThemeToggle />
             <Link
               href={redirectPath}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors"
             >
-              Get Started
+              <Button
+                className={`rounded-full shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 `}
+              >
+                Get Started 
+              </Button>
             </Link>
             <UserButton />
           </div>

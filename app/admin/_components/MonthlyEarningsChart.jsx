@@ -10,11 +10,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { Loader2Icon } from "lucide-react";
 
 const MonthlyEarningsChart = () => {
   const [monthlyEarnings, setMonthlyEarnings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchMonthlyEarnings = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get("/api/get-monthly-earnings");
       if (response.status === 200) {
@@ -27,6 +30,8 @@ const MonthlyEarningsChart = () => {
       }
     } catch (error) {
       console.error("Error fetching monthly earnings:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -37,21 +42,27 @@ const MonthlyEarningsChart = () => {
   return (
     <div className="mt-3" style={{ width: "100%", height: 400 }}>
       <h2 className="p-5 font-bold text-3xl text-primary">Monthly Earnings</h2>
-      <ResponsiveContainer>
-        <LineChart data={monthlyEarnings}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis tickFormatter={(value) => `₹${value}`} />
-          <Tooltip formatter={(value) => `₹${value}`} />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="earnings"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      {isLoading ? (
+        <div className="flex justify-center items-center min-h-[200px]">
+          <Loader2Icon className="h-8 w-8 animate-spin" />
+        </div>
+      ) : (
+        <ResponsiveContainer>
+          <LineChart data={monthlyEarnings}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis tickFormatter={(value) => `₹${value}`} />
+            <Tooltip formatter={(value) => `₹${value}`} />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="earnings"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 };
