@@ -34,7 +34,7 @@ function PlayerDialog({ playVideo, videoId }) {
         .where(eq(VideoData.id, videoId));
 
       if (result?.length) {
-        setVideoData(result[0]); // Set the fetched video data
+        setVideoData(result[0]);
         calculateDurationFrames(result[0].captions);
         setOpenDialog(true);
       } else {
@@ -63,16 +63,23 @@ function PlayerDialog({ playVideo, videoId }) {
 
     setLoadingState(true);
     try {
-      const response = await axios.post("/api/render-video", { videoData });
+      const updatedVideoData = {
+        ...videoData,
+        durationInFrames: durationInFrames,
+      };
+      const response = await axios.post("/api/render-video", {
+        videoData: updatedVideoData,
+      });
 
       if (response.status === 200) {
-        const { bucketName, renderId } = response.data;
+        const { bucketName, renderId, publicUrl } = response.data;
         const videoUrl = `https://storage.googleapis.com/${bucketName}/${renderId}.mp4`;
 
         console.log("Video successfully rendered:", videoUrl);
+        console.log("PublicUrl :", publicUrl);
 
         // Open the video URL in a new tab
-        window.open(videoUrl, "_blank");
+        window.open(publicUrl, "_blank");
       } else {
         console.error("Error rendering video:", response.data.message);
       }

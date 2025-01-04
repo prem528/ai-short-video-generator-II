@@ -194,7 +194,7 @@ function CreateNew() {
 
   // Function to upload images to firebase:
   const uploadImagesToFirebase = async (imageList) => {
-    setLoadingState(true);
+    // setLoadingState(true);
 
     let images = [];
 
@@ -229,7 +229,7 @@ function CreateNew() {
           imageList: images,
         }));
 
-        setLoadingState(false);
+        // setLoadingState(false);
       }
     }
   };
@@ -237,7 +237,11 @@ function CreateNew() {
   // Displays whenever videoData gets updated:
   useEffect(() => {
     // Ensure all required fields are present before saving
-    if (Object.keys(videoData).length === 4) {
+    if (
+      videoData &&
+      typeof videoData === "object" &&
+      Object.keys(videoData).length === 4
+    ) {
       saveVideoData(videoData);
     }
   }, [videoData]);
@@ -271,6 +275,12 @@ function CreateNew() {
       console.log("Inserted video data:", result);
 
       await updateUserCredits();
+
+      toast({
+        title: "Success!",
+        description:
+          "Video generated successfully! Please check your dashboard.",
+      });
     } catch (error) {
       console.error("Error saving video data:", error);
     } finally {
@@ -291,7 +301,11 @@ function CreateNew() {
       credits: userData?.credits - 1,
     }));
 
-    setVideoData(null);
+    setVideoData([]);
+    setFormData({
+      title: "",
+      description: "",
+    });
   };
 
   return (

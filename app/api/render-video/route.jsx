@@ -14,6 +14,8 @@ export async function POST(req) {
       });
     }
 
+    const { durationInFrames } = videoData;
+
     const services = await getServices({
       region: "us-east1",
       compatibleOnly: true,
@@ -30,10 +32,6 @@ export async function POST(req) {
 
     const serviceName = services[0].serviceName;
 
-    const onProgress = ({ progress }) => {
-      console.log(`Rendering is ${Math.round(progress * 100)}% complete`);
-    };
-
     const result = await renderMediaOnCloudrun({
       serviceName,
       region: "us-east1",
@@ -42,7 +40,8 @@ export async function POST(req) {
       inputProps: { ...videoData },
       codec: "h264",
       delayRenderTimeoutInMilliseconds: 900000,
-      updateRenderProgress: onProgress,
+      privacy: "public",
+      frameRange: [0, durationInFrames],
     });
 
     if (result.type === "success") {
@@ -50,6 +49,7 @@ export async function POST(req) {
         JSON.stringify({
           bucketName: result.bucketName,
           renderId: result.renderId,
+          publicUrl: result.publicUrl,
         }),
         { status: 200, headers: { "Content-Type": "application/json" } }
       );
