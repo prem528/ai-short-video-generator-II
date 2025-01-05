@@ -12,7 +12,7 @@ export function HeroSection() {
   const { user } = useUser();
 
   const videos = [
-    "/video22.mp4",
+    "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fvideo22.mp4?alt=media&token=818e0c11-59a7-443f-8395-38fc5180f74a",
     // Add all your video paths here
   ];
 
