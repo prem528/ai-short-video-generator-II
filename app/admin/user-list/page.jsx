@@ -1,7 +1,8 @@
 import { SearchUsers } from "./_components/SearchUser";
 import { clerkClient } from "@clerk/nextjs/server";
-import { removeRole, setRole } from "@/app/api/setRole/route";
+import { setRole } from "@/app/api/setRole/route";
 import UserTable from "./_components/UserTable";
+import { deleteUser } from "@/app/api/delete-user/route";
 
 export default async function Page({ searchParams }) {
   const query = (await searchParams).search;
@@ -23,7 +24,7 @@ export default async function Page({ searchParams }) {
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-primary">Users</h1>
       <SearchUsers />
-      <UserTable users={users} setRole={setRole} />
+      <UserTable users={users} setRole={setRole} deleteUser={deleteUser} />
     </div>
   );
 }

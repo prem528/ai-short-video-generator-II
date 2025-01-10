@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function UserTable({ users, setRole }) {
+export default function UserTable({ users, setRole, deleteUser }) {
   return (
     <div className="overflow-x-auto">
       <Table>
@@ -52,6 +52,15 @@ export default function UserTable({ users, setRole }) {
                       className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 mr-2"
                     >
                       Make User
+                    </Button>
+                  </form>
+                  <form action={deleteUser} className="inline">
+                    <input type="hidden" value={user.id} name="userId" />
+                    <Button
+                      type="submit"
+                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-3"
+                    >
+                      Delete User
                     </Button>
                   </form>
                 </TableCell>
