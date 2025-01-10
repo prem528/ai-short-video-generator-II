@@ -52,7 +52,7 @@ const VideoContainer = () => {
 
   useEffect(() => {
     user && getVideoList();
-  }, [user]);
+  }, [user, videoList]);
 
   // Add these animation variants
   const tabContentVariants = {

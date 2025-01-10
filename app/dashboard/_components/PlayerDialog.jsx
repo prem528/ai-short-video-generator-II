@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import CustomLoading from "@/components/CustomLoading";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 function PlayerDialog({ playVideo, videoId }) {
   const [loadingState, setLoadingState] = useState(false);
@@ -16,6 +17,7 @@ function PlayerDialog({ playVideo, videoId }) {
   const [videoData, setVideoData] = useState(null);
   const [durationInFrames, setDurationInFrames] = useState(10000); // Default value
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (playVideo && videoId) {
@@ -90,6 +92,41 @@ function PlayerDialog({ playVideo, videoId }) {
     }
   };
 
+  // Function to delete a video:
+  const handleDelete = async () => {
+    try {
+      setLoadingState(true);
+      const response = await axios.delete("/api/delete-video", {
+        data: { videoId }, // Pass the videoId in the request body
+      });
+
+      if (response.status === 200) {
+        toast({
+          title: "Video Deleted",
+          description: "The video has been deleted successfully.",
+          variant: "success",
+        });
+        setOpenDialog(false); // Close the dialog after deletion
+        router.refresh();
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete the video.",
+          variant: "error",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while deleting the video.",
+        variant: "error",
+      });
+      console.error(error);
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
   return (
     <>
       <CustomLoading loading={loadingState} />
@@ -114,9 +151,15 @@ function PlayerDialog({ playVideo, videoId }) {
           <div className="flex items-center justify-center gap-5 mt-5">
             <Button onClick={handleExport}>Export</Button>
             <Button
+              className="bg-red-500 hover:bg-red-400"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+            <Button
               className="bg-transparent text-black hover:bg-black hover:text-white"
               onClick={() => {
-                setOpenDialog(false); // Close the dialog
+                setOpenDialog(false);
               }}
             >
               Cancel
