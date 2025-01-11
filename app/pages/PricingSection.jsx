@@ -66,16 +66,16 @@ export default function PricingSection() {
   }, []);
 
   return (
-    <section id="pricing" className="py-16 px-20">
-      <div className="container mx-auto px-20">
-        <h2 className="text-4xl font-bold text-center mb-4  ">
+    <section id="pricing" className="py-8 sm:py-12 md:py-16">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3 sm:mb-4">
           Choose Your AI Video Plan
         </h2>
-        <p className="text-xl text-center mb-12">
+        <p className="text-lg sm:text-xl text-center mb-8 sm:mb-12 max-w-2xl mx-auto">
           Unleash your creativity with our AI-powered video generation
         </p>
         <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto"
           data-aos="zoom-out-up"
         >
           {tiers.map((tier) => (
@@ -83,32 +83,32 @@ export default function PricingSection() {
               key={tier.name}
               className="flex flex-col backdrop-blur-sm hover:shadow-xl transition-shadow duration-300"
             >
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold">
+              <CardHeader className="text-center space-y-2">
+                <CardTitle className="text-xl sm:text-2xl font-bold">
                   {tier.name}
                 </CardTitle>
-                <CardDescription className="text-lg ">
+                <CardDescription className="text-base sm:text-lg">
                   {tier.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex-grow">
-                <p className="text-4xl font-bold text-center mb-6">
+                <p className="text-3xl sm:text-4xl font-bold text-center mb-4 sm:mb-6">
                   {tier.price}
-                  <span className="text-lg font-normal  ">
+                  <span className="text-base sm:text-lg font-normal">
                     {tier.name !== "Enterprise" ? "/month" : ""}
                   </span>
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-2 sm:space-y-3">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-start">
                       <Check className="mr-2 h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span>{feature}</span>
+                      <span className="text-sm sm:text-base">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
-                <Button className="w-full bg-primary hover:bg-blue-700  ">
+              <CardFooter className="pt-4">
+                <Button className="w-full bg-primary hover:bg-blue-700 text-sm sm:text-base py-2 sm:py-3">
                   {tier.name === "Enterprise" ? "Contact Sales" : "Get Started"}
                 </Button>
               </CardFooter>

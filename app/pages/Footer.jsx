@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-opacity-10 mt-8 border-t  py-8">
+    <footer className="bg-opacity-10 mt-8 border-t py-8">
       <div className="container mx-auto px-6">
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col md:flex-row justify-between gap-6">
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-2xl font-bold mb-2">
               Delberto Video Generator
