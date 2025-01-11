@@ -9,6 +9,7 @@ import PricingSection from "./pages/PricingSection";
 import BackgroundLayout from "./pages/BackgroundLayout";
 import { IntroSection } from "./pages/IntroSection";
 import VideoCarousel from "./pages/video-carousel";
+import TestimonialsPage from "./pages/Testimonials";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <AnimatedDemoSection />      
       <CTASection />
       <PricingSection />
+      <TestimonialsPage/>
       <Footer />
     </BackgroundLayout>
   );

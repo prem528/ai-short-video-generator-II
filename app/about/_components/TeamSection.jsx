@@ -22,9 +22,9 @@ export default function TeamSection() {
                 <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Team</h2>
                 <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     {[
-                        { name: 'Name1', role: 'Founder & CEO', image: '/placeholder.svg?height=200&width=200' },
-                        { name: 'Name2', role: 'CTO', image: '/placeholder.svg?height=200&width=200' },
-                        { name: 'Name3', role: 'Head of AI', image: '/placeholder.svg?height=200&width=200' },
+                        { name: 'Name1', role: 'Founder & CEO', image: '/realistic.webp' },
+                        { name: 'Name2', role: 'CTO', image: '/realistic.webp' },
+                        { name: 'Name3', role: 'Head of AI', image: '/realistic.webp' },
                     ].map((member, index) => (
                         <div key={index} className="text-center">
                             <Image
