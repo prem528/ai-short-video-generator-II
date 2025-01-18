@@ -306,6 +306,7 @@ function CreateNew() {
       title: "",
       description: "",
     });
+    setImageList([]);
   };
 
   return (
