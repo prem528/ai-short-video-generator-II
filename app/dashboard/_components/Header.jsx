@@ -35,11 +35,19 @@ function Header({ onMenuClick, sideNavOpen }) {
         {/* Theme Toggle - Always Visible */}
         <ThemeToggle />
         <div className="flex gap-1 items-center px-2 py-1 rounded-md bg-yellow-400 text-sm md:text-base">
-            <Image src={"/coin.png"} alt="coin" height={20} width={20} />
-            <h2>{userData?.credits}</h2>
-          </div>
+          <Image src={"/coin.png"} alt="coin" height={20} width={20} />
+          <h2>{userData?.credits}</h2>
+        </div>
 
-                  {/* Menu Toggle for Small Screens */}
+        {isAdmin && (
+          <Link href="/admin">
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white text-sm md:text-base">
+              Admin
+            </Button>
+          </Link>
+        )}
+
+        {/* Menu Toggle for Small Screens */}
         <button
           className="md:hidden flex items-center p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
           onClick={onMenuClick}
@@ -55,22 +63,13 @@ function Header({ onMenuClick, sideNavOpen }) {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d={sideNavOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+              d={
+                sideNavOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"
+              }
             />
           </svg>
         </button>
-
-        {/* Standard Layout for Medium and Larger Screens */}
-        <div className="hidden md:flex gap-3 items-center">
-          {isAdmin && (
-            <Link href="/admin">
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white text-sm md:text-base">
-                Admin
-              </Button>
-            </Link>
-          )}
-          <UserButton/>
-        </div>
+        <UserButton />
       </div>
     </div>
   );

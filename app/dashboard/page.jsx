@@ -18,6 +18,10 @@ function Dashboard() {
   const [videoList, setVideoList] = useState([]);
   const { user } = useUser();
 
+  useEffect(() => {
+    user && getVideoList();
+  }, [user]);
+
   // Method to get all the videos created by the user:
   const getVideoList = async () => {
     const result = await db
@@ -29,16 +33,12 @@ function Dashboard() {
     setVideoList(result);
   };
 
-  useEffect(() => {
-    user && getVideoList();
-  }, [user]);
-
-  // console.log("VideoList:", videoList);
-
   return (
     <div className="p-4 md:p-6 space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-primary">Dashboard</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-primary">
+          Dashboard
+        </h2>
         <Link href="dashboard/create-new">
           <Button>
             <Plus className="w-4 h-4 mr-2" />

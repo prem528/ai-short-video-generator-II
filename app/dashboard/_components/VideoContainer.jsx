@@ -50,7 +50,7 @@ const VideoContainer = () => {
 
   useEffect(() => {
     user && getVideoList();
-  }, [user, videoList]);
+  }, [user]);
 
   const tabContentVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -59,36 +59,36 @@ const VideoContainer = () => {
 
   return (
     <div className="w-full">
-  <motion.div
-    initial="hidden"
-    animate="visible"
-    variants={tabContentVariants}
-    transition={{ duration: 0.3 }}
-    className="w-full"
-  >
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="text-xl">Recent Videos</CardTitle>
-      </CardHeader>
-      <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide">
-        {isLoading ? (
-          <div className="flex justify-center items-center min-h-[200px]">
-            <Loader2 className="h-8 w-8 animate-spin" />
-          </div>
-        ) : (
-          <div className="w-full">
-            {videoList?.length === 0 && (
-              <div>
-                <EmptyState />
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={tabContentVariants}
+        transition={{ duration: 0.3 }}
+        className="w-full"
+      >
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-xl">Recent Videos</CardTitle>
+          </CardHeader>
+          <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide">
+            {isLoading ? (
+              <div className="flex justify-center items-center min-h-[200px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            ) : (
+              <div className="w-full">
+                {videoList?.length === 0 && (
+                  <div>
+                    <EmptyState />
+                  </div>
+                )}
+                <VideoList videoList={videoList} />
               </div>
             )}
-            <VideoList videoList={videoList} />
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  </motion.div>
-</div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </div>
   );
 };
 

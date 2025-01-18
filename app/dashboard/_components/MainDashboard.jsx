@@ -10,30 +10,10 @@ import { eq } from "drizzle-orm";
 
 export const MainDashboard = () => {
   const [data, setData] = useState({
-    totalRevenue: 0,
-    totalUsers: 0,
-    userVideosCount: 0, // Renamed for clarity
+    userVideosCount: 0,
   });
 
   const { user } = useUser();
-  const { toast } = useToast();
-
-  // Function to fetch monthly revenue data
-  const fetchMonthlyRevenue = async () => {
-    try {
-      const response = await axios.get("/api/get-monthly-revenue");
-      if (response.data.success) {
-        setData((prevData) => ({
-          ...prevData,
-          totalRevenue: response?.data?.revenue,
-        }));
-      } else {
-        console.error("Failed to fetch revenue.");
-      }
-    } catch (error) {
-      console.error("Error fetching monthly revenue:", error);
-    }
-  };
 
   // Function to get videos created by the logged-in user
   const getUserVideosCount = async () => {
@@ -54,7 +34,6 @@ export const MainDashboard = () => {
   };
 
   useEffect(() => {
-    fetchMonthlyRevenue();
     getUserVideosCount();
   }, [user]);
 
@@ -63,7 +42,7 @@ export const MainDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <DashboardCard
           title="Your Videos"
-          value={data.userVideosCount} // Updated to use user's video count
+          value={data.userVideosCount}
           icon={Film}
           description="Videos created by you"
         />

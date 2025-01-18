@@ -4,7 +4,7 @@ import {
   PanelsTopLeft,
   Plus,
   Wallet2,
-  LockKeyhole
+  LockKeyhole,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -36,20 +36,12 @@ function SideNav() {
       path: "/dashboard/account",
       icons: CircleUserIcon,
     },
-    {
-      id: 5,
-      name: "Admin",
-      path: "/admin",
-      icons: LockKeyhole,
-    },
   ];
 
   const path = usePathname();
 
   return (
     <div className="w-64 h-full p-5">
- 
-
       {/* Menu Items */}
       <div className="grid gap">
         {MenuOption.map((item) => (
