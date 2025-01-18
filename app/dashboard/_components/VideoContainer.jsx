@@ -24,7 +24,6 @@ const VideoContainer = () => {
   const [userName, setUserName] = useState("John Doe");
   const [userEmail, setUserEmail] = useState("john.doe@example.com");
 
-  // Fetch user details
   useEffect(() => {
     if (user) {
       const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
@@ -35,7 +34,6 @@ const VideoContainer = () => {
     }
   }, [user]);
 
-  // Method to get all the videos created by the user:
   const getVideoList = async () => {
     try {
       const result = await db
@@ -54,47 +52,43 @@ const VideoContainer = () => {
     user && getVideoList();
   }, [user, videoList]);
 
-  // Add these animation variants
   const tabContentVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 10 },
   };
 
   return (
-    <div>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={tabContentVariants}
-        transition={{ duration: 0.3 }}
-      >
-        <Card className="">
-          <CardHeader>
-            <CardTitle className="text-xl">Recent Videos</CardTitle>
-          </CardHeader>
-          <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide">
-            {isLoading ? (
-              <div className="flex justify-center items-center min-h-[200px]">
-                <Loader2 className="h-8 w-8 animate-spin" />
-              </div>
-            ) : (
+    <div className="w-full">
+  <motion.div
+    initial="hidden"
+    animate="visible"
+    variants={tabContentVariants}
+    transition={{ duration: 0.3 }}
+    className="w-full"
+  >
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle className="text-xl">Recent Videos</CardTitle>
+      </CardHeader>
+      <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide">
+        {isLoading ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : (
+          <div className="w-full">
+            {videoList?.length === 0 && (
               <div>
-                {/* Empty state */}
-                {videoList?.length == 0 && (
-                  <div>
-                    {" "}
-                    <EmptyState />
-                  </div>
-                )}
-
-                {/* List of videos */}
-                <VideoList videoList={videoList} />
+                <EmptyState />
               </div>
             )}
-          </CardContent>
-        </Card>
-      </motion.div>
-    </div>
+            <VideoList videoList={videoList} />
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </motion.div>
+</div>
   );
 };
 

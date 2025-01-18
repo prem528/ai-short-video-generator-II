@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-opacity-10">
-      <nav className="container mx-auto px-6 py-4">
+      <nav className="container mx-auto lg:px-6 py-4">
         <div className="flex justify-between items-center">
           <Link
             href="/"
