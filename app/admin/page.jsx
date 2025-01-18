@@ -60,7 +60,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="p-6 px-24   min-h-screen rounded-md">
+    <div className="p-6 px-2   min-h-screen rounded-md">
       {/* Dashboard Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="font-bold text-3xl text-primary">Admin Dashboard</h2>

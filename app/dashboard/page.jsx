@@ -36,22 +36,21 @@ function Dashboard() {
   // console.log("VideoList:", videoList);
 
   return (
-    <div className="p-5">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-primary">Dashboard</h2>
-        <Link href={"dashboard/create-new"}>
+    <div className="p-4 md:p-6 space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-primary">Dashboard</h2>
+        <Link href="dashboard/create-new">
           <Button>
-             <Plus className="w-5 h-5" /> 
-              New Video
-             </Button>
+            <Plus className="w-4 h-4 mr-2" />
+            New Video
+          </Button>
         </Link>
       </div>
-      <div>
-        <MainDashboard/>
-        <QuickActions/>
+      <div className="space-y-6">
+        <MainDashboard />
+        <QuickActions />
+        <VideoContainer />
       </div>
-      <VideoContainer/>
-      
     </div>
   );
 }
