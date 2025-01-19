@@ -24,7 +24,9 @@ export default async function Page({ searchParams }) {
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-primary">Users</h1>
       <SearchUsers />
-      <UserTable users={users} setRole={setRole} deleteUser={deleteUser} />
+      <div className="overflow-x-auto">
+        <UserTable users={users} setRole={setRole} deleteUser={deleteUser} />
+      </div>
     </div>
   );
 }

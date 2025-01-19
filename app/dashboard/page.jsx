@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
-import EmptyState from "./_components/EmptyState";
 import Link from "next/link";
 import { db } from "@/configs/db";
 import { VideoData } from "@/configs/schema";
@@ -12,7 +11,7 @@ import VideoList from "./_components/VideoList";
 import { MainDashboard } from "./_components/MainDashboard";
 import { Plus } from "lucide-react";
 import VideoContainer from "./_components/VideoContainer";
-import QuickActions from "./_components/QuickActions";
+
 
 function Dashboard() {
   const [videoList, setVideoList] = useState([]);
@@ -35,7 +34,7 @@ function Dashboard() {
 
   return (
     <div className="p-4 md:p-6 space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col py-4 sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-2xl md:text-3xl font-bold text-primary">
           Dashboard
         </h2>
@@ -48,7 +47,6 @@ function Dashboard() {
       </div>
       <div className="space-y-6">
         <MainDashboard />
-        <QuickActions />
         <VideoContainer />
       </div>
     </div>
