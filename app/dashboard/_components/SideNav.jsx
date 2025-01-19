@@ -41,16 +41,18 @@ function SideNav() {
   const path = usePathname();
 
   return (
-    <div className="w-64 h-full p-5">
+    <div className="w-64 h-full p-5 bg-background dark:bg-background">
       {/* Menu Items */}
       <div className="grid gap">
         {MenuOption.map((item) => (
           <div key={item.id} className="gap-4 p-2 rounded-lg">
             <Link href={item.path}>
               <div
-                className={`flex items-center gap-3 p-3 hover:bg-blue-500 hover:text-white rounded-md cursor-pointer ${
-                  path === item.path && "bg-blue-500 text-white"
-                }`}
+                className={`flex items-center gap-3 p-3 hover:bg-blue-500 hover:text-white rounded-md cursor-pointer transition-colors
+                  ${path === item.path 
+                    ? "bg-blue-500 text-white" 
+                    : "text-foreground hover:text-white"
+                  }`}
               >
                 <item.icons />
                 <h2>{item.name}</h2>

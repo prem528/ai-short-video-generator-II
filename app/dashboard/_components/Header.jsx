@@ -9,19 +9,17 @@ import Link from "next/link";
 import React, { useContext, useState } from "react";
 
 function Header({ onMenuClick, sideNavOpen }) {
-  const { user, isLoaded } = useUser(); // Get the current user and loading state
+  const { user, isLoaded } = useUser();
   const { userData } = useContext(UserDetailContext);
-  const [menuOpen, setMenuOpen] = useState(false); // Menu toggle state
 
   if (!isLoaded) {
     return null;
   }
 
-  // Get the user's role from metadata
   const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
-    <div className="p-3 px-5 flex items-center justify-between shadow-lg border-gray-200 backdrop-blur-sm bg-opacity-90 bg-white">
+    <div className="p-3 px-5 md:py-5 flex items-center justify-between shadow-lg border-gray-200 backdrop-blur-sm bg-background/90 dark:border-gray-800">
       {/* Logo Section */}
       <Link href="/" className="flex gap-3 items-center">
         <Image src={"/logo.png"} width={100} height={50} alt="logo" />
@@ -49,7 +47,7 @@ function Header({ onMenuClick, sideNavOpen }) {
 
         {/* Menu Toggle for Small Screens */}
         <button
-          className="md:hidden flex items-center p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+          className="md:hidden flex items-center p-2 text-foreground hover:text-foreground/80 focus:outline-none"
           onClick={onMenuClick}
         >
           <svg
