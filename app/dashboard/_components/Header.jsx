@@ -19,7 +19,7 @@ function Header({ onMenuClick, sideNavOpen }) {
   const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
-    <div className="p-3 px-5 md:py-5 flex items-center justify-between shadow-lg border-gray-200 backdrop-blur-sm bg-background/90 dark:border-gray-800">
+    <div className="p-3 px-5 md:py-4 flex items-center justify-between shadow-lg border-gray-200 backdrop-blur-sm bg-background/90 dark:border-gray-800">
       {/* Logo Section */}
       <Link href="/" className="flex gap-3 items-center">
         <Image src={"/logo.png"} width={100} height={50} alt="logo" />
@@ -67,7 +67,9 @@ function Header({ onMenuClick, sideNavOpen }) {
             />
           </svg>
         </button>
-        <UserButton />
+        <div className="hidden md:flex ">
+          <UserButton />
+        </div>
       </div>
     </div>
   );

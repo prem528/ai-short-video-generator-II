@@ -125,35 +125,33 @@ function Page() {
   };
 
   return (
-    <div className="md:px-20">
-      <div className="mt-10 p-10 relative animate-shadow-pulse  ">
-        <h1 className="font-bold text-4xl text-primary text-center">
-          Add Credits
-        </h1>
-        <div className="m-20 flex items-center justify-center">
-          <div className="flex flex-row justify-between gap-5 border-solid border-primary">
-            <CoinCard
-              title="Basic Pack"
-              price="10"
-              description="Adds 10 credits to your account!"
-              onClick={() => makePayment(10)}
-            />
-            <CoinCard
-              title="Value Pack"
-              price="100"
-              description="Adds 100 credits to your account!"
-              onClick={() => makePayment(100)}
-            />
-            <CoinCard
-              title="Ultimate Pack"
-              price="1000"
-              description="Adds 1000 credits to your account!"
-              onClick={() => makePayment(1000)}
-            />
-          </div>
-        </div>
+    <div className="px-5 md:px-20">
+    <div className="mt-10 md:py-24 py-6 relative animate-shadow-pulse rounded-xl">
+      <h1 className="font-bold text-2xl md:text-4xl text-primary text-center">
+        Add Credits
+      </h1>
+      <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-center gap-5 ">
+        <CoinCard
+          title="Basic Pack"
+          price="10"
+          description="Adds 10 credits to your account!"
+          onClick={() => makePayment(10)}
+        />
+        <CoinCard
+          title="Value Pack"
+          price="100"
+          description="Adds 100 credits to your account!"
+          onClick={() => makePayment(100)}
+        />
+        <CoinCard
+          title="Ultimate Pack"
+          price="1000"
+          description="Adds 1000 credits to your account!"
+          onClick={() => makePayment(1000)}
+        />
       </div>
     </div>
+  </div>
   );
 }
 

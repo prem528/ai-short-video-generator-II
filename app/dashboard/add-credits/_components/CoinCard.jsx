@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function CoinCard({ title, price, description, onClick }) {
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow">
+    <Card className="p-6 border border-sky-300 overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
       <div className="flex flex-col items-center space-y-4">
         <h2 className="text-lg font-bold text-primary">{title}</h2>
         <Image src={Coin} alt="coin" height={30} width={30} />

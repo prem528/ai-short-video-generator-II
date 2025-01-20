@@ -60,8 +60,8 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="container mx-auto py-0 ">
-      <h1 className="text-4xl font-bold mb-6">Your Account</h1>
+    <div className="container mx-auto py-5 px-10 ">
+      <h1 className="text-4xl text-primary font-bold mb-6">Your Account</h1>
       <div className="grid gap-6 md:grid-cols-[1fr_3fr]">
 
         <Card className='h-80'>
