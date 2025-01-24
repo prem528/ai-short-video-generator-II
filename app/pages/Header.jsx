@@ -1,5 +1,4 @@
 "use client";
-
 import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,7 +40,7 @@ export default function Header() {
           >
             <Image src={"/logo.png"} width={100} height={50} alt="logo" />
             <h2 className="hidden md:block text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
-              Video Generator
+              Ai Shorts
             </h2>
           </Link>
 
