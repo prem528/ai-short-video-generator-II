@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -8,12 +8,22 @@ import { useUser } from "@clerk/nextjs";
 
 export function HeroSection() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);  // Loading state for button
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
+  const videoRef = useRef(null);
 
   const videos = [
     "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fvideo22.mp4?alt=media&token=818e0c11-59a7-443f-8395-38fc5180f74a",
   ];
+
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    
+    if (videoEl) {
+      videoEl.preload = 'metadata';
+      videoEl.setAttribute('fetchpriority', 'low');
+    }
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,13 +41,19 @@ export function HeroSection() {
   return (
     <section className="relative h-screen overflow-hidden">
       <video
+        ref={videoRef}
         key={videos[currentVideoIndex]}
         autoPlay
         loop
         muted
         playsInline
         preload="metadata"
+        poster="/hero.png"
         className="absolute w-full h-full object-cover"
+        style={{ 
+          transform: 'translateZ(0)', 
+          willChange: 'transform'
+        }}
       >
         <source src={videos[currentVideoIndex]} type="video/mp4" />
       </video>
