@@ -68,7 +68,7 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="py-8 sm:py-12 md:py-16">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3 sm:mb-4">
+        <h2 className="text-3xl sm:text-4xl font-normal text-center mb-3 sm:mb-4">
           Choose Your AI Video Plan
         </h2>
         <p className="text-lg sm:text-xl text-center mb-8 sm:mb-12 max-w-2xl mx-auto">

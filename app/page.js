@@ -1,4 +1,4 @@
-import { HeroSection } from "./pages/HeroSection";
+import  HeroSection  from "./pages/HeroSection";
 import { FeaturesSection } from "./pages/FeaturesSection";
 import { CTASection } from "./pages/CTASection";
 import Header from "./pages/Header";
@@ -9,6 +9,8 @@ import BackgroundLayout from "./pages/BackgroundLayout";
 import { IntroSection } from "./pages/IntroSection";
 import VideoCarousel from "./pages/video-carousel";
 import TestimonialsPage from "./pages/Testimonials";
+import ROIStatistics from "./pages/ROIStatistics";
+import Platform from "./pages/Platforms";
 
 export default function Home() {
   return (
@@ -20,6 +22,8 @@ export default function Home() {
       <IntroSection/>
       <AnimatedDemoSection />      
       <CTASection />
+      <ROIStatistics/>
+      <Platform/>
       <PricingSection />
       <TestimonialsPage/>
       <Footer />

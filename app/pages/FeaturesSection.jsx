@@ -15,7 +15,7 @@ export function FeaturesSection() {
   return (
     <section id="features" className="py-20" data-aos="fade-up">
       <div className="container mx-auto lg:px-20 px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">
+        <h2 className="text-3xl font-noraml text-center mb-12">
           Why Choose Our Platform?
         </h2>
         <div className=" text-center grid md:grid-cols-2 lg:grid-cols-4 gap-8">
