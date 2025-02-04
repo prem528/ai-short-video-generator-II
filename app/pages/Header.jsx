@@ -39,13 +39,13 @@ export default function Header() {
             className="flex items-center text-2xl font-bold text-white gap-2"
           >
             <Image src={"/logo.png"} width={100} height={50} alt="logo" />
-            <h2 className="hidden md:block text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+            <h2 className="hidden font-light md:block text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
               Ai Shorts
             </h2>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="font-semibold text-lg hidden md:flex space-x-8">
+          <div className="font-normal text-lg hidden md:flex space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -65,7 +65,7 @@ export default function Header() {
               className="hidden md:block"
             >
               <Button
-                className="rounded-full shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 flex items-center"
+                className=" shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 flex items-center"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -132,7 +132,7 @@ export default function Header() {
               className="block"
             >
               <Button
-                className="w-full rounded-full shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 flex items-center justify-center"
+                className="w-full rounded-xl shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 flex items-center justify-center"
                 disabled={isLoading}
               >
                 {isLoading ? "Loading..." : "Get Started"}

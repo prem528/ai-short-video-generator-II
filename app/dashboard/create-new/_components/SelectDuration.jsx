@@ -23,7 +23,7 @@ function SelectDuration({ onUserSelect }) {
 
   return (
     <div className="mt-5">
-      <h2 className="font-bold text-2xl text-primary">Duration</h2>
+      <h2 className="font-noraml text-xl text-primary">Duration</h2>
       <p className="text-gray-500">What is the duration of the video?</p>
       <Select onValueChange={handleValueChange}>
         <SelectTrigger className="w-full mt-2 text-lg">

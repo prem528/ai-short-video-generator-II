@@ -46,8 +46,8 @@ function NavBar() {
         {/* Logo Section */}
         <Link href="/" className="flex gap-3 items-center">
           <Image src={"/logo.png"} width={100} height={50} alt="logo" />
-          <h2 className="hidden md:block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500 font-bold text-lg md:text-xl">
-            Video Generator
+          <h2 className="font-light hidden md:block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500  text-lg md:text-2xl">
+             Ai shorts 
           </h2>
         </Link>
 

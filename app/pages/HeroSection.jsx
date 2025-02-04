@@ -1,65 +1,68 @@
-"use client"
-import { useState, useEffect, useRef } from "react";
-import { Video } from "lucide-react";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { Button } from "/components/ui/button";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useUser } from "@clerk/nextjs";
+import { Video } from "lucide-react";
 
-export function HeroSection() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const { user } = useUser();
-  const videoRef = useRef(null);
-
-  const videos = [
-    "https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fvideo22.mp4?alt=media&token=818e0c11-59a7-443f-8395-38fc5180f74a",
-  ];
+export default function HeroSection() {
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    const videoEl = videoRef.current;
-    
-    if (videoEl) {
-      videoEl.preload = 'metadata';
-      videoEl.setAttribute('fetchpriority', 'low');
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Set canvas size
+    const setSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    setSize();
+    window.addEventListener("resize", setSize);
+
+    // Create vertical lines effect
+    const lines = [];
+    for (let i = 0; i < 20; i++) {
+      lines.push({
+        x: Math.random() * canvas.width,
+        speed: 0.2 + Math.random() * 0.3,
+        opacity: 0.1 + Math.random() * 0.2,
+      });
     }
-  }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentVideoIndex((prevIndex) =>
-        prevIndex === videos.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
+    // Animation
+    const animate = () => {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const handleButtonClick = () => {
-    setIsLoading(true);
-  };
+      lines.forEach((line) => {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(150, 255, 0, ${line.opacity})`;
+        ctx.lineWidth = 1;
+        ctx.moveTo(line.x, 0);
+        ctx.lineTo(line.x, canvas.height);
+        ctx.stroke();
+
+        line.x += line.speed;
+        if (line.x > canvas.width) line.x = 0;
+      });
+
+      requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", setSize);
+    };
+  }, []);
 
   return (
     <section className="relative h-screen overflow-hidden">
-      <video
-        ref={videoRef}
-        key={videos[currentVideoIndex]}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        poster="/hero.png"
-        className="absolute w-full h-full object-cover"
-        style={{ 
-          transform: 'translateZ(0)', 
-          willChange: 'transform'
-        }}
-      >
-        <source src={videos[currentVideoIndex]} type="video/mp4" />
-      </video>
-
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/50 animated-gradient mix-blend-overlay" />
-
+      <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-100" style={{ mixBlendMode: "screen" }} />
       <div className="relative flex justify-center items-center h-full p-3">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -69,50 +72,31 @@ export function HeroSection() {
         >
           <Video className="w-16 h-16 text-white animate-pulse" />
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/10 p-6 rounded-lg">
-            Create Stunning Videos with{" "}
+            Create Stunning Videos with {" "}
             <span className="text-transparent animated-gradient bg-clip-text">
-              AI Magic
+              Ai Magic
             </span>
           </h1>
           <p className="text-xl text-white/90 max-w-2xl backdrop-blur-sm bg-black/3 rounded-lg">
             Transform your ideas into captivating short videos in minutes.
             Powered by cutting-edge AI technology.
           </p>
+
+          {/* Status Banner */}
+          <div className="relative z-10 mt-20 flex justify-center">
+            <div className="flex items-center gap-2 rounded-full bg-[#002020]/50 px-4 py-2 text-sm">
+              <span className="text-gray-300">EXPERIENCE THE</span>
+              <div className="ml-2 rounded-full bg-[#398eb2] px-3 py-1 text-[#002020]">Ai Magic </div>
+            </div>
+          </div>
+
           <div className="flex gap-4">
             <Link href="/dashboard">
               <Button
                 size="lg"
                 className="animated-gradient hover:text-black hover:font-semibold"
-                onClick={handleButtonClick}
-                disabled={isLoading}
               >
-                {isLoading ? (
-                  <span className="flex items-center gap-2">
-                    <svg
-                      className="animate-spin h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v8H4z"
-                      ></path>
-                    </svg>
-                    Loading...
-                  </span>
-                ) : (
-                  "Get Started Free"
-                )}
+                Get Started Free
               </Button>
             </Link>
             <Button

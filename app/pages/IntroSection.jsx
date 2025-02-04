@@ -39,7 +39,7 @@ export function IntroSection() {
       
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
-          <h1 className={`text-4xl md:text-6xl font-bold tracking-tight mb-6 `}>
+          <h1 className={`text-4xl font-normal md:text-6xl tracking-tight mb-6 `}>
             Transform Products into
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-blue-600 ml-2 animate-gradient-x">
               Engaging Videos
@@ -53,7 +53,7 @@ export function IntroSection() {
 
         {/* Process Section */}
         <div className="mt-24">
-          <h2 className={`text-3xl underline font-bold text-center mb-16 ${fadeInUp}`}>
+          <h2 className={`text-3xl underline font-noraml text-center mb-16 ${fadeInUp}`}>
             Four Simple Steps to Amazing Product Videos
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -24,7 +24,7 @@ export default function BackgroundLayout({ children }) {
       <div
         className={`absolute inset-0 bg-gradient-to-br ${
           theme === "dark"
-            ? "from-violet-950 via-background to-blue-950"
+            ? "from-black via-black/50 to-black"
             : "from-violet-100 via-white to-blue-100"
         } animate-gradient`}
       />
