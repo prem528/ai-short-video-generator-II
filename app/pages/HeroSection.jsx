@@ -2,12 +2,18 @@
 
 import { Button } from "/components/ui/button";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Video } from "lucide-react";
 
 export default function HeroSection() {
   const canvasRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const colorRef = useRef(0); // To keep track of the color transition
+
+  const handleButtonClick = () => {
+    setIsLoading(true);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -24,13 +30,14 @@ export default function HeroSection() {
     setSize();
     window.addEventListener("resize", setSize);
 
-    // Create vertical lines effect
+    // Create vertical lines effect with color properties
     const lines = [];
     for (let i = 0; i < 20; i++) {
       lines.push({
         x: Math.random() * canvas.width,
         speed: 0.2 + Math.random() * 0.3,
         opacity: 0.1 + Math.random() * 0.2,
+        hueOffset: Math.random() * 30 // Add slight variation to each line
       });
     }
 
@@ -39,9 +46,14 @@ export default function HeroSection() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Update the base hue
+      colorRef.current = (colorRef.current + 0.5) % 360;
+
       lines.forEach((line) => {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(150, 255, 0, ${line.opacity})`;
+        // Use HSL color with changing hue
+        const hue = (colorRef.current + line.hueOffset) % 360;
+        ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${line.opacity})`;
         ctx.lineWidth = 1;
         ctx.moveTo(line.x, 0);
         ctx.lineTo(line.x, canvas.height);
@@ -67,7 +79,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 1, delay: 0.8 }}
           className="flex flex-col items-center text-center space-y-8"
         >
           <Video className="w-16 h-16 text-white animate-pulse" />
@@ -91,12 +103,39 @@ export default function HeroSection() {
           </div>
 
           <div className="flex gap-4">
-            <Link href="/dashboard">
+            <Link href="/dashboard" onClick={handleButtonClick}>
               <Button
                 size="lg"
                 className="animated-gradient hover:text-black hover:font-semibold"
+                disabled={isLoading}
               >
-                Get Started Free
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z"
+                      ></path>
+                    </svg>
+                    Loading...
+                  </span>
+                ) : (
+                  "Get Started Free"
+                )}
               </Button>
             </Link>
             <Button
