@@ -42,6 +42,7 @@ export async function POST(req) {
       delayRenderTimeoutInMilliseconds: 900000,
       privacy: "public",
       frameRange: [0, durationInFrames],
+      downloadBehavior: { type: "download", fileName: "download.mp4" },
     });
 
     if (result.type === "success") {
