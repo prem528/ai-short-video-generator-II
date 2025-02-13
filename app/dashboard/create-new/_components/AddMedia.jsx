@@ -21,7 +21,7 @@ const AddMedia = ({ onMediaChange }) => {
 
   return (
     <div className="mt-5">
-      <h2 className="font-noraml text-xl text-primary ">Product Images</h2>
+      <h2 className="font-normal text-xl text-primary ">Product Images</h2>
 
       {/* Image List with Dotted Rectangle */}
       <div

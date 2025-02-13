@@ -9,25 +9,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-function SelectDuration({ onUserSelect }) {
-  const options = ["15 seconds", "30 seconds", "60 seconds"];
+function SelectGender({ onUserSelect }) {
+  const options = ["male", "female"];
 
   const [selectedOption, setSelectedOption] = useState();
 
   const handleValueChange = (value) => {
     setSelectedOption(value);
     if (onUserSelect) {
-      onUserSelect("duration", value);
+      onUserSelect("gender", value);
     }
   };
 
   return (
     <div className="mt-5">
-      <h2 className="font-normal text-xl text-primary">Duration</h2>
-      <p className="text-gray-500">What is the duration of the video?</p>
+      <h2 className="font-normal text-xl text-primary">Gender</h2>
+      <p className="text-gray-500">
+        What will be the gender of voice for the video?
+      </p>
       <Select onValueChange={handleValueChange}>
         <SelectTrigger className="w-full mt-2 text-lg">
-          <SelectValue placeholder="Select Duration" />
+          <SelectValue placeholder="Select Gender" />
         </SelectTrigger>
         <SelectContent>
           {options.map((item, index) => (
@@ -41,4 +43,4 @@ function SelectDuration({ onUserSelect }) {
   );
 }
 
-export default SelectDuration;
+export default SelectGender;

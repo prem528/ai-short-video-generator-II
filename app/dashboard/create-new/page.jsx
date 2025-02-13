@@ -21,6 +21,9 @@ import { Users, VideoData } from "@/configs/schema";
 import { UserDetailContext } from "@/app/_context/userDataContext";
 import { eq } from "drizzle-orm";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
+import SelectGender from "./_components/SelectGender";
+import SelectLanguage from "./_components/SelectLanguage";
 
 function CreateNew() {
   // storing form data:
@@ -88,7 +91,7 @@ function CreateNew() {
   const getVideoScript = async () => {
     setLoadingState(true);
 
-    await uploadImagesToFirebase(imageList);
+    // await uploadImagesToFirebase(imageList);
 
     const prompt = `
   Write a script for a video with a duration of "${formData.duration}" on the topic "${formData.topic}". 
@@ -123,7 +126,7 @@ function CreateNew() {
 
       console.log("This is the videoScript:", resp.data.result);
 
-      resp.data.result && (await generateAudioFile(resp.data.result));
+      // resp.data.result && (await generateAudioFile(resp.data.result));
     } catch (error) {
       console.error("Error fetching video script:", error);
     } finally {
@@ -340,22 +343,31 @@ function CreateNew() {
         {/* Select Topic */}
         <SelectTopic onUserSelect={onHandleInputChange} />
 
-        {/* Select Style
-        <SelectStyle
-          onUserSelect={(style) => onHandleInputChange("imageStyle", style)}
-        /> */}
+        <div className="flex flex-col sm:flex-row gap-4 w-full">
+          {/* Select Gender */}
+          <div className="w-full">
+            <SelectGender onUserSelect={onHandleInputChange} />
+          </div>
 
-        {/* Duration */}
+          {/* Select Language */}
+          <div className="w-full">
+            <SelectLanguage onUserSelect={onHandleInputChange} />
+          </div>
+        </div>
+
+        {/* Select Duration */}
         <SelectDuration onUserSelect={onHandleInputChange} />
 
         {/* Create Button */}
         <div className="flex justify-center mt-5">
-          <Button
-            className="flex items-center rounded-full"
-            onClick={onCreateClickHandler}
-          >
-            Create Video
-          </Button>
+          <Link href={"/dashboard/create-new/editor"}>
+            <Button
+              className="flex items-center rounded-full"
+              onClick={onCreateClickHandler}
+            >
+              Next
+            </Button>
+          </Link>
         </div>
       </div>
 

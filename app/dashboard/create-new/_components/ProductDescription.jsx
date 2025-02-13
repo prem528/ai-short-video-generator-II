@@ -29,7 +29,7 @@ function ProductDescription({ value, onValueChange }) {
 
   return (
     <div className="mt-5 mb-5">
-      <h2 className="font-noraml text-xl text-primary">Product Description</h2>
+      <h2 className="font-normal text-xl text-primary">Product Description</h2>
       <Textarea
         ref={textareaRef}
         className="mt-3 resize-none"

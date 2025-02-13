@@ -19,7 +19,9 @@ function ProductName({ value, onValueChange }) {
 
   return (
     <div className="mt-5">
-      <Label className='font-noraml text-xl text-primary'  htmlFor="productName">Product Name</Label>
+      <Label className="font-normal text-xl text-primary" htmlFor="productName">
+        Product Name
+      </Label>
       <Input
         id="name"
         type="text"
