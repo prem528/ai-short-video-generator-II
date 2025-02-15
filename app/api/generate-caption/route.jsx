@@ -28,7 +28,7 @@ export async function POST(req) {
     });
 
     // Prepare data for transcription
-    const data = { audio: audioFileUrl };
+    const data = { audio: audioFileUrl, language_detection: true };
 
     // Transcribe audio file
     const transcript = await client.transcripts.transcribe(data);

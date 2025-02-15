@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 
 function SelectGender({ onUserSelect }) {
-  const options = ["male", "female"];
+  const options = ["MALE", "FEMALE"];
 
   const [selectedOption, setSelectedOption] = useState();
 

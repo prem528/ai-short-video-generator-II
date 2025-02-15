@@ -26,4 +26,7 @@ export const VideoData = pgTable("videoData", {
   captions: json("captions").notNull(),
   imageList: varchar("imageList").array(),
   createdBy: varchar("createdBy").notNull(),
+  title: varchar("title"),
+  language: varchar("language"),
+  gender: varchar("gender"),
 });

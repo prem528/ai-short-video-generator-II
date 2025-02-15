@@ -11,12 +11,26 @@ const client = new textToSpeech.TextToSpeechClient({
 });
 
 export async function POST(req) {
-  const { text, id } = await req.json();
+  const languageMap = {
+    Hindi: "hi-IN",
+    Tamil: "ta-IN",
+    Telugu: "te-IN",
+    Bengali: "bn-IN",
+    Gujarati: "gu-IN",
+    Kannada: "kn-IN",
+    Malayalam: "ml-IN",
+    Marathi: "mr-IN",
+    Punjabi: "pa-IN",
+    English: "en-US",
+  };
+
+  const { text, id, language, gender } = await req.json();
   const storageRef = ref(storage, "/ai-video-file/" + id + ".mp3");
+  const languageCode = languageMap[language];
 
   const request = {
     input: { text: text },
-    voice: { languageCode: "en-US", ssmlGender: "FEMALE" },
+    voice: { languageCode: languageCode, ssmlGender: gender },
     audioConfig: { audioEncoding: "MP3" },
   };
 

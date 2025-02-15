@@ -10,14 +10,25 @@ import {
 } from "@/components/ui/select";
 
 function SelectLanguage({ onUserSelect }) {
-  const options = ["hindi", "english"];
+  const options = [
+    "English",
+    "Bengali",
+    "Gujarati",
+    "Hindi",
+    "Kannada",
+    "Malayalam",
+    "Marathi",
+    "Punjabi",
+    "Tamil",
+    "Telugu",
+  ];
 
   const [selectedOption, setSelectedOption] = useState();
 
   const handleValueChange = (value) => {
     setSelectedOption(value);
     if (onUserSelect) {
-      onUserSelect("gender", value);
+      onUserSelect("language", value);
     }
   };
 

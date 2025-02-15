@@ -33,12 +33,26 @@ function RemotionVideo({ script, imageList, audioFileUrl, captions }) {
     return null;
   }
 
+  // Function to get the current captions:
   const getCurrentCaptions = () => {
-    const currentTime = (frame / 30) * 1000; // Converts frames to miliseconds
-    const currentCaption = captions.find(
-      (word) => currentTime >= word.start && currentTime <= word.end
-    );
-    return currentCaption ? currentCaption?.text : "";
+    const currentTime = (frame / 30) * 1000; // Convert frames to milliseconds
+
+    const wordsPerGroup = 4;
+
+    let startIndex = captions.findIndex((word) => currentTime < word.end);
+
+    if (startIndex === -1) return "";
+
+    // Group words into chunks of 3-4
+    startIndex = Math.floor(startIndex / wordsPerGroup) * wordsPerGroup;
+
+    // Get the next 3-4 words in sequence
+    const displayedWords = captions
+      .slice(startIndex, startIndex + wordsPerGroup)
+      .map((c) => c.text)
+      .join(" ");
+
+    return displayedWords || "";
   };
 
   return (
@@ -66,39 +80,63 @@ function RemotionVideo({ script, imageList, audioFileUrl, captions }) {
                 alignItems: "center",
               }}
             >
+              {/* Background Image */}
               <Img
                 src={item}
                 style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
                   height: "100%",
                   width: "100%",
                   objectFit: "cover",
+                  filter: "blur(20px)",
+                  transform: "scale(1.2)",
+                }}
+              />
+              {/* Main Image */}
+              <Img
+                src={item}
+                style={{
+                  position: "absolute",
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "contain",
                   transform: `scale(${scale(index)})`,
                 }}
               />
-
-              <AbsoluteFill
-                style={{
-                  color: "white",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  top: undefined,
-                  bottom: 50,
-                  height: 150,
-                  width: "100%",
-                }}
-              >
-                <h2
+              {/* Captions */}
+              {getCurrentCaptions() && (
+                <AbsoluteFill
                   style={{
-                    fontSize: "1rem",
-                    backgroundColor: "black",
-                    padding: "0.25rem",
-                    borderRadius: "0.125rem",
+                    color: "white",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    top: undefined,
+                    bottom: -10,
+                    height: 150,
+                    width: "100%",
+                    opacity: interpolate(
+                      frame,
+                      [frame - 10, frame, frame + 10], // Fade in and out smoothly
+                      [0, 1, 0], // 0 = invisible, 1 = fully visible
+                      { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+                    ),
                   }}
                 >
-                  {getCurrentCaptions()}
-                </h2>
-              </AbsoluteFill>
+                  <h2
+                    style={{
+                      fontSize: "1rem",
+                      backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background
+                      padding: "0.25rem",
+                      borderRadius: "0.125rem",
+                    }}
+                  >
+                    {getCurrentCaptions()}
+                  </h2>
+                </AbsoluteFill>
+              )}
             </AbsoluteFill>
           </Sequence>
         );
