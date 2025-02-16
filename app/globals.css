@@ -94,11 +94,12 @@
 
 @layer utilities {
   .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
   .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
+    display: none; /* Chrome, Safari and Opera */
   }
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Bengali&family=Noto+Sans+Gujarati&family=Noto+Sans+Devanagari&family=Noto+Sans+Kannada&family=Noto+Sans+Malayalam&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&display=swap");

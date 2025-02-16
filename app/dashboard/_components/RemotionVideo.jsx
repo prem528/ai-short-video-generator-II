@@ -9,6 +9,27 @@ import {
   useVideoConfig,
 } from "remotion";
 
+import { loadFont as loadNotoSans } from "@remotion/google-fonts/NotoSans";
+import { loadFont as loadNotoSansBengali } from "@remotion/google-fonts/NotoSansBengali";
+import { loadFont as loadNotoSansGujarati } from "@remotion/google-fonts/NotoSansGujarati";
+import { loadFont as loadNotoSansDevanagari } from "@remotion/google-fonts/NotoSansDevanagari";
+import { loadFont as loadNotoSansKannada } from "@remotion/google-fonts/NotoSansKannada";
+import { loadFont as loadNotoSansMalayalam } from "@remotion/google-fonts/NotoSansMalayalam";
+import { loadFont as loadNotoSansGurmukhi } from "@remotion/google-fonts/NotoSansGurmukhi";
+import { loadFont as loadNotoSansTamil } from "@remotion/google-fonts/NotoSansTamil";
+import { loadFont as loadNotoSansTelugu } from "@remotion/google-fonts/NotoSansTelugu";
+
+// Load fonts
+const { fontFamily: notoSans } = loadNotoSans();
+const { fontFamily: notoSansBengali } = loadNotoSansBengali();
+const { fontFamily: notoSansGujarati } = loadNotoSansGujarati();
+const { fontFamily: notoSansDevanagari } = loadNotoSansDevanagari();
+const { fontFamily: notoSansKannada } = loadNotoSansKannada();
+const { fontFamily: notoSansMalayalam } = loadNotoSansMalayalam();
+const { fontFamily: notoSansGurmukhi } = loadNotoSansGurmukhi();
+const { fontFamily: notoSansTamil } = loadNotoSansTamil();
+const { fontFamily: notoSansTelugu } = loadNotoSansTelugu();
+
 function RemotionVideo({ script, imageList, audioFileUrl, captions }) {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -127,6 +148,7 @@ function RemotionVideo({ script, imageList, audioFileUrl, captions }) {
                 >
                   <h2
                     style={{
+                      fontFamily: `${notoSans}, ${notoSansBengali}, ${notoSansGujarati}, ${notoSansDevanagari}, ${notoSansKannada}, ${notoSansMalayalam}, ${notoSansGurmukhi}, ${notoSansTamil}, ${notoSansTelugu}, sans-serif`,
                       fontSize: "1rem",
                       backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background
                       padding: "0.25rem",
