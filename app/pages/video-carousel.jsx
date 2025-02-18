@@ -5,27 +5,27 @@ import { useRef, useEffect } from 'react'
 
 const VIDEOS = [
   {
-    url: 'https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fout.mp4?alt=media&token=f13d91d3-4507-44c1-a690-cef070dbbec3', // Use unique video URLs
+    url: 'https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F4167410-hd_720_900_30fps.mp4?alt=media&token=c739a26e-88a9-46d8-b357-3dc296230b33', // Use unique video URLs
     overlayText: 'Looking for a',
   },
   {
-    url: 'https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fout1.mp4?alt=media&token=2a5661ff-6155-470e-ab14-aab70ff7b4e9',
+    url: 'https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F5644248-uhd_2160_4096_25fps.mp4?alt=media&token=553a36ce-abd4-4857-95d0-633ab0d64ba6',
   },
   {
-    url: 'https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fout2.mp4?alt=media&token=6df3d915-e5ce-4adc-ba46-5c1363c0d1a2',
+    url: 'https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F4167410-hd_720_900_30fps.mp4?alt=media&token=c739a26e-88a9-46d8-b357-3dc296230b33',
     overlayText: 'COMBINATION TO OILY',
     secondaryText: 'Deep cleans and reduces appearance of pores',
   },
   {
-    url: 'https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fout3.mp4?alt=media&token=a0cec09c-c12b-4bbb-8dda-429dbf52e83b',
+    url: 'https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F5925304-uhd_2160_3840_30fps.mp4?alt=media&token=a90be5dc-2194-4175-bbe1-b17d7631cbc1',
     overlayText: 'Playback with',
   },
   {
-    url: 'https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fout4.mp4?alt=media&token=cb3a2501-c3ab-4355-b927-89527f2d189b',
+    url: 'https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F5644248-uhd_2160_4096_25fps.mp4?alt=media&token=553a36ce-abd4-4857-95d0-633ab0d64ba6',
     overlayText: 'DUMBBELL STAND-CAKE',
   },
   {
-    url: 'https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fout5.mp4?alt=media&token=7240fdb0-6838-4cda-8a88-2ff589cd6eb8',
+    url: 'https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F5644248-uhd_2160_4096_25fps.mp4?alt=media&token=553a36ce-abd4-4857-95d0-633ab0d64ba6',
     overlayText: 'HAPPY NEW YEAR',
   },
 ]
