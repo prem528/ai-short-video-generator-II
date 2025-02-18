@@ -18,7 +18,7 @@ export default function AnimatedDemoSection() {
         poster="/video-poster.jpg"
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <source src="https://firebasestorage.googleapis.com/v0/b/ai-video-generator-d0362.firebasestorage.app/o/ai-video-file%2Fvideo20.mp4?alt=media&token=1a802718-c9fa-4eab-8592-0996c855f3ad" type="video/mp4" />
+        <source src="https://firebasestorage.googleapis.com/v0/b/ai-short-videos-28e83.firebasestorage.app/o/ai-video-file%2F3360184-uhd_3840_2160_30fps.mp4?alt=media&token=e566451e-3bf7-42eb-bd3b-13b202293678" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
