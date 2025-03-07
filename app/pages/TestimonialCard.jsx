@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-export function TestimonialCard({ content, author, role, avatarSrc }) {
+export default function TestimonialCard({ content, author, role, avatarSrc }) {
   return (
     <Card className="w-[340px] h-[300px]">
       <CardContent className="p-6 flex flex-col h-full">

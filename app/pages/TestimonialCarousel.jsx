@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { TestimonialCard } from "./testimonial-card"
+import  TestimonialCard  from "./TestimonialCard"
 
 const testimonials = [
   {
