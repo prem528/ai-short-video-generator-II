@@ -43,7 +43,7 @@ const testimonials = [
   }
 ]
 
-export function TestimonialCarousel() {
+export default function TestimonialCarousel() {
   const [activeIndex, setActiveIndex] = React.useState(0)
 
   return (
