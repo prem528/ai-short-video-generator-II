@@ -5,14 +5,16 @@ import signup from '../../../../public/signup.jpg'
 
 export default function Page() {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2'>
-    <div>
+    <div className='min-h-screen flex flex-col md:flex-row bg-white'>
+    <div className="hidden md:block md:w-1/2 h-screen relative">
       <Image src={signup} 
-      alt='login' width={500} height={500} 
-      className='w-full h-screen object-contain'
+      alt='login'  
+      fill
+      priority 
+      className='object-cover'
       />
     </div>
-    <div className='flex justify-center items-center h-screen'>
+    <div className='w-full md:w-1/2 min-h-screen flex justify-center items-center p-4'>
       <SignUp />
     </div>
   </div>

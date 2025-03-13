@@ -20,7 +20,7 @@ function Platform() {
     },
     {
       name: "Google Play",
-      logo: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-play-store-icon.png"
+      logo: "https://i1.wp.com/9to5google.com/wp-content/uploads/sites/4/2022/07/current-google-play-icon.jpg?ssl=1"
     },
     {
       name: "App Store",
