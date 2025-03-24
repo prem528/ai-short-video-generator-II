@@ -17,7 +17,7 @@ function CustomLoading({ loading }) {
             Loading...
           </AlertDialogTitle>
           <div className="bg-white flex flex-col items-center my-10 justify-center">
-            <Image src="/progress.gif" alt="loading" height={100} width={100} />
+            <Image src="/loading3.gif" alt="loading" height={100} width={300} />
             <h2>Please do not refresh the browser.</h2>
           </div>
         </AlertDialogContent>

@@ -1,4 +1,5 @@
 import React from 'react';
+ 
 
 function Platform() {
   const platforms = [
@@ -29,9 +30,13 @@ function Platform() {
   ];
 
   return (
-    <div className="bg-black py-20">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-[#F8F9FF] rounded-3xl p-12">
+    <div className="relative py-20 bg-[url('/socialmedia.webp')] bg-fixed bg-cover bg-center">
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/20" />
+
+      {/* Content Section */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
+        <div className="bg-[#F8F9FF]/90 backdrop-blur-sm rounded-3xl p-12">
           <h2 className="text-3xl md:text-4xl font-normal text-center mb-12 text-black">
             Compatible with these platforms
           </h2>

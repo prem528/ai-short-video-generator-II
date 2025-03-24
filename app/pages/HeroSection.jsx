@@ -35,8 +35,8 @@ export default function HeroSection() {
     for (let i = 0; i < 20; i++) {
       lines.push({
         x: Math.random() * canvas.width,
-        speed: 0.2 + Math.random() * 0.3,
-        opacity: 0.1 + Math.random() * 0.2,
+        speed: 0.2 + Math.random() * 1.5,
+        opacity: 0.1 + Math.random() * 0.6,
         hueOffset: Math.random() * 30 // Add slight variation to each line
       });
     }
