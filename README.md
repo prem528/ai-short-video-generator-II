@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Short Video Generator
 
-## Getting Started
+## Overview
 
-First, run the development server:
+The **AI Short Video Generator** is a web application that generates short AI-powered videos based on user prompts. The platform utilizes advanced AI models like **Gemini API,** GCP and other APIs to create video content, including **automated script generation,  captions, voiceovers, and video synthesis**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **URL Scraping**: Extracts product details from URLs.
+- **AI-Powered Content Generation**: Uses AI to generate product descriptions and scripts via Gemini API.
+- **Audio Generation**: Converts the generated script into speech via GCP Text to speech APIs.
+- **Video Generation**: Integrates AI-generated content into short videos via Remotion.
+- **User Authentication**: Secure login and user management using Clerk.
+- **Cloud Storage**: Saves generated videos for later use on Google Cloud Storage.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Backend**: Node.JS, Firebase, NeonDB, Drezzel
+- **AI Models**: Gemini API, GCP & other AI APIs
+- **Database**: PostgreSQL (NeonDB)
+- **Storage**: Firebase Storage
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```sh
+   https://github.com/prem528/ai-short-video-generator-II.git
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Install dependencies:
 
-## Deploy on Vercel
+   ```sh
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Set up environment variables:
+   Create a `.env.local` file and add your API keys and database credentials:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```sh
+   NEXT_PUBLIC_GEMINI_API_KEY=your_api_key
+   FIREBASE_CONFIG=your_firebase_config
+   DATABASE_URL=your_database_url
+   ```
+
+4. Run the development server:
+
+   ```sh
+   npm run dev
+   ```
+
+## Usage
+
+1. Enter a product URL from ( Amazon only ).
+2. The platform extracts the title and description.
+3. AI generates a script and voiceover.
+4. A short video is created based on the provided data.
+5. Users can preview and download the video.
+
+## Deployment
+
+This project is deployed on **Vercel** for frontend and **Firebase** for backend services.
+
+## Future Enhancements
+
+- AI-powered video editing tools
+- Customizable video templates
+- Support for multiple languages
+- Integration with social media platforms
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+For any queries, reach out to **Prem** via  email at [premydv5164@gmail.com](mailto\:premydv5164@gmail.com).
+
