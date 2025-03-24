@@ -39,9 +39,12 @@ The **AI Short Video Generator** is a web application that generates short AI-po
    Create a `.env.local` file and add your API keys and database credentials:
 
    ```sh
-   NEXT_PUBLIC_GEMINI_API_KEY=your_api_key
-   FIREBASE_CONFIG=your_firebase_config
-   DATABASE_URL=your_database_url
+   NEXT_PUBLIC_DRIZZLE_DATABASE_URL
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+   NEXT_PUBLIC_ASSEMBLYAI_API_KEY
+   GOOGLE_TEXT_TO_SPEECH_API_KEY
+   NEXT_PUBLIC_FIREBASE_API_KEY
+   REMOTION_GCP_PRIVATE_KEY
    ```
 
 4. Run the development server:
