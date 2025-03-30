@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Video } from "lucide-react";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export default function HeroSection() {
   const canvasRef = useRef(null);
@@ -82,7 +83,18 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.8 }}
           className="flex flex-col items-center text-center space-y-8"
         >
-          <Video className="w-16 h-16 text-white animate-pulse" />
+
+          <div className="">
+          <DotLottieReact
+            src="https://lottie.host/cb595df1-55ff-4f9c-9df2-1b67275356ee/uIbBsP1xNR.lottie"
+            loop
+            autoplay
+            renderer="canvas"
+          />
+          </div>
+          {/* <Video className="w-16 h-16 text-white animate-pulse" /> */}
+
+
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/10 p-6 rounded-lg">
             Create Stunning Videos with {" "}
             <span className="text-transparent animated-gradient bg-clip-text">

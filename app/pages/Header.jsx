@@ -8,6 +8,8 @@ import { ThemeToggle } from "../about/_components/toggle-theme";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
+
+
 export default function Header() {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +41,7 @@ export default function Header() {
             href="/"
             className="flex items-center text-2xl font-bold text-white gap-2"
           >
-            <Image src={"/logo.png"} width={100} height={50} alt="logo" />
+            {/* <Image src={"/logo.png"} width={100} height={50} alt="logo" /> */}
             <h2 className="hidden font-light md:block text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
               Ai Shorts
             </h2>
