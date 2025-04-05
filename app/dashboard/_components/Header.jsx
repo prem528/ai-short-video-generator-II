@@ -22,9 +22,9 @@ function Header({ onMenuClick, sideNavOpen }) {
     <div className="p-3 px-5 md:py-4 flex items-center justify-between shadow-lg border-gray-200 backdrop-blur-sm bg-background/90 dark:border-gray-800">
       {/* Logo Section */}
       <Link href="/" className="flex gap-3 items-center">
-        <Image src={"/logo.png"} width={100} height={50} alt="logo" />
+        {/* <Image src={"/logo.png"} width={100} height={50} alt="logo" /> */}
         <h2 className="font-light hidden md:block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500  text-lg md:text-2xl">
-          Ai Shorts
+          --Ai Shorts--
         </h2>
       </Link>
 
