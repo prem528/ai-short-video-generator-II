@@ -1,5 +1,8 @@
 # AI Short Video Generator
 
+![image](https://github.com/user-attachments/assets/4ffd1755-4c24-428d-8758-38115db57d5e)
+
+
 ## Overview
 
 The **AI Short Video Generator** is a web application that generates short AI-powered videos based on user prompts. The platform utilizes advanced AI models like **Gemini API,** GCP and other APIs to create video content, including **automated script generation,  captions, voiceovers, and video synthesis**.
