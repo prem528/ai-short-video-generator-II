@@ -21,7 +21,7 @@ function Platform() {
     },
     {
       name: "Google Play",
-      logo: "https://i1.wp.com/9to5google.com/wp-content/uploads/sites/4/2022/07/current-google-play-icon.jpg?ssl=1"
+      logo: "https://brandlogos.net/wp-content/uploads/2021/04/play-store-logo.png"
     },
     {
       name: "App Store",
