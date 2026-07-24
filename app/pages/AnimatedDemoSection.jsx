@@ -1,20 +1,39 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 
  
 export default function AnimatedDemoSection() {
- 
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <video
-        autoPlay
+        ref={videoRef}
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         poster="/video-poster.jpg"
         className="absolute top-0 left-0 w-full h-full object-cover"
       >

@@ -10,9 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import React from "react";
 
 const tiers = [
   {
@@ -61,10 +58,6 @@ const tiers = [
 ];
 
 export default function PricingSection() {
-  React.useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
     <section id="pricing" className="py-8 sm:py-12 md:py-16">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
@@ -74,10 +67,7 @@ export default function PricingSection() {
         <p className="text-lg sm:text-xl text-center mb-8 sm:mb-12 max-w-2xl mx-auto">
           Unleash your creativity with our AI-powered video generation
         </p>
-        <div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto"
-          data-aos="zoom-out-up"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {tiers.map((tier) => (
             <Card
               key={tier.name}

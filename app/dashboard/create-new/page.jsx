@@ -19,8 +19,10 @@ import SelectGender from "./_components/SelectGender";
 import SelectLanguage from "./_components/SelectLanguage";
 import { UserDetailContext } from "@/app/_context/userDataContext";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 function CreateNew() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -52,13 +54,12 @@ function CreateNew() {
   // Handle the create create video button:
   const onNextClickHandler = async () => {
     try {
-      // Wait for getVideoScript to complete
-      if (!userData?.credits > 0) {
-        // Alert user if he dosen't have sufficient credits.
+      if (userData && userData.credits <= 0) {
         toast({
           title: "Error",
           description: "Insufficient credits. Please add more credits.",
         });
+        return;
       }
 
       setVideoData((prev) => ({
@@ -68,7 +69,10 @@ function CreateNew() {
         gender: formData.gender,
       }));
 
-      await getVideoScript();
+      const success = await getVideoScript();
+      if (success) {
+        router.push("/dashboard/create-new/editor");
+      }
     } catch (error) {
       console.error("Error in onNextClickHandler:", error);
     }
@@ -118,8 +122,14 @@ function CreateNew() {
       }));
 
       setVideoScript(resp.data.result);
+      return true;
     } catch (error) {
       console.error("Error fetching video script:", error);
+      toast({
+        title: "Error",
+        description: "Failed to generate video script. Please try again.",
+      });
+      return false;
     } finally {
       setLoadingState(false);
     }
@@ -211,14 +221,12 @@ function CreateNew() {
 
         {/* Create Button */}
         <div className="flex justify-center mt-5">
-          <Link href={"/dashboard/create-new/editor"}>
-            <Button
-              className="flex items-center rounded-full"
-              onClick={onNextClickHandler}
-            >
-              Next
-            </Button>
-          </Link>
+          <Button
+            className="flex items-center rounded-full"
+            onClick={onNextClickHandler}
+          >
+            Next
+          </Button>
         </div>
       </div>
 

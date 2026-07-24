@@ -1,11 +1,31 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Card } from '@/components/ui/card'
 
 export function VideoCard({ videoUrl, overlayText, secondaryText }) {
   const videoRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false))
+        } else {
+          video.pause()
+          setIsPlaying(false)
+        }
+      },
+      { threshold: 0.25 }
+    )
+
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -26,7 +46,7 @@ export function VideoCard({ videoUrl, overlayText, secondaryText }) {
         loop
         muted
         playsInline
-        autoPlay
+        preload="metadata"
         onClick={togglePlay}
       >
         <source src={videoUrl} type="video/mp4" />

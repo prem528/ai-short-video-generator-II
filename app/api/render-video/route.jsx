@@ -1,6 +1,12 @@
 "use server";
 
 import { getServices, renderMediaOnCloudrun } from "@remotion/cloudrun/client";
+import { exec } from "child_process";
+import fs from "fs";
+import path from "path";
+import { promisify } from "util";
+
+const execPromise = promisify(exec);
 
 export async function POST(req) {
   try {
@@ -14,11 +20,63 @@ export async function POST(req) {
       });
     }
 
-    const { durationInFrames } = videoData;
+    const { id: videoId, durationInFrames } = videoData;
 
+    // --- LOCAL RENDERING PIPELINE (Runs without GCP) ---
+    if (process.env.RENDER_LOCALLY === "true") {
+      const uniqueId = videoId || `temp-${Date.now()}`;
+      const tempJsonPath = path.resolve(`./public/temp-${uniqueId}.json`);
+      const outputVideoPath = path.resolve(`./public/renders/${uniqueId}.mp4`);
+
+      // Ensure folders exist
+      fs.mkdirSync(path.dirname(tempJsonPath), { recursive: true });
+      fs.mkdirSync(path.dirname(outputVideoPath), { recursive: true });
+
+      // Save props to temporary JSON file to prevent command line escaping errors on Windows
+      fs.writeFileSync(tempJsonPath, JSON.stringify(videoData));
+
+      try {
+        console.log(`[Local Render] Rendering video ID: ${uniqueId} (${durationInFrames} frames) locally...`);
+        const renderCommand = `npx remotion render remotion/index.jsx video-result "${outputVideoPath}" --props="${tempJsonPath}" --frames=0-${durationInFrames - 1}`;
+        
+        await execPromise(renderCommand, { cwd: process.cwd() });
+        
+        // Clean up temporary props file
+        try {
+          fs.unlinkSync(tempJsonPath);
+        } catch (e) {}
+
+        console.log(`[Local Render] Success: ${outputVideoPath}`);
+
+        return new Response(
+          JSON.stringify({
+            bucketName: "local",
+            renderId: uniqueId,
+            publicUrl: `/renders/${uniqueId}.mp4`,
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } }
+        );
+      } catch (renderError) {
+        // Clean up temporary props file on failure
+        try {
+          fs.unlinkSync(tempJsonPath);
+        } catch (e) {}
+
+        console.error("[Local Render] Failed:", renderError.message);
+        return new Response(
+          JSON.stringify({
+            message: "Local render failed",
+            details: renderError.message,
+          }),
+          { status: 500, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
+    // --- GCP CLOUD RUN PIPELINE ---
     const services = await getServices({
       region: "us-east1",
-      compatibleOnly: true,
+      compatibleOnly: false,
     });
 
     if (!services.length) {

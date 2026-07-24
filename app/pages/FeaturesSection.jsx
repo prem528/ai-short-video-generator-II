@@ -2,18 +2,11 @@
 
 import { Wand2, Zap, Clock, Share2 } from "lucide-react";
 import { FeatureCard } from "./FeatureCard";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import React  from "react";
 
 
 export function FeaturesSection() {
-  React.useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
-    <section id="features" className="py-20" data-aos="fade-up">
+    <section id="features" className="py-20">
       <div className="container mx-auto lg:px-20 px-4">
         <h2 className="text-3xl font-noraml text-center mb-12">
           Why Choose Our Platform?

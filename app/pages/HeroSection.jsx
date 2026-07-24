@@ -42,8 +42,11 @@ export default function HeroSection() {
       });
     }
 
-    // Animation
+    let animationFrameId;
+    let isInViewport = true;
+
     const animate = () => {
+      if (!isInViewport || document.hidden) return;
       ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -64,12 +67,36 @@ export default function HeroSection() {
         if (line.x > canvas.width) line.x = 0;
       });
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
-    animate();
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isInViewport = entry.isIntersecting;
+        if (isInViewport && !document.hidden) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && isInViewport) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    visibilityObserver.observe(canvas);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    animationFrameId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("resize", setSize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      visibilityObserver.disconnect();
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -90,6 +117,12 @@ export default function HeroSection() {
             loop
             autoplay
             renderer="canvas"
+            // Keep the backing canvas stable. Older dotlottie-web versions can
+            // render with a stale pixel buffer while ResizeObserver is resizing.
+            width={320}
+            height={320}
+            className="h-64 w-64 md:h-80 md:w-80"
+            renderConfig={{ autoResize: false }}
           />
           </div>
           {/* <Video className="w-16 h-16 text-white animate-pulse" /> */}

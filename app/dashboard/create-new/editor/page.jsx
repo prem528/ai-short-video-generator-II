@@ -31,6 +31,10 @@ export default function page() {
   const { toast } = useToast();
   const { user } = useUser();
 
+  useEffect(() => {
+    console.log("videoData in editor:", videoData);
+  }, [videoData]);
+
   // Process videoScript from videoData when videoData updates
   useEffect(() => {
     if (!videoData?.videoScript || !Array.isArray(videoData.videoScript))

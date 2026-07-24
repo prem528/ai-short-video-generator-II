@@ -1,18 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTheme } from "next-themes";
 
 export default function BackgroundLayout({ children }) {
   const { theme } = useTheme();
-  const [time, setTime] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((prevTime) => prevTime + 1);
-    }, 100); // Smooth animation over time
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div
