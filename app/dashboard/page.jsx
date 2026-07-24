@@ -33,19 +33,28 @@ function Dashboard() {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
-      <div className="flex flex-col py-4 sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-primary">
-          Dashboard
-        </h2>
+    <div className="mx-auto max-w-6xl space-y-8 p-4 md:p-8">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <div className="flex items-center gap-3">
+          {/* Playhead tick — the signature marker on the page title */}
+          <span className="h-9 w-[3px] rounded-full bg-gradient-to-b from-brand to-brand-2" />
+          <div>
+            <span className="timecode text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Your Studio
+            </span>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+              Dashboard
+            </h2>
+          </div>
+        </div>
         <Link href="dashboard/create-new">
-          <Button>
-            <Plus className="w-4 h-4 mr-2" />
+          <Button className="bg-brand text-brand-foreground shadow-sm hover:bg-brand/90">
+            <Plus className="mr-2 h-4 w-4" />
             New Video
           </Button>
         </Link>
       </div>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <MainDashboard />
         <VideoContainer />
       </div>

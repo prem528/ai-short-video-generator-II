@@ -28,15 +28,21 @@ function ProductDescription({ value, onValueChange }) {
   };
 
   return (
-    <div className="mt-5 mb-5">
-      <h2 className="font-normal text-xl text-primary">Product Description</h2>
+    <div>
+      <label
+        htmlFor="description"
+        className="text-sm font-medium text-foreground"
+      >
+        Product description
+      </label>
       <Textarea
+        id="description"
         ref={textareaRef}
-        className="mt-3 resize-none"
+        className="mt-2 resize-none"
         value={description}
         onChange={handleChange}
-        placeholder="Description"
-        rows={5}
+        placeholder="What is it, who is it for, and what makes it stand out?"
+        rows={4}
       />
     </div>
   );

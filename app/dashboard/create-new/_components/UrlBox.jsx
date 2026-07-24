@@ -34,15 +34,17 @@ function UrlBox({ onUserSelect }) {
 
       const result = await response.json();
 
-      if (response.ok) {
+      if (response.ok && result.success !== false) {
         const fetchedData = {
-          title: result.title || "No title available",
-          description: result.description || "No description available",
+          title: result.title || "",
+          description: result.description || "",
+          images: Array.isArray(result.images) ? result.images : [],
+          video: result.video || null,
         };
         setData(fetchedData);
         onUserSelect(fetchedData);
       } else {
-        setError(result.error || "Failed to fetch data.");
+        setError(result.details || result.error || "Failed to fetch data.");
       }
     } catch (err) {
       setError("An error occurred while fetching data.");
@@ -62,21 +64,27 @@ function UrlBox({ onUserSelect }) {
 
   return (
     <div>
-      <Label className="font-normal text-xl text-primary" htmlFor="url">
+      <Label className="text-sm font-medium text-foreground" htmlFor="url">
         Product URL
       </Label>
-      <div className="flex w-full gap-1 mt-3">
+      <div className="mt-2 flex w-full gap-2">
         <Input
+          id="url"
           type="url"
           placeholder="https://example.com/product"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
-        <Button onClick={fetchData} disabled={loading}>
-          {loading ? "Fetching..." : "Fetch data"}
+        <Button
+          variant="secondary"
+          onClick={fetchData}
+          disabled={loading}
+          className="shrink-0"
+        >
+          {loading ? "Fetching…" : "Autofill"}
         </Button>
       </div>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+      {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
     </div>
   );
 }

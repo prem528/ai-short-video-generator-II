@@ -32,6 +32,12 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    /* Studio brand accents — blue -> red gradient (matches original logo) */
+    --brand: 217 91% 60%;
+    --brand-foreground: 0 0% 100%;
+    --brand-2: 0 84% 60%;
+    --panel: 0 0% 100%;
+    --hairline: 0 0% 89%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -58,6 +64,12 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    /* Studio brand accents (dark) — blue -> red gradient */
+    --brand: 213 94% 68%;
+    --brand-foreground: 0 0% 100%;
+    --brand-2: 0 91% 71%;
+    --panel: 240 14% 9%;
+    --hairline: 0 0% 100%;
   }
 }
 @layer base {
@@ -93,6 +105,39 @@
 }
 
 @layer utilities {
+  /* Studio: mono technical/timecode data */
+  .font-mono,
+  .timecode {
+    font-family: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+    font-feature-settings: "tnum" 1;
+  }
+  .timecode {
+    letter-spacing: 0.02em;
+  }
+  /* Signature: violet playhead that grows in on the active nav item */
+  @keyframes playhead-grow {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  .playhead {
+    transform-origin: center;
+    animation: playhead-grow 0.35s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  }
+  /* Soft brand glow used sparingly on primary surfaces */
+  .brand-glow {
+    box-shadow: 0 0 0 1px hsl(var(--brand) / 0.35),
+      0 8px 30px -12px hsl(var(--brand) / 0.55);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .playhead {
+      animation: none;
+    }
+  }
+
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
