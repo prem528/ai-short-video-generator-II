@@ -76,12 +76,12 @@ function UrlBox({ onUserSelect }) {
           onChange={(e) => setUrl(e.target.value)}
         />
         <Button
-          variant="secondary"
+          variant=""
           onClick={fetchData}
           disabled={loading}
           className="shrink-0"
         >
-          {loading ? "Fetching…" : "Autofill"}
+         {loading ? "Extracting..." : "Extract Data"}
         </Button>
       </div>
       {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
