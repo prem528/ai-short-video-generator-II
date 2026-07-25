@@ -33,12 +33,12 @@ function SelectLanguage({ onUserSelect }) {
   };
 
   return (
-    <div className="mt-5">
-      <h2 className="font-normal text-xl text-primary">Language</h2>
-      <p className="text-gray-500">What will be the language of the video?</p>
+    <div>
+      <label className="text-sm font-medium text-foreground">Language</label>
+      <p className="mt-1 text-xs text-muted-foreground">Spoken language.</p>
       <Select onValueChange={handleValueChange}>
-        <SelectTrigger className="w-full mt-2 text-lg">
-          <SelectValue placeholder="Select Language" />
+        <SelectTrigger className="mt-2 w-full">
+          <SelectValue placeholder="Select language" />
         </SelectTrigger>
         <SelectContent>
           {options.map((item, index) => (

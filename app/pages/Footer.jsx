@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-6">
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-2xl font-bold mb-2">
-              Delberto Video Generator
+              Ai-Video Generator
             </h3>
             <p className="text-gray-500">
               Creating stunning videos with the power of AI.
@@ -105,7 +105,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center">
           <p className="text-gray-600">
-            &copy; {new Date().getFullYear()} Delberto Video Generator. All
+            &copy; {new Date().getFullYear()} Ai-Video Generator. All
             rights reserved.
           </p>
         </div>

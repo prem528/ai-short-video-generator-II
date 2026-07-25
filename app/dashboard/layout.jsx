@@ -55,7 +55,7 @@ function DashboardLayout({ children }) {
 
               {/* Sidebar */}
               <div
-                className={`fixed top-[60px] left-0 h-[calc(100vh-60px)] w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 z-50 md:translate-x-0 ${
+                className={`fixed top-[60px] left-0 h-[calc(100vh-60px)] w-64 bg-panel border-r border-border transform transition-transform duration-300 z-50 md:translate-x-0 ${
                   sideNavOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
               >

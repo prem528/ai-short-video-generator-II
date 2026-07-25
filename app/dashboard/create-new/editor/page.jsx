@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { VideoDataContext } from "@/app/_context/VideoDataContext";
 import CustomLoading from "@/components/CustomLoading";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, FileText, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/configs/db";
 import { Users, VideoData } from "@/configs/schema";
@@ -30,6 +31,10 @@ export default function page() {
 
   const { toast } = useToast();
   const { user } = useUser();
+
+  useEffect(() => {
+    console.log("videoData in editor:", videoData);
+  }, [videoData]);
 
   // Process videoScript from videoData when videoData updates
   useEffect(() => {
@@ -211,39 +216,93 @@ export default function page() {
     setVideoScriptData("");
   };
 
-  return (
-    <div className="md:px-20 py-10">
-      <h2 className="font-bold text-4xl text-primary text-center">
-        Generated Script
-      </h2>
-      <div className="mt-10 p-10 relative border animate-shadow-pulse rounded-xl ">
-        <h2 className="font-normal text-xl text-center text-primary">
-          Please review the script
-        </h2>
+  const wordCount = videoScriptData.trim()
+    ? videoScriptData.trim().split(/\s+/).length
+    : 0;
+  const credits = userData?.credits ?? 0;
 
-        {isloading ? (
-          <div className="flex justify-center items-center min-h-[200px]">
-            <Loader2 className="h-8 w-8 animate-spin" />
+  return (
+    <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
+      {/* Page header */}
+      <div className="mb-8">
+        <Link
+          href="/dashboard/create-new"
+          className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to setup
+        </Link>
+        <div className="flex items-center gap-3">
+          <span className="h-9 w-[3px] rounded-full bg-gradient-to-b from-brand to-brand-2" />
+          <div>
+            <span className="timecode text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Step 2 · Review
+            </span>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+              Review your script
+            </h2>
           </div>
-        ) : (
-          <div className="mt-5 mb-5">
+        </div>
+      </div>
+
+      <div className="space-y-5">
+        {/* Script card */}
+        <section className="rounded-xl border border-border bg-card p-5 md:p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                <FileText className="h-4 w-4" />
+              </span>
+              <div>
+                <h3 className="text-base font-semibold leading-tight text-foreground">
+                  Generated script
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Edit anything before we record the voiceover.
+                </p>
+              </div>
+            </div>
+            {!isloading && (
+              <span className="timecode shrink-0 rounded-md bg-secondary px-2 py-1 text-[11px] font-medium text-muted-foreground">
+                {wordCount} words
+              </span>
+            )}
+          </div>
+
+          {isloading ? (
+            <div className="space-y-3 py-4" aria-label="Loading script">
+              {[92, 100, 84, 96, 70, 100, 88].map((w, i) => (
+                <div
+                  key={i}
+                  className="h-4 animate-pulse rounded bg-secondary"
+                  style={{ width: `${w}%` }}
+                />
+              ))}
+            </div>
+          ) : (
             <Textarea
-              className="mt-3 resize-none text-2xl p-4 rounded-lg"
-              placeholder="Script"
+              className="min-h-[320px] resize-y rounded-lg p-4 text-base leading-relaxed"
+              placeholder="Your script will appear here…"
               value={videoScriptData}
               onChange={handleChange}
-              rows={30}
             />
-          </div>
-        )}
+          )}
+        </section>
 
-        {/* Create Button */}
-        <div className="flex justify-center mt-5">
+        {/* Action bar */}
+        <div className="flex flex-col items-stretch justify-between gap-3 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-center">
+          <p className="text-xs text-muted-foreground">
+            Rendering uses{" "}
+            <span className="font-medium text-foreground">1 credit</span> ·{" "}
+            <span className="timecode text-foreground">{credits}</span> remaining
+          </p>
           <Button
-            className="flex items-center rounded-full"
+            className="gap-2 bg-brand text-brand-foreground hover:bg-brand/90"
             onClick={onCreateClickHandler}
+            disabled={loadingState || isloading || !videoScriptData}
           >
-            Create Video
+            <Sparkles className="h-4 w-4" />
+            {loadingState ? "Creating…" : "Create video"}
           </Button>
         </div>
       </div>

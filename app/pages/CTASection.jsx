@@ -1,17 +1,10 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import React  from "react";
 
 export function CTASection() {
-  React.useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
-    <section className="py-16"  data-aos="fade-up">
+    <section className="py-16">
       
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-noraml mb-6">Ready to Create Amazing Videos?</h2>

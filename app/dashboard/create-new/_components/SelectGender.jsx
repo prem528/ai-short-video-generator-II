@@ -22,14 +22,12 @@ function SelectGender({ onUserSelect }) {
   };
 
   return (
-    <div className="mt-5">
-      <h2 className="font-normal text-xl text-primary">Gender</h2>
-      <p className="text-gray-500">
-        What will be the gender of voice for the video?
-      </p>
+    <div>
+      <label className="text-sm font-medium text-foreground">Voice</label>
+      <p className="mt-1 text-xs text-muted-foreground">Narrator gender.</p>
       <Select onValueChange={handleValueChange}>
-        <SelectTrigger className="w-full mt-2 text-lg">
-          <SelectValue placeholder="Select Gender" />
+        <SelectTrigger className="mt-2 w-full">
+          <SelectValue placeholder="Select voice" />
         </SelectTrigger>
         <SelectContent>
           {options.map((item, index) => (

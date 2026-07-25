@@ -35,18 +35,41 @@ export default function VideoCarousel() {
 
   useEffect(() => {
     const carousel = carouselRef.current
-    if (carousel) {
-      let animationFrame
-      const startScrolling = () => {
-        carousel.scrollLeft += 1 // Adjust this value to control speed
-        if (carousel.scrollLeft >= carousel.scrollWidth / 2) {
-          carousel.scrollLeft = 0 // Reset to start when reaching the end
-        }
-        animationFrame = requestAnimationFrame(startScrolling)
+    if (!carousel) return
+
+    let animationFrame
+    let isInViewport = false
+    const startScrolling = () => {
+      if (!isInViewport || document.hidden) return
+      carousel.scrollLeft += 1
+      if (carousel.scrollLeft >= carousel.scrollWidth / 2) {
+        carousel.scrollLeft = 0
       }
       animationFrame = requestAnimationFrame(startScrolling)
+    }
 
-      return () => cancelAnimationFrame(animationFrame) // Cleanup animation
+    const observer = new IntersectionObserver(([entry]) => {
+      isInViewport = entry.isIntersecting
+      if (isInViewport && !document.hidden) {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = requestAnimationFrame(startScrolling)
+      }
+    }, { threshold: 0.1 })
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && isInViewport) {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = requestAnimationFrame(startScrolling)
+      }
+    }
+
+    observer.observe(carousel)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      cancelAnimationFrame(animationFrame)
     }
   }, [])
 

@@ -38,27 +38,29 @@ export const MainDashboard = () => {
   }, [user]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <DashboardCard
-          title="Your Videos"
-          value={data.userVideosCount}
-          icon={Film}
-          description="Videos created by you"
-        />
-        <DashboardCard
-          title="Processing Time"
-          value="1.5 minutes"
-          icon={Clock}
-          description="Average processing time"
-        />
-        <DashboardCard
-          title="Credits Used"
-          value={85}
-          icon={Zap}
-          description="Out of 100 monthly credits"
-        />
-      </div>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <DashboardCard
+        title="Rendered Shorts"
+        value={data.userVideosCount}
+        unit="clips"
+        icon={Film}
+        description="Videos generated on your account"
+      />
+      <DashboardCard
+        title="Avg Render"
+        value="1:30"
+        unit="min"
+        icon={Clock}
+        description="Typical time from prompt to export"
+      />
+      <DashboardCard
+        title="Credits"
+        value="85 / 100"
+        icon={Zap}
+        accent="coral"
+        progress={85}
+        description="Resets at the start of next cycle"
+      />
     </div>
   );
 };

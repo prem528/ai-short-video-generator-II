@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" next dev --turbo",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" next start",
     "lint": "next lint",
-    "db:push": "drizzle-kit push",
-    "db:pull": "drizzle-kit pull",
-    "db:studio": "drizzle-kit studio"
+    "db:push": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" drizzle-kit push",
+    "db:pull": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" drizzle-kit pull",
+    "db:studio": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" drizzle-kit studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.6",
@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@types/react": "18.3.13",
+    "cross-env": "^10.1.0",
     "drizzle-kit": "^0.29.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",

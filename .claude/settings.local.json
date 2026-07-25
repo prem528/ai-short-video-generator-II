@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -m 90 -X POST http://localhost:3000/api/scrape-site-data -H 'Content-Type: application/json' -d '{\"url\":\"__TRACKED_VAR__\"}')",
+      "Bash(python3 -c ' *)"
+    ]
+  }
+}

@@ -19,6 +19,7 @@
 
 # production
 /build
+/docs
 
 # misc
 .DS_Store
@@ -38,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Remotion local renders
+/public/renders/
