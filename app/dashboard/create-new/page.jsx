@@ -37,6 +37,8 @@ function CreateNew() {
   const [scrapedImages, setScrapedImages] = useState([]);
   const [selectedScrapedImages, setSelectedScrapedImages] = useState([]);
 
+  const [currentStep, setCurrentStep] = useState(1);
+
   const { videoData, setVideoData } = useContext(VideoDataContext);
   const { userData, setUserData } = useContext(UserDetailContext);
 
@@ -83,6 +85,24 @@ function CreateNew() {
     setSelectedScrapedImages((prev) =>
       prev.includes(url) ? prev.filter((u) => u !== url) : [...prev, url]
     );
+  };
+
+  // Handle moving to Step 2
+  const handleStep1Next = () => {
+    const totalImages = imageList.length + selectedScrapedImages.length;
+    if (totalImages === 0) {
+      toast({
+        title: "Add at least one image",
+        description: "Upload a photo or pick a product image from the URL.",
+      });
+      return;
+    }
+    setCurrentStep(2);
+  };
+
+  // Handle moving back to Step 1
+  const handleStep2Back = () => {
+    setCurrentStep(1);
   };
 
   // Handle the create create video button:
@@ -221,120 +241,194 @@ function CreateNew() {
         </div>
       </div>
 
+      {/* Stepper Indicator */}
+      <div className="mb-8 flex items-center justify-start gap-4 sm:gap-6 border-b border-border pb-5">
+        <button
+          type="button"
+          onClick={() => setCurrentStep(1)}
+          className="flex items-center gap-2 text-left focus:outline-none"
+        >
+          <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold transition-all ${
+            currentStep === 1
+              ? "bg-brand text-white ring-2 ring-brand/35"
+              : "bg-brand/10 text-brand hover:bg-brand/20"
+          }`}>
+            1
+          </span>
+          <span className={`text-sm font-medium transition-colors ${
+            currentStep === 1 ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+          }`}>
+            Source & Media
+          </span>
+        </button>
+        
+        <div className="h-[1px] w-8 bg-border sm:w-12" />
+        
+        <button
+          type="button"
+          onClick={handleStep1Next}
+          className="flex items-center gap-2 text-left focus:outline-none"
+        >
+          <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold transition-all ${
+            currentStep === 2
+              ? "bg-brand text-white ring-2 ring-brand/35"
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          }`}>
+            2
+          </span>
+          <span className={`text-sm font-medium transition-colors ${
+            currentStep === 2 ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+          }`}>
+            Script & Voice
+          </span>
+        </button>
+      </div>
+
       <div className="space-y-5">
-        {/* Section 1 — Source */}
-        <Section
-          index="01"
-          title="Source"
-          description="Autofill from a product URL, or write the details yourself."
-        >
-          <UrlBox onUserSelect={handleScrape} />
-          <ProductName
-            value={formData.title}
-            onValueChange={(newTitle) => onHandleInputChange("title", newTitle)}
-          />
-          <ProductDescription
-            value={formData.description}
-            onValueChange={(newDescription) =>
-              onHandleInputChange("description", newDescription)
-            }
-          />
-        </Section>
+        {currentStep === 1 ? (
+          <>
+            {/* Section 1 — Source */}
+            <Section
+              index="01"
+              title="Source"
+              description="Autofill from a product URL, or write the details yourself."
+            >
+              <UrlBox onUserSelect={handleScrape} />
+              <ProductName
+                value={formData.title}
+                onValueChange={(newTitle) => onHandleInputChange("title", newTitle)}
+              />
+              <ProductDescription
+                value={formData.description}
+                onValueChange={(newDescription) =>
+                  onHandleInputChange("description", newDescription)
+                }
+              />
+            </Section>
 
-        {/* Section 2 — Media */}
-        <Section
-          index="02"
-          title="Media"
-          description="Each image becomes one scene in the final short."
-        >
-          <AddMedia onMediaChange={handleMediaChange} />
+            {/* Section 2 — Media */}
+            <Section
+              index="02"
+              title="Media"
+              description="Each image becomes one scene in the final short."
+            >
+              <AddMedia onMediaChange={handleMediaChange} />
 
-          {scrapedImages.length > 0 && (
-            <div className="rounded-xl border border-border bg-secondary/30 p-4">
-              <div className="mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <LinkIcon className="h-4 w-4 text-brand" />
-                  <span className="text-sm font-medium text-foreground">
-                    Product images from the URL
-                  </span>
-                </div>
-                <span className="timecode text-[11px] text-muted-foreground">
-                  {selectedScrapedImages.length}/{scrapedImages.length} selected
-                </span>
-              </div>
-              <p className="mb-3 text-xs text-muted-foreground">
-                Tap to include or exclude. Selected images are added as scenes.
-              </p>
-              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-                {scrapedImages.map((url, index) => {
-                  const selected = selectedScrapedImages.includes(url);
-                  return (
-                    <button
-                      type="button"
-                      key={index}
-                      onClick={() => toggleScrapedImage(url)}
-                      aria-pressed={selected}
-                      className={`group relative aspect-[9/16] overflow-hidden rounded-lg border-2 transition-all ${
-                        selected
-                          ? "border-brand ring-2 ring-brand/30"
-                          : "border-border opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={url}
-                        alt={`Product ${index + 1}`}
-                        className="h-full w-full object-cover"
-                      />
-                      <span
-                        className={`absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full text-white transition-colors ${
-                          selected ? "bg-brand" : "bg-black/50"
-                        }`}
-                      >
-                        {selected ? (
-                          <Check className="h-3 w-3" />
-                        ) : (
-                          <Plus className="h-3 w-3" />
-                        )}
+              {scrapedImages.length > 0 && (
+                <div className="rounded-xl border border-border bg-secondary/30 p-4">
+                  <div className="mb-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <LinkIcon className="h-4 w-4 text-brand" />
+                      <span className="text-sm font-medium text-foreground">
+                        Product images from the URL
                       </span>
-                    </button>
-                  );
-                })}
-              </div>
+                    </div>
+                    <span className="timecode text-[11px] text-muted-foreground">
+                      {selectedScrapedImages.length}/{scrapedImages.length} selected
+                    </span>
+                  </div>
+                  <p className="mb-3 text-xs text-muted-foreground">
+                    Tap to include or exclude. Selected images are added as scenes.
+                  </p>
+                  <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+                    {scrapedImages.map((url, index) => {
+                      const selected = selectedScrapedImages.includes(url);
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          onClick={() => toggleScrapedImage(url)}
+                          aria-pressed={selected}
+                          className={`group relative aspect-[9/16] overflow-hidden rounded-lg border-2 transition-all ${
+                            selected
+                              ? "border-brand ring-2 ring-brand/30"
+                              : "border-border opacity-60 hover:opacity-100"
+                          }`}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={url}
+                            alt={`Product ${index + 1}`}
+                            className="h-full w-full object-cover"
+                          />
+                          <span
+                            className={`absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full text-white transition-colors ${
+                              selected ? "bg-brand" : "bg-black/50"
+                            }`}
+                          >
+                            {selected ? (
+                              <Check className="h-3 w-3" />
+                            ) : (
+                              <Plus className="h-3 w-3" />
+                            )}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </Section>
+
+            {/* Action bar */}
+            <div className="flex flex-col items-stretch justify-between gap-3 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-center">
+              <p className="text-xs text-muted-foreground">
+                Next: Select script style, language, voice gender, and duration.
+              </p>
+              <Button
+                className="gap-2 bg-brand text-brand-foreground hover:bg-brand/90"
+                onClick={handleStep1Next}
+              >
+                Next Step
+                <Sparkles className="h-4 w-4" />
+              </Button>
             </div>
-          )}
-        </Section>
+          </>
+        ) : (
+          <>
+            {/* Section 3 — Script & voice */}
+            <Section
+              index="03"
+              title="Script & voice"
+              description="Choose the style, voice, and length of your video."
+            >
+              <SelectTopic onUserSelect={onHandleInputChange} />
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <SelectGender onUserSelect={onHandleInputChange} />
+                <SelectLanguage onUserSelect={onHandleInputChange} />
+              </div>
+              <SelectDuration onUserSelect={onHandleInputChange} />
+            </Section>
 
-        {/* Section 3 — Script & voice */}
-        <Section
-          index="03"
-          title="Script & voice"
-          description="Choose the style, voice, and length of your video."
-        >
-          <SelectTopic onUserSelect={onHandleInputChange} />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <SelectGender onUserSelect={onHandleInputChange} />
-            <SelectLanguage onUserSelect={onHandleInputChange} />
-          </div>
-          <SelectDuration onUserSelect={onHandleInputChange} />
-        </Section>
-
-        {/* Action bar */}
-        <div className="flex flex-col items-stretch justify-between gap-3 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-center">
-          <p className="text-xs text-muted-foreground">
-            Generating uses{" "}
-            <span className="font-medium text-foreground">1 credit</span> ·{" "}
-            <span className="timecode text-foreground">{credits}</span> remaining
-          </p>
-          <Button
-            className="gap-2 bg-brand text-brand-foreground hover:bg-brand/90"
-            onClick={onNextClickHandler}
-            disabled={loadingState}
-          >
-            <Sparkles className="h-4 w-4" />
-            {loadingState ? "Generating…" : "Generate video"}
-          </Button>
-        </div>
+            {/* Action bar */}
+            <div className="flex flex-col items-stretch justify-between gap-3 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-center">
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  className="gap-2"
+                  onClick={handleStep2Back}
+                  disabled={loadingState}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                  Generating uses{" "}
+                  <span className="font-medium text-foreground">1 credit</span> ·{" "}
+                  <span className="timecode text-foreground">{credits}</span> remaining
+                </p>
+              </div>
+              <Button
+                className="gap-2 bg-brand text-brand-foreground hover:bg-brand/90"
+                onClick={onNextClickHandler}
+                disabled={loadingState}
+              >
+                <Sparkles className="h-4 w-4" />
+                {loadingState ? "Generating…" : "Generate video"}
+              </Button>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Loading Screen */}
