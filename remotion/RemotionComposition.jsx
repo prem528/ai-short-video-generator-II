@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Video,
   Img,
   interpolate,
   Sequence,
@@ -118,6 +119,42 @@ const ImageSlide = ({ src, segmentDuration, zoomIn, fadeIn, fadeOut }) => {
   );
 };
 
+const VideoSlide = ({ src, segmentDuration, fadeIn, fadeOut }) => {
+  const localFrame = useCurrentFrame();
+
+  const fadeInFactor =
+    fadeIn > 0
+      ? interpolate(localFrame, [0, fadeIn], [0, 1], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        })
+      : 1;
+  const fadeOutFactor =
+    fadeOut > 0
+      ? interpolate(
+          localFrame,
+          [segmentDuration - fadeOut, segmentDuration],
+          [1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+        )
+      : 1;
+  const opacity = fadeInFactor * fadeOutFactor;
+
+  return (
+    <AbsoluteFill style={{ opacity, backgroundColor: "black" }}>
+      <Video
+        src={src}
+        volume={0}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      />
+    </AbsoluteFill>
+  );
+};
+
 /**
  * Continuous caption layer driven by the GLOBAL frame (rendered once, on top of
  * all slides) so text never resets at image boundaries. Groups words into short
@@ -200,47 +237,65 @@ const CaptionLayer = ({ captions }) => {
   );
 };
 
-function RemotionComposition({ imageList, audioFileUrl, captions }) {
+function RemotionComposition({ imageList, audioFileUrl, captions, script }) {
   const { fps, durationInFrames } = useVideoConfig();
 
-  if (!imageList?.length) return null;
+  const isAssemble = script?.isAssembleFlow;
+  const activeList = isAssemble && Array.isArray(script.mediaList)
+    ? script.mediaList
+    : imageList?.map((img) => ({ url: img, type: "image", duration: (durationInFrames / fps) / (imageList.length || 1) })) || [];
 
-  const count = imageList.length;
-  const segmentDuration = durationInFrames / count;
+  if (!activeList.length) return null;
 
-  // Overlap between consecutive slides (the crossfade window). Capped so it is
-  // never longer than a quarter of a slide, and 0 when there is only one image.
-  const overlap =
-    count > 1 ? Math.min(Math.round(fps * 0.6), Math.floor(segmentDuration / 4)) : 0;
+  const count = activeList.length;
+  const overlap = isAssemble 
+    ? 0 
+    : (count > 1 ? Math.min(Math.round(fps * 0.6), Math.floor((durationInFrames / count) / 4)) : 0);
+
+  let currentStartFrame = 0;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
-      {imageList.map((item, index) => {
-        const start = Math.round(index * segmentDuration);
+      {activeList.map((item, index) => {
+        const segmentDuration = isAssemble
+          ? Math.round((Number(item.duration) || 0) * fps)
+          : Math.round(durationInFrames / count);
+
+        const start = currentStartFrame;
+        currentStartFrame += segmentDuration;
+
         const isFirst = index === 0;
         const isLast = index === count - 1;
 
-        // Extend each slide by `overlap` frames into the next one so they can
-        // crossfade. First slide has no lead-in fade; last has no fade-out.
         const fadeIn = isFirst ? 0 : overlap;
         const fadeOut = isLast ? 0 : overlap;
-        const slideDuration = Math.round(segmentDuration) + fadeOut;
+        const slideDuration = segmentDuration + fadeOut;
+
+        if (slideDuration <= 0) return null;
 
         return (
           <Sequence
             key={index}
             from={start}
             durationInFrames={slideDuration}
-            // Decode the image ~1s before it is shown -> no pop-in / stall.
             premountFor={Math.round(fps)}
           >
-            <ImageSlide
-              src={item}
-              segmentDuration={slideDuration}
-              zoomIn={index % 2 === 0}
-              fadeIn={fadeIn}
-              fadeOut={fadeOut}
-            />
+            {item.type === "video" ? (
+              <VideoSlide
+                src={item.url}
+                segmentDuration={slideDuration}
+                fadeIn={fadeIn}
+                fadeOut={fadeOut}
+              />
+            ) : (
+              <ImageSlide
+                src={item.url}
+                segmentDuration={slideDuration}
+                zoomIn={index % 2 === 0}
+                fadeIn={fadeIn}
+                fadeOut={fadeOut}
+              />
+            )}
           </Sequence>
         );
       })}

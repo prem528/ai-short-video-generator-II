@@ -36,8 +36,17 @@ function PlayerDialog({ playVideo, videoId }) {
         .where(eq(VideoData.id, videoId));
 
       if (result?.length) {
-        setVideoData(result[0]);
-        calculateDurationFrames(result[0].captions);
+        const currentData = result[0];
+        setVideoData(currentData);
+        if (currentData.script?.isAssembleFlow && Array.isArray(currentData.script.mediaList)) {
+          const totalFrames = currentData.script.mediaList.reduce(
+            (acc, item) => acc + Math.round((Number(item.duration) || 0) * 30),
+            0
+          );
+          setDurationInFrames(totalFrames);
+        } else {
+          calculateDurationFrames(currentData.captions);
+        }
         setOpenDialog(true);
       } else {
         console.error("No video data found for the given video ID.");
@@ -139,8 +148,8 @@ function PlayerDialog({ playVideo, videoId }) {
             <Player
               component={RemotionVideo}
               durationInFrames={durationInFrames}
-              compositionWidth={300}
-              compositionHeight={450}
+              compositionWidth={videoData?.script?.aspectRatio === "16:9" ? 450 : 300}
+              compositionHeight={videoData?.script?.aspectRatio === "16:9" ? 253 : 450}
               fps={30}
               controls={true}
               inputProps={{

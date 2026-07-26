@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -111,24 +111,24 @@ export default function HeroSection() {
           className="flex flex-col items-center text-center space-y-8"
         >
 
-          <div className="">
-          <DotLottieReact
-            src="https://lottie.host/cb595df1-55ff-4f9c-9df2-1b67275356ee/uIbBsP1xNR.lottie"
-            loop
-            autoplay
-            renderer="canvas"
-            // Keep the backing canvas stable. Older dotlottie-web versions can
-            // render with a stale pixel buffer while ResizeObserver is resizing.
-            width={320}
-            height={320}
-            className="h-64 w-64 md:h-80 md:w-80"
-            renderConfig={{ autoResize: false }}
-          />
+          <div>
+            <DotLottieReact
+              src="https://lottie.host/cb595df1-55ff-4f9c-9df2-1b67275356ee/uIbBsP1xNR.lottie"
+              loop
+              autoplay
+              renderer="canvas"
+              // Keep the backing canvas stable. Older dotlottie-web versions can
+              // render with a stale pixel buffer while ResizeObserver is resizing.
+              width={220}
+              height={220}
+              className="h-64 w-64 "
+              renderConfig={{ autoResize: false }}
+            />
           </div>
           {/* <Video className="w-16 h-16 text-white animate-pulse" /> */}
 
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/10 p-6 rounded-lg">
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white backdrop-blur-sm bg-black/10  rounded-lg">
             Create Stunning Videos with {" "}
             <span className="text-transparent animated-gradient bg-clip-text">
               Ai Magic

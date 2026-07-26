@@ -18,10 +18,16 @@ function RemotionRoot() {
       // Derive the true duration from the caption track so the timeline length
       // always matches the audio. This keeps the crossfade / zoom math correct.
       calculateMetadata={({ props }) => {
+        const isLandscape = props?.script?.aspectRatio === "16:9";
+        const width = isLandscape ? 1920 : 720;
+        const height = isLandscape ? 1080 : 1080;
+
         const durationInFrames =
           props?.durationInFrames ||
-          getDurationInFrames(props?.captions, FPS);
-        return { durationInFrames };
+          (props?.script?.isAssembleFlow && Array.isArray(props.script.mediaList)
+            ? props.script.mediaList.reduce((acc, item) => acc + Math.round((Number(item.duration) || 0) * FPS), 0)
+            : getDurationInFrames(props?.captions, FPS));
+        return { durationInFrames, width, height };
       }}
     />
   );

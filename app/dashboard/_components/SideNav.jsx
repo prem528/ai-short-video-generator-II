@@ -1,5 +1,5 @@
 "use client";
-import { PanelsTopLeft, Plus, Wallet2, CircleUserIcon } from "lucide-react";
+import { PanelsTopLeft, Plus, Wallet2, CircleUserIcon, Film } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -12,6 +12,7 @@ function SideNav({ activeOverride } = {}) {
   const MenuOption = [
     { id: 1, name: "Dashboard", path: "/dashboard", icons: PanelsTopLeft },
     { id: 2, name: "Create New", path: "/dashboard/create-new", icons: Plus },
+    { id: 5, name: "Assemble Video", path: "/dashboard/assemble", icons: Film },
     { id: 3, name: "Add Credits", path: "/dashboard/add-credits", icons: Wallet2 },
     { id: 4, name: "Account", path: "/dashboard/account", icons: CircleUserIcon },
   ];
