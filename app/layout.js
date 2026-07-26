@@ -1,7 +1,7 @@
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Provider from "./provider";
-import { Outfit } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import Head from "next/head";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider"; // Updated path
@@ -12,6 +12,10 @@ export const metadata = {
 };
 
 const outfit = Outfit({ subsets: ["latin"] });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export default function RootLayout({ children }) {
   return (
@@ -22,7 +26,7 @@ export default function RootLayout({ children }) {
           <meta name="description" content={metadata.description} />
           <link rel="icon" href="/logo.png" />
         </Head>
-        <body className={outfit.className}>
+        <body className={`${outfit.className} ${jetbrainsMono.variable}`}>
           <ThemeProvider>
             <Provider>{children}</Provider>
           </ThemeProvider>

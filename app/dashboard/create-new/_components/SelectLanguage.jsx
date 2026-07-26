@@ -10,18 +10,9 @@ import {
 } from "@/components/ui/select";
 
 function SelectLanguage({ onUserSelect }) {
-  const options = [
-    "English",
-    "Bengali",
-    "Gujarati",
-    "Hindi",
-    "Kannada",
-    "Malayalam",
-    "Marathi",
-    "Punjabi",
-    "Tamil",
-    "Telugu",
-  ];
+  // Only languages our local TTS can speak — see lib/tts/profiles.js.
+  // The other Indic languages need a separate engine (docs/VOICEBOX_INTEGRATION.md §9).
+  const options = ["English", "Hindi"];
 
   const [selectedOption, setSelectedOption] = useState();
 
@@ -33,12 +24,12 @@ function SelectLanguage({ onUserSelect }) {
   };
 
   return (
-    <div className="mt-5">
-      <h2 className="font-normal text-xl text-primary">Language</h2>
-      <p className="text-gray-500">What will be the language of the video?</p>
+    <div>
+      <label className="text-sm font-medium text-foreground">Language</label>
+      <p className="mt-1 text-xs text-muted-foreground">Spoken language.</p>
       <Select onValueChange={handleValueChange}>
-        <SelectTrigger className="w-full mt-2 text-lg">
-          <SelectValue placeholder="Select Language" />
+        <SelectTrigger className="mt-2 w-full">
+          <SelectValue placeholder="Select language" />
         </SelectTrigger>
         <SelectContent>
           {options.map((item, index) => (

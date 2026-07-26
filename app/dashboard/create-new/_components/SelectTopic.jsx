@@ -29,14 +29,14 @@ function SelectTopic({ onUserSelect }) {
   };
 
   return (
-    <div className="mt-5">
-      <h2 className="font-normal text-xl text-primary">Content</h2>
-      <p className="text-gray-500">
-        Select the type of content the video will have
+    <div>
+      <label className="text-sm font-medium text-foreground">Content type</label>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Sets the tone and structure of the script.
       </p>
       <Select onValueChange={handleValueChange} value={selectedOption}>
-        <SelectTrigger className="w-full mt-2 text-lg">
-          <SelectValue placeholder="Content Type" />
+        <SelectTrigger className="mt-2 w-full">
+          <SelectValue placeholder="Select a content type" />
         </SelectTrigger>
         <SelectContent>
           {options.map((item, index) => {
@@ -51,9 +51,10 @@ function SelectTopic({ onUserSelect }) {
 
       {selectedOption === "Custom Prompt" && (
         <Textarea
-          className="mt-3"
+          className="mt-3 resize-none"
+          rows={3}
           onChange={(e) => onUserSelect("topic", e.target.value)}
-          placeholder="Enter your prompt"
+          placeholder="Describe exactly what the video should say…"
         />
       )}
     </div>

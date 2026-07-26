@@ -1,59 +1,37 @@
 import { storage } from "@/configs/FirebaseConfig";
-import textToSpeech from "@google-cloud/text-to-speech";
+import { synthesize } from "@/lib/tts";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { NextResponse } from "next/server";
 
-const fs = require("fs");
-const util = require("util");
-
-const client = new textToSpeech.TextToSpeechClient({
-  apiKey: process.env.GOOGLE_TEXT_TO_SPEECH_API_KEY,
-});
-
 export async function POST(req) {
-  const languageMap = {
-    Hindi: "hi-IN",
-    Tamil: "ta-IN",
-    Telugu: "te-IN",
-    Bengali: "bn-IN",
-    Gujarati: "gu-IN",
-    Kannada: "kn-IN",
-    Malayalam: "ml-IN",
-    Marathi: "mr-IN",
-    Punjabi: "pa-IN",
-    English: "en-US",
-  };
-
-  const { text, id, language, gender } = await req.json();
-  const storageRef = ref(storage, "/ai-video-file/" + id + ".mp3");
-  const languageCode = languageMap[language];
-
-  const request = {
-    input: { text: text },
-    voice: { languageCode: languageCode, ssmlGender: gender },
-    audioConfig: { audioEncoding: "MP3" },
-  };
-
   try {
-    // Performs the text-to-speech request
-    const [response] = await client.synthesizeSpeech(request);
-    console.log("Text-to-speech request successful.");
+    const { text, id, language, gender } = await req.json();
 
-    const audioBuffer = Buffer.from(response.audioContent, "binary");
+    if (!text || !id || !language) {
+      return NextResponse.json(
+        { error: "text, id and language are required" },
+        { status: 400 }
+      );
+    }
 
-    // Upload audio to Firebase Storage
-    const uploadResponse = await uploadBytes(storageRef, audioBuffer, {
-      contentType: "audio/mp3",
+    // Engine selection (Voicebox vs Google) lives in lib/tts.
+    const { buffer, contentType, extension, provider } = await synthesize({
+      text,
+      language,
+      gender,
     });
-    console.log("Audio uploaded successfully:", uploadResponse);
 
-    // Retrieve the download URL
+    // Audio must live at a public URL: AssemblyAI fetches it for captions and
+    // Remotion loads it as the <Audio> source when rendering.
+    const storageRef = ref(storage, `/ai-video-file/${id}.${extension}`);
+    await uploadBytes(storageRef, buffer, { contentType });
     const downloadUrl = await getDownloadURL(storageRef);
-    console.log("Audio download URL:", downloadUrl);
 
-    return NextResponse.json({ Result: downloadUrl });
+    console.log(`[generate-audio] ${id} synthesized via ${provider} (${contentType})`);
+
+    return NextResponse.json({ Result: downloadUrl, provider });
   } catch (error) {
     console.error("Error generating or uploading audio:", error);
-    return NextResponse.json({ error: error.message });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

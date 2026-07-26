@@ -41,3 +41,7 @@ next-env.d.ts
 
 # Remotion local renders
 /public/renders/
+
+# Voicebox (self-hosted TTS) — profiles, model cache, smoke-test output
+/voicebox-data/
+voicebox-test.wav

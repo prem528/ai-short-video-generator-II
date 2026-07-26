@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -m 90 -X POST http://localhost:3000/api/scrape-site-data -H 'Content-Type: application/json' -d '{\"url\":\"__TRACKED_VAR__\"}')",
+      "Bash(python3 -c ' *)",
+      "WebFetch(domain:github.com)",
+      "Bash(cd /home/dev/Downloads/voicebox/backend && grep -n \"router.get\\\\|router.post\" routes/audio.py routes/history.py | head -20)",
+      "Read(//home/dev/Downloads/voicebox/backend/**)",
+      "Bash(cd /home/dev/Downloads/voicebox && cat docker-compose.rocm.yml && echo \"=== Dockerfile head ===\" && head -40 Dockerfile)",
+      "Read(//home/dev/Downloads/voicebox/**)",
+      "Bash(docker system *)"
+    ]
+  }
+}

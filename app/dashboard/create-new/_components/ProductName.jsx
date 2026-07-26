@@ -18,17 +18,17 @@ function ProductName({ value, onValueChange }) {
   };
 
   return (
-    <div className="mt-5">
-      <Label className="font-normal text-xl text-primary" htmlFor="productName">
-        Product Name
+    <div>
+      <Label className="text-sm font-medium text-foreground" htmlFor="name">
+        Product name
       </Label>
       <Input
         id="name"
         type="text"
         value={productName}
         onChange={handleChange}
-        placeholder="Product Name"
-        className="mt-3"
+        placeholder="e.g. Realme GT 7 Pro"
+        className="mt-2"
       />
     </div>
   );

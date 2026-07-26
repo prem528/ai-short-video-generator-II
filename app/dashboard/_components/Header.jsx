@@ -19,27 +19,41 @@ function Header({ onMenuClick, sideNavOpen }) {
   const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
-    <div className="p-3 px-5 md:py-4 flex items-center justify-between shadow-lg border-gray-200 backdrop-blur-sm bg-background/90 dark:border-gray-800">
-      {/* Logo Section */}
-      <Link href="/" className="flex gap-3 items-center">
-        {/* <Image src={"/logo.png"} width={100} height={50} alt="logo" /> */}
-        <h2 className="font-light hidden md:block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500  text-lg md:text-2xl">
-          --Ai Shorts--
-        </h2>
+    <div className="flex h-[60px] items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6">
+      {/* Logo Section — filmstrip play mark + wordmark */}
+      <Link href="/" className="flex w-64 items-center gap-2.5">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-2 shadow-sm">
+          <svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2.5 1.5L10 6L2.5 10.5V1.5Z" fill="white" />
+          </svg>
+        </span>
+        <div className="leading-tight">
+          <span className="block text-[15px] font-semibold tracking-tight text-foreground">
+            Shorts Studio
+          </span>
+          <span className="timecode block text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
+            AI Video Engine
+          </span>
+        </div>
       </Link>
 
       {/* Right Section */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         {/* Theme Toggle - Always Visible */}
         <ThemeToggle />
-        <div className="flex gap-1 items-center px-2 py-1 rounded-md bg-yellow-400 text-sm md:text-base">
-          <Image src={"/coin.png"} alt="coin" height={20} width={20} />
-          <h2>{userData?.credits}</h2>
+        <div className="flex items-center gap-1.5 rounded-md border border-border bg-secondary px-2.5 py-1.5">
+          <Image src={"/coin.png"} alt="" height={16} width={16} />
+          <span className="timecode text-sm font-medium tabular-nums text-foreground">
+            {userData?.credits ?? "—"}
+          </span>
+          <span className="timecode hidden text-[9px] uppercase tracking-wider text-muted-foreground sm:inline">
+            cr
+          </span>
         </div>
 
         {isAdmin && (
           <Link href="/admin">
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white text-sm md:text-base">
+            <Button className="bg-brand text-brand-foreground hover:bg-brand/90 text-sm md:text-base">
               Admin
             </Button>
           </Link>

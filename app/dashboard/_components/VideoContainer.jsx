@@ -66,11 +66,17 @@ const VideoContainer = () => {
         transition={{ duration: 0.3 }}
         className="w-full"
       >
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="text-xl">Recent Videos</CardTitle>
+        <Card className="w-full overflow-hidden border-border bg-card">
+          <CardHeader className="flex flex-row items-center justify-between border-b border-border py-4">
+            <div className="flex items-center gap-2.5">
+              <span className="h-4 w-[3px] rounded-full bg-brand" />
+              <CardTitle className="text-base font-semibold">Recent Videos</CardTitle>
+            </div>
+            <span className="timecode text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+              Library
+            </span>
           </CardHeader>
-          <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide">
+          <CardContent className="max-h-[58vh] overflow-y-auto scrollbar-hide pt-5">
             {isLoading ? (
               <div className="flex justify-center items-center min-h-[200px]">
                 <Loader2 className="h-8 w-8 animate-spin" />

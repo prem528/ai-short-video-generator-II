@@ -22,12 +22,12 @@ function SelectDuration({ onUserSelect }) {
   };
 
   return (
-    <div className="mt-5">
-      <h2 className="font-normal text-xl text-primary">Duration</h2>
-      <p className="text-gray-500">What is the duration of the video?</p>
+    <div>
+      <label className="text-sm font-medium text-foreground">Duration</label>
+      <p className="mt-1 text-xs text-muted-foreground">Target video length.</p>
       <Select onValueChange={handleValueChange}>
-        <SelectTrigger className="w-full mt-2 text-lg">
-          <SelectValue placeholder="Select Duration" />
+        <SelectTrigger className="mt-2 w-full">
+          <SelectValue placeholder="Select duration" />
         </SelectTrigger>
         <SelectContent>
           {options.map((item, index) => (
