@@ -5,13 +5,6 @@ import RemotionComposition, {
 } from "./RemotionComposition";
 
 const FPS = 30;
-import React from "react";
-import { Composition } from "remotion";
-import RemotionComposition, {
-  getDurationInFrames,
-} from "./RemotionComposition";
-
-const FPS = 30;
 
 function RemotionRoot() {
   return (

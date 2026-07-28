@@ -1,5 +1,4 @@
 import React from "react";
-import React from "react";
 import {
   AbsoluteFill,
   Audio,
@@ -319,5 +318,4 @@ function RemotionComposition({ imageList, audioFileUrl, captions, script, isThum
   );
 }
 
-export default RemotionComposition;
 export default RemotionComposition;
