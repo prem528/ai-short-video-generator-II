@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Thumbnail } from "@remotion/player";
 import { Play } from "lucide-react";
+import { Play } from "lucide-react";
 import RemotionVideo from "./RemotionVideo";
 import PlayerDialog from "./PlayerDialog";
 

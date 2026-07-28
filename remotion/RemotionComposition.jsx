@@ -1,4 +1,5 @@
 import React from "react";
+import React from "react";
 import {
   AbsoluteFill,
   Audio,
@@ -21,6 +22,7 @@ import { loadFont as loadNotoSansGurmukhi } from "@remotion/google-fonts/NotoSan
 import { loadFont as loadNotoSansTamil } from "@remotion/google-fonts/NotoSansTamil";
 import { loadFont as loadNotoSansTelugu } from "@remotion/google-fonts/NotoSansTelugu";
 
+// Load fonts once at module scope so glyphs are ready before the first frame.
 // Load fonts once at module scope so glyphs are ready before the first frame.
 const { fontFamily: notoSans } = loadNotoSans();
 const { fontFamily: notoSansBengali } = loadNotoSansBengali();
@@ -317,4 +319,5 @@ function RemotionComposition({ imageList, audioFileUrl, captions, script, isThum
   );
 }
 
+export default RemotionComposition;
 export default RemotionComposition;

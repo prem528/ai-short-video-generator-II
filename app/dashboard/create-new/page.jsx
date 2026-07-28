@@ -21,6 +21,7 @@ import { UserDetailContext } from "@/app/_context/userDataContext";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Check, Link2 as LinkIcon, Plus, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Link2 as LinkIcon, Plus, Sparkles } from "lucide-react";
 
 function CreateNew() {
   const router = useRouter();
@@ -132,10 +133,29 @@ function CreateNew() {
     // Persist the final scene images (uploads + scraped) for the render.
     setImageUrlList(finalImages);
     setVideoData((prev) => ({ ...prev, imageList: finalImages }));
+    // Uploaded files -> Firebase URLs, then append the picked scraped images.
+    const uploadedUrls = await uploadImagesToFirebase(imageList);
+    const finalImages = [...uploadedUrls, ...selectedScrapedImages];
+
+    if (finalImages.length === 0) {
+      toast({
+        title: "Add at least one image",
+        description: "Upload a photo or pick a product image from the URL.",
+      });
+      setLoadingState(false);
+      return false;
+    }
+
+    // Persist the final scene images (uploads + scraped) for the render.
+    setImageUrlList(finalImages);
+    setVideoData((prev) => ({ ...prev, imageList: finalImages }));
 
     const prompt = `
     Write a high-quality script for a video with a duration of "${formData.duration}" on the topic "${formData.topic}" in "${formData.language}" language.
+    Write a high-quality script for a video with a duration of "${formData.duration}" on the topic "${formData.topic}" in "${formData.language}" language.
 
+    ### **Structure & Requirements:**
+    - The script should be divided into **"${finalImages.length}" scenes**, each containing engaging, well-structured, and concise narration.
     ### **Structure & Requirements:**
     - The script should be divided into **"${finalImages.length}" scenes**, each containing engaging, well-structured, and concise narration.
     - Use the following reference data:  
@@ -191,6 +211,13 @@ function CreateNew() {
 
     for (const image of files) {
       const imageRef = ref(storage, `ai-video-file/${Date.now()}_${image.name}`);
+  // Upload user-selected files to Firebase and return their public URLs.
+  const uploadImagesToFirebase = async (files) => {
+    const images = [];
+    if (!Array.isArray(files) || files.length === 0) return images;
+
+    for (const image of files) {
+      const imageRef = ref(storage, `ai-video-file/${Date.now()}_${image.name}`);
       try {
         const snapshot = await uploadBytes(imageRef, image);
         const downloadUrl = await getDownloadURL(snapshot.ref);
@@ -200,7 +227,10 @@ function CreateNew() {
       }
     }
     return images;
+    return images;
   };
+
+  const credits = userData?.credits ?? 0;
 
   const credits = userData?.credits ?? 0;
 
@@ -347,6 +377,28 @@ function CreateNew() {
       {/* Loading Screen */}
       <CustomLoading loading={loadingState} />
     </div>
+  );
+}
+
+/** Numbered form section — the steps are a real top-to-bottom sequence. */
+function Section({ index, title, description, children }) {
+  return (
+    <section className="rounded-xl border border-border bg-card p-5 md:p-6">
+      <div className="mb-5 flex items-start gap-3">
+        <span className="timecode mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand/10 text-[11px] font-semibold text-brand">
+          {index}
+        </span>
+        <div>
+          <h3 className="text-base font-semibold leading-tight text-foreground">
+            {title}
+          </h3>
+          {description && (
+            <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>
+          )}
+        </div>
+      </div>
+      <div className="space-y-5">{children}</div>
+    </section>
   );
 }
 

@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" next dev --turbo",
+    "dev": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" next dev --turbo",
     "build": "next build",
+    "start": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" next start",
     "start": "cross-env NODE_OPTIONS=\"--dns-result-order=ipv4first --no-network-family-autoselection\" next start",
     "lint": "next lint",
     "tts:check": "node scripts/check-voicebox.mjs",
@@ -77,6 +79,7 @@
   },
   "devDependencies": {
     "@types/react": "18.3.13",
+    "cross-env": "^10.1.0",
     "cross-env": "^10.1.0",
     "drizzle-kit": "^0.29.1",
     "postcss": "^8",
