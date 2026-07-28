@@ -29,4 +29,5 @@ export const VideoData = pgTable("videoData", {
   title: varchar("title"),
   language: varchar("language"),
   gender: varchar("gender"),
+  finalVideoUrl: varchar("finalVideoUrl"),
 });

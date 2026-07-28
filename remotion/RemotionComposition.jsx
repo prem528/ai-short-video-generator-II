@@ -8,6 +8,7 @@ import {
   Sequence,
   useCurrentFrame,
   useVideoConfig,
+  staticFile,
 } from "remotion";
 
 import { loadFont as loadNotoSans } from "@remotion/google-fonts/NotoSans";
@@ -32,6 +33,15 @@ const { fontFamily: notoSansTamil } = loadNotoSansTamil();
 const { fontFamily: notoSansTelugu } = loadNotoSansTelugu();
 
 const CAPTION_FONT_STACK = `${notoSans}, ${notoSansBengali}, ${notoSansGujarati}, ${notoSansDevanagari}, ${notoSansKannada}, ${notoSansMalayalam}, ${notoSansGurmukhi}, ${notoSansTamil}, ${notoSansTelugu}, sans-serif`;
+
+const resolveAssetUrl = (url) => {
+  if (!url) return "";
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+  // It is a relative path (e.g. /temp-assets/...). Wrap in staticFile for Remotion resolution.
+  return staticFile(url);
+};
 
 /**
  * Compute the total duration (in frames) of the video from the caption track.
@@ -90,7 +100,7 @@ const ImageSlide = ({ src, segmentDuration, zoomIn, fadeIn, fadeOut }) => {
     <AbsoluteFill style={{ opacity }}>
       {/* Blurred fill so portrait images don't show black bars. */}
       <Img
-        src={src}
+        src={resolveAssetUrl(src)}
         pauseWhenLoading
         style={{
           position: "absolute",
@@ -105,7 +115,7 @@ const ImageSlide = ({ src, segmentDuration, zoomIn, fadeIn, fadeOut }) => {
       />
       {/* Main image with the Ken Burns transform. */}
       <Img
-        src={src}
+        src={resolveAssetUrl(src)}
         pauseWhenLoading
         style={{
           position: "absolute",
@@ -143,7 +153,7 @@ const VideoSlide = ({ src, segmentDuration, fadeIn, fadeOut }) => {
   return (
     <AbsoluteFill style={{ opacity, backgroundColor: "black" }}>
       <Video
-        src={src}
+        src={resolveAssetUrl(src)}
         volume={0}
         style={{
           width: "100%",
@@ -237,7 +247,7 @@ const CaptionLayer = ({ captions }) => {
   );
 };
 
-function RemotionComposition({ imageList, audioFileUrl, captions, script }) {
+function RemotionComposition({ imageList, audioFileUrl, captions, script, isThumbnail }) {
   const { fps, durationInFrames } = useVideoConfig();
 
   const isAssemble = script?.isAssembleFlow;
@@ -300,9 +310,9 @@ function RemotionComposition({ imageList, audioFileUrl, captions, script }) {
         );
       })}
 
-      <CaptionLayer captions={captions} />
+      {script?.showCaptions !== false && <CaptionLayer captions={captions} />}
 
-      {audioFileUrl && <Audio src={audioFileUrl} pauseWhenBuffering />}
+      {audioFileUrl && !isThumbnail && <Audio src={resolveAssetUrl(audioFileUrl)} pauseWhenBuffering />}
     </AbsoluteFill>
   );
 }

@@ -23,19 +23,29 @@ function VideoList({ videoList }) {
             {/* 9:16 frame */}
             <div className="relative aspect-[9/16] overflow-hidden rounded-xl border border-border bg-black transition-all duration-200 group-hover:border-brand/60 group-hover:shadow-[0_10px_40px_-12px_hsl(var(--brand)/0.6)]">
               <div className="flex h-full w-full items-center justify-center overflow-hidden [&>*]:h-full [&>*]:w-full [&>*]:object-cover">
-                <Thumbnail
-                  component={RemotionVideo}
-                  compositionWidth={150}
-                  compositionHeight={266}
-                  frameToDisplay={30}
-                  durationInFrames={120}
-                  fps={30}
-                  inputProps={{
-                    ...video,
-                    setDurationFrames: () => {},
-                  }}
-                  style={{ height: "100%", width: "100%" }}
-                />
+                {(video.finalVideoUrl || video.script?.finalVideoUrl) ? (
+                  <video
+                    src={video.finalVideoUrl || video.script.finalVideoUrl}
+                    preload="metadata"
+                    className="h-full w-full object-cover"
+                    muted
+                  />
+                ) : (
+                  <Thumbnail
+                    component={RemotionVideo}
+                    compositionWidth={150}
+                    compositionHeight={266}
+                    frameToDisplay={30}
+                    durationInFrames={120}
+                    fps={30}
+                    inputProps={{
+                      ...video,
+                      isThumbnail: true,
+                      setDurationFrames: () => {},
+                    }}
+                    style={{ height: "100%", width: "100%" }}
+                  />
+                )}
               </div>
 
               {/* Hover scrim + play affordance */}

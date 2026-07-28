@@ -63,7 +63,7 @@ function DashboardLayout({ children }) {
               </div>
 
               {/* Main Content */}
-              <div className="w-full md:ml-64 transition-all duration-300 min-h-[calc(100vh-60px)]">
+              <div className="w-full md:ml-64 transition-all duration-300 min-h-[calc(100vh-60px)] min-w-0 overflow-hidden">
                 {children}
               </div>
             </div>
