@@ -371,27 +371,4 @@ function Section({ index, title, description, children }) {
     </section>
   );
 }
-
-/** Numbered form section — the steps are a real top-to-bottom sequence. */
-function Section({ index, title, description, children }) {
-  return (
-    <section className="rounded-xl border border-border bg-card p-5 md:p-6">
-      <div className="mb-5 flex items-start gap-3">
-        <span className="timecode mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand/10 text-[11px] font-semibold text-brand">
-          {index}
-        </span>
-        <div>
-          <h3 className="text-base font-semibold leading-tight text-foreground">
-            {title}
-          </h3>
-          {description && (
-            <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>
-          )}
-        </div>
-      </div>
-      <div className="space-y-5">{children}</div>
-    </section>
-  );
-}
-
 export default CreateNew;
