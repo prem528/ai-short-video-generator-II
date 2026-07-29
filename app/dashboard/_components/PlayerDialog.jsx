@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Player } from "@remotion/player";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import RemotionVideo from "./RemotionVideo";
 import { Button } from "@/components/ui/button";
 import { db } from "@/configs/db";
@@ -158,6 +158,9 @@ function PlayerDialog({ playVideo, videoId }) {
       }
     } catch (error) {
       console.error("Error calling API:", error.message);
+      if (error.response?.data) {
+        console.error("API error details:", error.response.data);
+      }
     } finally {
       setLoadingState(false);
     }
@@ -206,6 +209,9 @@ function PlayerDialog({ playVideo, videoId }) {
           <DialogTitle className="font-bold text-3xl my-5">
             Your video is ready!
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Preview and export your generated video.
+          </DialogDescription>
           {videoData && (
             (videoData.finalVideoUrl || videoData.script?.finalVideoUrl) ? (
               <video

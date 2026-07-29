@@ -67,7 +67,7 @@ function UrlBox({ onUserSelect }) {
       <Label className="text-sm font-medium text-foreground" htmlFor="url">
         Product URL
       </Label>
-      <div className="mt-2 flex w-full gap-2">
+      <div className="mt-2 flex w-full gap-2">  
         <Input
           id="url"
           type="url"

@@ -8,6 +8,7 @@ import { UserDetailContext } from "@/app/_context/userDataContext";
 import { db } from "@/configs/db";
 import { Users } from "@/configs/schema";
 import { eq } from "drizzle-orm";
+import Image from "next/image";
 
 function Page() {
   const { user } = useUser(); // Fetch user details from Clerk
@@ -125,12 +126,36 @@ function Page() {
   };
 
   return (
-    <div className="px-5 md:px-20">
-    <div className="mt-10 md:py-24 py-6 relative animate-shadow-pulse rounded-xl">
-      <h1 className="font-bold text-2xl md:text-4xl text-primary text-center">
-        Add Credits
-      </h1>
-      <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-center gap-5 ">
+    <div className="mx-auto max-w-5xl px-4 py-8 md:px-8 md:py-10">
+      {/* Page Header */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3">
+          <span className="h-9 w-[3px] rounded-full bg-gradient-to-b from-brand to-brand-2" />
+          <div>
+            <span className="timecode text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Billing
+            </span>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+              Add Credits
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      {/* Current Balance Summary Card */}
+      <div className="mb-8 p-5 rounded-xl border border-border bg-card shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 className="text-base font-semibold text-foreground">Your Balance</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">Use credits to generate scripts, scenes, and videos.</p>
+        </div>
+        <div className="flex items-center gap-3 bg-secondary/30 border border-border/50 px-4 py-2.5 rounded-xl">
+          <Image src="/coin.png" alt="coin" height={22} width={22} />
+          <span className="timecode text-lg font-bold text-foreground">{userData?.credits ?? 0} Credits</span>
+        </div>
+      </div>
+
+      {/* Coin Packs Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <CoinCard
           title="Basic Pack"
           price="10"
@@ -151,7 +176,6 @@ function Page() {
         />
       </div>
     </div>
-  </div>
   );
 }
 

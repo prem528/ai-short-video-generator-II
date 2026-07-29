@@ -26,21 +26,9 @@ const cleanUpTempAssets = async (videoData, originalAudioUrl) => {
       }
     }
 
-    // 2. Delete temporary Firebase audio file
-    const audioUrlToDelete = originalAudioUrl || videoData.audioFileUrl;
-    if (audioUrlToDelete && audioUrlToDelete.startsWith("http")) {
-      const { storage } = await import("@/configs/FirebaseConfig");
-      const { ref: storageRef, deleteObject } = await import("firebase/storage");
-      
-      const decodedUrl = decodeURIComponent(audioUrlToDelete);
-      const filePart = decodedUrl.split("/o/")[1]?.split("?")[0];
-      
-      if (filePart) {
-        const fileRef = storageRef(storage, filePart);
-        await deleteObject(fileRef);
-        console.log(`[Cleanup] Deleted temporary Firebase voiceover: ${filePart}`);
-      }
-    }
+    // 2. Do NOT delete the Firebase audio file, as the Remotion Player in the dashboard
+    // and subsequent re-renders require it to play the preview.
+
 
     // 3. Delete ONLY local temporary audio download cache file (created solely to speed up rendering)
     if (videoData.audioFileUrl && videoData.audioFileUrl.startsWith("/temp-assets/")) {

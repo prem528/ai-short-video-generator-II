@@ -208,13 +208,6 @@ function CreateNew() {
     <div className="mx-auto max-w-5xl px-4 py-8 md:px-8 md:py-10">
       {/* Page header */}
       <div className="mb-8">
-        <Link
-          href="/dashboard"
-          className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to dashboard
-        </Link>
         <div className="flex items-center gap-3">
           <span className="h-9 w-[3px] rounded-full bg-gradient-to-b from-brand to-brand-2" />
           <div>

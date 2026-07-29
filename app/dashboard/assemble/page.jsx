@@ -455,25 +455,43 @@ function AssembleVideo() {
 
       {/* STEP 1: SCRIPT SETUP & VOICEOVER SYNTHESIS */}
       {step === 1 && (
-        <div className="mx-auto max-w-2xl w-full">
-          <Card className="flex flex-col gap-5 p-6 bg-panel border-border">
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2">
-                <FileAudio className="h-5 w-5 text-brand" /> Narration & Voice Settings
-              </h2>
-              <p className="text-xs text-muted-foreground mt-1">
-                Enter your narration script, choose your speech voice, and generate local Voicebox audio.
-              </p>
+        <div className="mx-auto max-w-4xl w-full space-y-6">
+          {/* Page header */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3">
+              <span className="h-9 w-[3px] rounded-full bg-gradient-to-b from-brand to-brand-2" />
+              <div>
+                <span className="timecode text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Assemble Flow
+                </span>
+                <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                  Narration & Voice Settings
+                </h2>
+              </div>
             </div>
+          </div>
 
-            <div className="grid grid-cols-2 gap-4">
+          {/* Section 1 — Voice Settings */}
+          <Section
+            index="01"
+            title="Voice & Language"
+            description="Select the language and voice gender for the custom voiceover narration."
+          >
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <SelectLanguage onUserSelect={handleInputChange} />
               <SelectGender onUserSelect={handleInputChange} />
             </div>
+          </Section>
 
-            <div className="grid grid-cols-2 gap-4">
+          {/* Section 2 — Layout & style */}
+          <Section
+            index="02"
+            title="Layout & Captions"
+            description="Choose the dimensions and subtitle settings for the generated video."
+          >
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Aspect Ratio</label>
+                <label className="text-sm font-medium text-foreground">Aspect Ratio</label>
                 <Select defaultValue="9:16" value={formData.aspectRatio} onValueChange={(val) => handleInputChange("aspectRatio", val)}>
                   <SelectTrigger className="mt-2 w-full bg-background border-border">
                     <SelectValue placeholder="Select ratio" />
@@ -486,7 +504,7 @@ function AssembleVideo() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Subtitles / Captions</label>
+                <label className="text-sm font-medium text-foreground">Subtitles / Captions</label>
                 <Select defaultValue="enable" value={formData.showCaptions !== false ? "enable" : "disable"} onValueChange={(val) => handleInputChange("showCaptions", val === "enable")}>
                   <SelectTrigger className="mt-2 w-full bg-background border-border">
                     <SelectValue placeholder="Select status" />
@@ -498,9 +516,15 @@ function AssembleVideo() {
                 </Select>
               </div>
             </div>
+          </Section>
 
+          {/* Section 3 — Narration Script */}
+          <Section
+            index="03"
+            title="Narration Script"
+            description="Paste or write the audio script text. Voicebox will synthesize this into speech."
+          >
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Audio Script Text</label>
               <Textarea
                 placeholder="Paste your voiceover script here..."
                 rows={6}
@@ -538,7 +562,7 @@ function AssembleVideo() {
                 <audio src={audioFileUrl} controls className="w-full h-8 text-xs mt-1" />
               </div>
             )}
-          </Card>
+          </Section>
         </div>
       )}
 
@@ -867,6 +891,28 @@ function AssembleVideo() {
     e.preventDefault();
     setSelectedClipIndex(index);
   }
+}
+
+/** Numbered form section component matching the design system of /create-new */
+function Section({ index, title, description, children }) {
+  return (
+    <section className="rounded-xl border border-border bg-card p-5 md:p-6 shadow-sm">
+      <div className="mb-5 flex items-start gap-3">
+        <span className="timecode mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand/10 text-[11px] font-semibold text-brand">
+          {index}
+        </span>
+        <div>
+          <h3 className="text-base font-semibold leading-tight text-foreground">
+            {title}
+          </h3>
+          {description && (
+            <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>
+          )}
+        </div>
+      </div>
+      <div className="space-y-5">{children}</div>
+    </section>
+  );
 }
 
 export default AssembleVideo;
